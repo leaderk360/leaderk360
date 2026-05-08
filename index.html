@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeaderK 360 | Assessment Estratégico de Liderança</title>
+
+  <style>
+    :root {
+      --bg: #060b14;
+      --bg2: #0a1220;
+      --card: rgba(255,255,255,.06);
+      --line: rgba(255,255,255,.12);
+      --gold: #c8a96b;
+      --gold2: #e2c982;
+      --blue: #3ba7ff;
+      --text: #f5f7fa;
+      --muted: #a9b4c7;
+      --danger: #ffcf7a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(6,11,20,.98) 0%,
+          rgba(6,11,20,.92) 38%,
+          rgba(6,11,20,.74) 72%,
+          rgba(6,11,20,.9) 100%
+        ),
+        url("reuniaolider.png") center top / cover no-repeat fixed;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(6,11,20,.84);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo img {
+      height: 68px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: .3px;
+    }
+
+    .brand span {
+      color: var(--gold);
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 25px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      color: #07101d;
+      font-weight: 900;
+      box-shadow: 0 0 34px rgba(200,169,107,.28);
+      transition: .25s;
+      border: 1px solid rgba(255,255,255,.12);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 46px rgba(200,169,107,.42);
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      box-shadow: none;
+      border: 1px solid var(--line);
+    }
+
+    section {
+      padding: 92px 0;
+      position: relative;
+      background: linear-gradient(
+        180deg,
+        rgba(6,11,20,.88),
+        rgba(6,11,20,.94)
+      );
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 150px 0 86px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 22% 22%, rgba(59,167,255,.16), transparent 32%),
+        radial-gradient(circle at 78% 18%, rgba(200,169,107,.16), transparent 26%),
+        linear-gradient(180deg, transparent 70%, var(--bg) 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(200,169,107,.38);
+      color: var(--gold);
+      padding: 9px 15px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 28px;
+      background: rgba(200,169,107,.08);
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: .98;
+      letter-spacing: -2.7px;
+      margin-bottom: 28px;
+    }
+
+    h1 span {
+      color: var(--gold);
+    }
+
+    .hero p {
+      font-size: 19px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 650px;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .trust {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .trust b {
+      color: var(--gold);
+    }
+
+    .floating-panel {
+      position: absolute;
+      z-index: 4;
+      right: min(6vw, 80px);
+      bottom: 70px;
+      width: min(430px, 88vw);
+      padding: 22px;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(6,11,20,.72);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 30px 90px rgba(0,0,0,.45);
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .metric {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin-bottom: 17px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .metric strong {
+      color: var(--gold);
+    }
+
+    .bar {
+      grid-column: 1 / -1;
+      height: 8px;
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 56px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(32px, 4vw, 54px);
+      letter-spacing: -1.7px;
+      margin-bottom: 18px;
+      line-height: 1.08;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 30px 24px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+      min-height: 250px;
+      transition: .25s;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,.095);
+      border-color: rgba(200,169,107,.35);
+    }
+
+    .card-icon {
+      width: 82px;
+      height: 82px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 22px auto;
+      filter: drop-shadow(0 0 16px rgba(200,169,107,.35));
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 21px;
+      line-height: 1.15;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .reveal-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .reveal-item {
+      min-height: 210px;
+      padding: 24px 20px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top, rgba(200,169,107,.12), transparent 48%),
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      backdrop-filter: blur(8px);
+    }
+
+    .reveal-item strong {
+      display: block;
+      color: var(--gold);
+      font-size: 15px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .reveal-item p {
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .tension-box {
+      max-width: 920px;
+      margin: 56px auto 0;
+      padding: 42px;
+      border-radius: 32px;
+      border: 1px solid rgba(200,169,107,.28);
+      background:
+        radial-gradient(circle at top right, rgba(200,169,107,.16), transparent 38%),
+        rgba(255,255,255,.045);
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .tension-box h3 {
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+
+    .tension-box p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .audience-item {
+      padding: 18px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      color: var(--muted);
+      text-align: center;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+      transition: .25s;
+    }
+
+    .audience-item:hover {
+      color: var(--text);
+      border-color: rgba(200,169,107,.42);
+      transform: translateY(-3px);
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .method-card {
+      padding: 36px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top right, rgba(59,167,255,.12), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      backdrop-filter: blur(8px);
+    }
+
+    .method-card h3 {
+      font-size: 28px;
+      margin-bottom: 18px;
+      line-height: 1.12;
+    }
+
+    .method-card p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+
+    .method-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .method-list div {
+      color: var(--muted);
+      line-height: 1.55;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .method-list div::before {
+      content: "✓";
+      color: var(--gold);
+      position: absolute;
+      left: 0;
+      font-weight: 900;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .step {
+      padding: 34px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top right, rgba(59,167,255,.12), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      backdrop-filter: blur(8px);
+    }
+
+    .number {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #07101d;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      font-weight: 900;
+      margin-bottom: 22px;
+    }
+
+    .step h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .step p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .report-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .report-image-box {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 70px rgba(0,0,0,.42);
+      background: rgba(255,255,255,.04);
+    }
+
+    .report-image-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .report-copy h2 {
+      font-size: clamp(34px, 4vw, 54px);
+      letter-spacing: -1.6px;
+      margin-bottom: 20px;
+      line-height: 1.08;
+    }
+
+    .report-copy p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    .features {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .feature {
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .feature::before {
+      content: "✓";
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .sample-box {
+      margin-top: 28px;
+      padding: 24px;
+      border-radius: 24px;
+      border: 1px solid rgba(200,169,107,.22);
+      background: rgba(255,255,255,.045);
+    }
+
+    .sample-box strong {
+      display: block;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .sample-box p {
+      font-size: 16px;
+      margin-bottom: 0;
+    }
+
+    .authority {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      padding: 50px;
+      background:
+        linear-gradient(135deg, rgba(59,167,255,.12), rgba(200,169,107,.08)),
+        rgba(255,255,255,.04);
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .authority h2 {
+      font-size: clamp(30px, 4vw, 48px);
+      margin-bottom: 18px;
+      letter-spacing: -1.3px;
+      line-height: 1.12;
+    }
+
+    .authority p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+      max-width: 820px;
+      margin: auto;
+    }
+
+    .stats-strip {
+      padding: 42px 0;
+      background: rgba(6,11,20,.78);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 28px 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-item strong {
+      display: block;
+      font-size: 42px;
+      color: var(--gold);
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .stat-item span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .urgency-box {
+      max-width: 880px;
+      margin: 0 auto 36px;
+      padding: 22px 28px;
+      border-radius: 22px;
+      border: 1px solid rgba(200,169,107,.3);
+      background: rgba(200,169,107,.08);
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .final-cta {
+      text-align: center;
+      padding: 115px 0;
+      background:
+        radial-gradient(circle at center, rgba(200,169,107,.14), transparent 46%),
+        linear-gradient(180deg, rgba(6,11,20,.92), rgba(8,16,29,.96));
+    }
+
+    .final-cta h2 {
+      font-size: clamp(36px, 5vw, 64px);
+      letter-spacing: -2px;
+      max-width: 850px;
+      margin: 0 auto 22px;
+      line-height: 1.05;
+    }
+
+    .final-cta p {
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.75;
+      max-width: 700px;
+      margin: 0 auto 34px;
+    }
+
+    .small-note {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 34px 0;
+      color: var(--muted);
+      font-size: 14px;
+      background: rgba(5,9,18,.96);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1080px) {
+      .floating-panel {
+        display: none;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .reveal-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .audience-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .method-grid,
+      .report-preview {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .features {
+        max-width: 520px;
+        margin: 24px auto 0;
+        text-align: left;
+      }
+
+      .method-list {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 940px) {
+      body {
+        background:
+          linear-gradient(180deg, rgba(6,11,20,.84), rgba(6,11,20,.98)),
+          url("reuniaolider.png") center top / cover no-repeat fixed;
+      }
+
+      .nav {
+        height: 84px;
+      }
+
+      .logo img {
+        height: 56px;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .tagline {
+        font-size: 10px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      header .btn {
+        padding: 12px 18px;
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 130px 0 80px;
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: clamp(42px, 11vw, 58px);
+        letter-spacing: -1.8px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .trust {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .cards,
+      .steps,
+      .stats-grid,
+      .audience-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reveal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: auto;
+      }
+
+      .report-image-box {
+        max-width: 92%;
+      }
+
+      section {
+        padding: 72px 0;
+      }
+
+      .authority,
+      .tension-box,
+      .method-card {
+        padding: 34px 22px;
+      }
+
+      .final-cta {
+        padding: 86px 0;
+      }
+
+      .footer-grid {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .logo div {
+        display: none;
+      }
+
+      .logo img {
+        height: 60px;
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        padding: 8px 12px;
+      }
+
+      .section-title h2,
+      .report-copy h2,
+      .authority h2,
+      .final-cta h2 {
+        letter-spacing: -1px;
+      }
+
+      .card-icon {
+        width: 74px;
+        height: 74px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      <img src="logo-leaderk360.png" alt="Logo LeaderK 360">
+      <div>
+        <div class="brand">LeaderK <span>360</span></div>
+        <div class="tagline">Assessment Estratégico de Liderança</div>
+      </div>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#analise">Análise</a>
+      <a href="#revela">O que revela</a>
+      <a href="#metodo">Método</a>
+      <a href="#relatorio">Relatório</a>
+    </nav>
+
+    <a class="btn" href="#assessment">Começar</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="eyebrow">Liderança sob uma perspectiva 360</div>
+
+        <h1>O líder que você acredita ser pode não ser o líder que sua equipe enxerga.</h1>
+
+        <p>
+          O LeaderK 360 analisa padrões de liderança, tomada de decisão,
+          comunicação e comportamento sob pressão para revelar seu perfil
+          estratégico predominante — e os pontos cegos que podem estar afetando
+          sua influência.
+        </p>
+
+        <div class="hero-actions">
+          <a href="questoes.html" class="btn">Descobrir meu perfil de liderança</a>
+          <a href="#relatorio" class="btn secondary">Ver prévia do relatório</a>
+        </div>
+
+        <div class="trust">
+          <span><b>✓</b> Resultado gratuito</span>
+          <span><b>✓</b> Leva cerca de 5 minutos</span>
+          <span><b>✓</b> Relatório estratégico personalizado</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="floating-panel">
+      <div class="panel-title">
+        <span>Leadership Insight</span>
+        <span>Profile Scan</span>
+      </div>
+
+      <div class="metric">
+        <span>Tomada de decisão</span><strong>87%</strong>
+        <div class="bar"><span style="width:87%"></span></div>
+      </div>
+
+      <div class="metric">
+        <span>Liderança sob pressão</span><strong>74%</strong>
+        <div class="bar"><span style="width:74%"></span></div>
+      </div>
+
+      <div class="metric">
+        <span>Comunicação estratégica</span><strong>68%</strong>
+        <div class="bar"><span style="width:68%"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="analise">
+    <div class="container">
+      <div class="section-title">
+        <div class="eyebrow">O ponto cego do líder</div>
+        <h2>Grandes líderes possuem padrões. A maioria não percebe os seus.</h2>
+        <p>
+          Muitos profissionais lideram equipes, tomam decisões e conduzem pessoas
+          sem perceber como seu comportamento é interpretado por quem está ao redor.
+        </p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <img class="card-icon" src="icone-pressao.png" alt="Liderança sob pressão">
+          <h3>Liderança sob pressão</h3>
+          <p>Você mantém clareza em cenários críticos ou passa a centralizar tudo?</p>
+        </div>
+
+        <div class="card">
+          <img class="card-icon" src="icone-comunicacao.png" alt="Comunicação estratégica">
+          <h3>Comunicação estratégica</h3>
+          <p>Sua comunicação inspira confiança ou gera ruído e resistência?</p>
+        </div>
+
+        <div class="card">
+          <img class="card-icon" src="icone-gestao.png" alt="Tomada de decisão">
+          <h3>Tomada de decisão</h3>
+          <p>Você decide por estratégia, impulso, controle ou necessidade de segurança?</p>
+        </div>
+
+        <div class="card">
+          <img class="card-icon" src="icone-decisao.png" alt="Gestão de pessoas">
+          <h3>Gestão de pessoas</h3>
+          <p>Seu estilo fortalece a equipe ou desgasta talentos sem que você perceba?</p>
+        </div>
+      </div>
+
+      <div class="tension-box">
+        <h3>O maior ponto cego de um líder geralmente é invisível para ele próprio.</h3>
+        <p>
+          O LeaderK 360 foi criado para transformar percepções subjetivas em uma
+          leitura estratégica sobre comportamento, influência, pressão e impacto na equipe.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="revela">
+    <div class="container">
+      <div class="section-title">
+        <div class="eyebrow">O que o relatório pode revelar</div>
+        <h2>Algumas respostas podem incomodar. É justamente por isso que elas ajudam.</h2>
+        <p>
+          O assessment não mostra apenas um perfil. Ele aponta tendências que podem
+          estar fortalecendo ou limitando sua liderança.
+        </p>
+      </div>
+
+      <div class="reveal-grid">
+        <div class="reveal-item">
+          <strong>Influência</strong>
+          <p>Você lidera por respeito, confiança, controle ou medo?</p>
+        </div>
+
+        <div class="reveal-item">
+          <strong>Pressão</strong>
+          <p>Em crise, você ganha clareza ou passa a centralizar decisões?</p>
+        </div>
+
+        <div class="reveal-item">
+          <strong>Comunicação</strong>
+          <p>As pessoas compreendem sua direção ou apenas obedecem suas ordens?</p>
+        </div>
+
+        <div class="reveal-item">
+          <strong>Equipe</strong>
+          <p>Seu comportamento desenvolve talentos ou cria dependência?</p>
+        </div>
+
+        <div class="reveal-item">
+          <strong>Risco oculto</strong>
+          <p>Seu maior talento pode ser também o seu maior ponto cego.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="publico">
+    <div class="container">
+      <div class="section-title">
+        <div class="eyebrow">Pra quem é indicado?</div>
+        <h2>Para todos que exercem ou desejam exercer liderança.</h2>
+        <p>
+          O LeaderK 360 foi desenvolvido para profissionais que lidam com pessoas,
+          decisões, pressão, responsabilidade e influência no dia a dia.
+        </p>
+      </div>
+
+      <div class="audience-grid">
+        <div class="audience-item">Diretores de empresas</div>
+        <div class="audience-item">Gerentes e coordenadores</div>
+        <div class="audience-item">CEOs, CFOs e executivos</div>
+        <div class="audience-item">Servidores públicos em chefia</div>
+        <div class="audience-item">Assessores e supervisores</div>
+        <div class="audience-item">Líderes celetistas</div>
+        <div class="audience-item">Dirigentes sindicais</div>
+        <div class="audience-item">Federações e associações</div>
+        <div class="audience-item">Empreendedores</div>
+        <div class="audience-item">Gestores de equipes</div>
+        <div class="audience-item">Líderes comunitários</div>
+        <div class="audience-item">Profissionais em ascensão</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="metodo">
+    <div class="container">
+      <div class="section-title">
+        <div class="eyebrow">Base técnica do assessment</div>
+        <h2>Um modelo proprietário de leitura comportamental aplicado à liderança.</h2>
+        <p>
+          O LeaderK 360 utiliza uma estrutura objetiva de análise baseada em respostas
+          graduadas, indicadores comportamentais e cruzamento de dimensões estratégicas.
+        </p>
+      </div>
+
+      <div class="method-grid">
+        <div class="method-card">
+          <h3>Como a análise é estruturada</h3>
+          <p>
+            O assessment utiliza uma escala de resposta de 5 pontos, com perguntas
+            distribuídas entre liderança sob pressão, tomada de decisão, comunicação,
+            influência, gestão de pessoas, visão estratégica e comportamento operacional.
+          </p>
+
+          <div class="method-list">
+            <div>36 perguntas estratégicas de leitura comportamental</div>
+            <div>Escala de resposta em intensidade, não apenas “sim” ou “não”</div>
+            <div>Identificação de perfil predominante e perfil complementar</div>
+            <div>Leitura de comportamento sob pressão e pontos cegos</div>
+          </div>
+        </div>
+
+        <div class="method-card">
+          <h3>O que torna o relatório mais profundo</h3>
+          <p>
+            As respostas são interpretadas em conjunto para gerar indicadores derivados,
+            como índice de pressão, estilo de comunicação, padrão de influência,
+            orientação estratégica e impacto provável sobre a equipe.
+          </p>
+
+          <div class="method-list">
+            <div>Interpretação cruzada entre dimensões comportamentais</div>
+            <div>Radar visual de liderança e intensidade do perfil</div>
+            <div>Análise textual personalizada com linguagem executiva</div>
+            <div>Indicação de forças, riscos e oportunidades de evolução</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="small-note" style="text-align:center;max-width:820px;margin:28px auto 0;">
+        *O LeaderK 360 é uma ferramenta de desenvolvimento e autoconhecimento executivo.
+        Não substitui avaliação psicológica, clínica ou processo formal de seleção profissional.
+      </p>
+    </div>
+  </section>
+
+  <section id="funciona">
+    <div class="container">
+      <div class="section-title">
+        <div class="eyebrow">Simples, rápido e profundo</div>
+        <h2>Uma análise estratégica da sua liderança em poucos minutos.</h2>
+        <p>
+          Você responde ao assessment, recebe um resultado gratuito e pode desbloquear
+          uma análise mais completa da sua liderança.
+        </p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="number">01</div>
+          <h3>Responda ao assessment</h3>
+          <p>36 perguntas desenvolvidas para mapear padrões reais de liderança.</p>
+        </div>
+
+        <div class="step">
+          <div class="number">02</div>
+          <h3>Descubra seu perfil predominante</h3>
+          <p>Identifique tendências comportamentais e estratégicas da sua liderança.</p>
+        </div>
+
+        <div class="step">
+          <div class="number">03</div>
+          <h3>Receba sua análise personalizada</h3>
+          <p>Tenha acesso a um relatório estratégico sobre sua forma de liderar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="relatorio">
+    <div class="container report-preview">
+      <div class="report-image-box">
+        <img src="preview.png" alt="Prévia do Relatório Estratégico de Liderança LeaderK 360">
+      </div>
+
+      <div class="report-copy">
+        <div class="eyebrow">Preview do relatório</div>
+
+        <h2>Muito além de um simples teste de perfil.</h2>
+
+        <p>
+          O LeaderK 360 entrega uma análise estratégica sobre comportamento,
+          influência, tomada de decisão e liderança sob pressão.
+        </p>
+
+        <div class="features">
+          <div class="feature">Perfil predominante de liderança</div>
+          <div class="feature">Liderança sob pressão</div>
+          <div class="feature">Estilo de comunicação</div>
+          <div class="feature">Pontos cegos comportamentais</div>
+          <div class="feature">Impacto na equipe</div>
+          <div class="feature">Inteligência emocional e influência</div>
+        </div>
+
+        <div class="sample-box">
+          <strong>Exemplo de insight do relatório:</strong>
+          <p>
+            “Sob pressão, você tende a aumentar o controle e reduzir a escuta.
+            Esse padrão pode gerar velocidade, mas também diminuir autonomia e
+            confiança da equipe.”
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="authority">
+        <h2>Desenvolvido para líderes que desejam evoluir com clareza estratégica.</h2>
+        <p>
+          O LeaderK 360 combina análise comportamental, padrões de liderança,
+          leitura de pressão, comunicação, influência e tomada de decisão para
+          oferecer uma visão aprofundada sobre como cada profissional impacta
+          pessoas, ambientes e resultados.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-strip">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <strong>36</strong>
+        <span>Perguntas estratégicas</span>
+      </div>
+
+      <div class="stat-item">
+        <strong>7</strong>
+        <span>Dimensões analisadas</span>
+      </div>
+
+      <div class="stat-item">
+        <strong>360º</strong>
+        <span>Visão completa da liderança</span>
+      </div>
+
+      <div class="stat-item">
+        <strong>5 min</strong>
+        <span>Tempo médio de resposta</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="assessment" class="final-cta">
+    <div class="container">
+      <div class="urgency-box">
+        Versão gratuita disponível para a fase inicial de validação do LeaderK 360.
+      </div>
+
+      <h2>Sua liderança deixa padrões. Descubra os seus.</h2>
+
+      <p>
+        Seu perfil pode revelar comportamentos que impactam diretamente
+        sua equipe, seus resultados, sua influência e sua evolução profissional.
+      </p>
+
+      <a href="questoes.html" class="btn">Gerar meu relatório gratuito</a>
+
+      <div class="small-note">
+        Confidencial · Rápido · Desenvolvido para autoconhecimento executivo
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>© 2026 LeaderK 360. Todos os direitos reservados.</div>
+    <div>Política de Privacidade · Termos · Contato · Instagram · LinkedIn</div>
+  </div>
+</footer>
+
+</body>
+</html>

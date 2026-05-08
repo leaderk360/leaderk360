@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeaderK 360 | Assessment</title>
+
+  <style>
+    :root {
+      --bg: #060b14;
+      --card: rgba(255,255,255,.07);
+      --line: rgba(255,255,255,.13);
+      --gold: #c8a96b;
+      --gold2: #e2c982;
+      --blue: #3ba7ff;
+      --text: #f5f7fa;
+      --muted: #a9b4c7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(59,167,255,.18), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(200,169,107,.16), transparent 34%),
+        linear-gradient(180deg, #060b14, #08101d);
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: min(980px, 92%);
+      margin: auto;
+      padding: 36px 0;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 38px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo img {
+      height: 64px;
+      object-fit: contain;
+    }
+
+    .brand {
+      font-weight: 900;
+      font-size: 24px;
+    }
+
+    .brand span {
+      color: var(--gold);
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+      box-shadow: 0 30px 90px rgba(0,0,0,.38);
+      backdrop-filter: blur(12px);
+      padding: clamp(26px, 5vw, 54px);
+    }
+
+    .intro h1,
+    .result h1,
+    .lead-form h1 {
+      font-size: clamp(34px, 6vw, 62px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 22px;
+    }
+
+    .intro h1 span,
+    .result h1 span {
+      color: var(--gold);
+    }
+
+    .intro p,
+    .result p,
+    .lead-form p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+
+    .badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .badge {
+      border: 1px solid rgba(200,169,107,.32);
+      color: var(--gold);
+      background: rgba(200,169,107,.08);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      color: #07101d;
+      font-weight: 900;
+      font-size: 15px;
+      box-shadow: 0 0 34px rgba(200,169,107,.28);
+      transition: .25s;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 46px rgba(200,169,107,.42);
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    .progress-wrap {
+      margin-bottom: 34px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .progress {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.09);
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      border-radius: 999px;
+      transition: .25s;
+    }
+
+    .question {
+      min-height: 310px;
+    }
+
+    .question h2 {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 34px;
+    }
+
+    .answers {
+      display: grid;
+      gap: 12px;
+    }
+
+    .answer {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      color: var(--text);
+      border-radius: 18px;
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: .2s;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .answer:hover {
+      border-color: rgba(200,169,107,.55);
+      background: rgba(200,169,107,.08);
+      transform: translateX(4px);
+    }
+
+    .answer.selected {
+      border-color: var(--gold);
+      background: rgba(200,169,107,.16);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .loader {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.12);
+      border-top-color: var(--gold);
+      margin: 0 auto 28px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading h2 {
+      font-size: clamp(28px, 4vw, 46px);
+      margin-bottom: 14px;
+    }
+
+    .loading p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      color: var(--gold);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.055);
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: rgba(200,169,107,.65);
+      background: rgba(200,169,107,.08);
+    }
+
+    .lgpd-check {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      margin: 10px 0 28px;
+      cursor: pointer;
+    }
+
+    .lgpd-check input {
+      margin-top: 4px;
+      transform: scale(1.15);
+    }
+
+    .lead-error {
+      color: #ffcf7a;
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 32px;
+    }
+
+    .result-box {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: rgba(255,255,255,.045);
+      padding: 24px;
+    }
+
+    .result-box h3 {
+      color: var(--gold);
+      margin-bottom: 10px;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .result-box strong {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .result-box p {
+      font-size: 15px;
+      margin-bottom: 0;
+    }
+
+    .radar {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .dimension {
+      display: grid;
+      grid-template-columns: 190px 1fr 46px;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .dim-bar {
+      height: 10px;
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .dim-bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      border-radius: 999px;
+    }
+
+    .cta-box {
+      margin-top: 34px;
+      border-radius: 28px;
+      border: 1px solid rgba(200,169,107,.32);
+      background: rgba(200,169,107,.08);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .cta-box p {
+      margin-bottom: 22px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 780px) {
+      .logo img {
+        height: 54px;
+      }
+
+      .brand {
+        font-size: 20px;
+      }
+
+      .form-grid,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dimension {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="top">
+    <div class="logo">
+      <img src="logo-leaderk360.png" alt="LeaderK 360">
+      <div>
+        <div class="brand">LeaderK <span>360</span></div>
+        <div class="tagline">Assessment Estratégico de Liderança</div>
+      </div>
+    </div>
+  </div>
+
+  <section id="intro" class="card intro">
+    <div class="badges">
+      <div class="badge">42 perguntas</div>
+      <div class="badge">7 dimensões</div>
+      <div class="badge">Resultado gratuito</div>
+      <div class="badge">Cerca de 5 minutos</div>
+    </div>
+
+    <h1>Descubra os padrões que definem sua forma de <span>liderar.</span></h1>
+
+    <p>
+      Responda ao assessment para identificar seu perfil predominante de liderança,
+      seu perfil complementar, sua intensidade comportamental e um primeiro insight
+      sobre seus pontos cegos.
+    </p>
+
+    <button class="btn" onclick="startQuiz()">Iniciar Assessment</button>
+  </section>
+
+  <section id="quiz" class="card hidden">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span id="questionCounter">Pergunta 1 de 42</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress"><span id="progressBar"></span></div>
+    </div>
+
+    <div class="question">
+      <h2 id="questionText"></h2>
+      <div class="answers" id="answers"></div>
+    </div>
+
+    <div class="controls">
+      <button class="btn secondary" onclick="prevQuestion()">Voltar</button>
+      <button class="btn" onclick="nextQuestion()" id="nextBtn">Próxima</button>
+    </div>
+  </section>
+
+  <section id="loading" class="card loading hidden">
+    <div class="loader"></div>
+    <h2>Analisando seu perfil estratégico...</h2>
+    <p id="loadingText">Identificando padrões predominantes de liderança.</p>
+  </section>
+
+  <section id="leadForm" class="card lead-form hidden">
+    <div class="badges">
+      <div class="badge">Resultado processado</div>
+      <div class="badge">Acesso gratuito</div>
+    </div>
+
+    <h1>Seu perfil estratégico foi analisado.</h1>
+
+    <p>
+      Para liberar seu resultado gratuito e vincular sua análise ao seu cadastro,
+      preencha os dados abaixo.
+    </p>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" id="leadNome" placeholder="Digite seu nome completo">
+      </div>
+
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="leadEmail" placeholder="Digite seu melhor e-mail">
+      </div>
+
+      <div class="form-group">
+        <label>WhatsApp</label>
+        <input type="text" id="leadWhatsapp" placeholder="Ex: 65999999999">
+      </div>
+
+      <div class="form-group">
+        <label>Cargo/Função</label>
+        <input type="text" id="leadCargo" placeholder="Ex: Diretor, Gerente, Assessor">
+      </div>
+
+      <div class="form-group full">
+        <label>Empresa/Órgão</label>
+        <input type="text" id="leadEmpresa" placeholder="Digite o nome da empresa, órgão ou entidade">
+      </div>
+    </div>
+
+    <label class="lgpd-check">
+      <input type="checkbox" id="leadLgpd">
+      <span>
+        Declaro que li e concordo com o tratamento dos meus dados para geração do resultado
+        e eventual envio de informações relacionadas ao LeaderK 360.
+      </span>
+    </label>
+
+    <button class="btn" onclick="submitLeadForm()">Liberar meu resultado gratuito</button>
+
+    <p id="leadError" class="lead-error hidden">
+      Preencha todos os campos obrigatórios e aceite os termos para continuar.
+    </p>
+  </section>
+
+  <section id="result" class="card result hidden">
+    <div class="badges">
+      <div class="badge">Resultado gratuito</div>
+      <div class="badge">LeaderK 360</div>
+    </div>
+
+    <h1>Seu perfil predominante foi identificado.</h1>
+
+    <p>
+      Este é apenas o resultado inicial. O relatório completo aprofunda sua liderança
+      sob pressão, pontos cegos, comunicação, influência e impacto provável na equipe.
+    </p>
+
+    <div class="result-grid">
+      <div class="result-box">
+        <h3>Perfil predominante</h3>
+        <strong id="mainProfile"></strong>
+        <p id="mainProfileDesc"></p>
+      </div>
+
+      <div class="result-box">
+        <h3>Perfil complementar</h3>
+        <strong id="secondProfile"></strong>
+        <p id="secondProfileDesc"></p>
+      </div>
+
+      <div class="result-box">
+        <h3>Intensidade</h3>
+        <strong id="intensity"></strong>
+        <p>Indica a força com que seu perfil predominante aparece nas respostas.</p>
+      </div>
+
+      <div class="result-box">
+        <h3>Risco oculto</h3>
+        <strong id="riskTitle"></strong>
+        <p id="riskText"></p>
+      </div>
+    </div>
+
+    <div class="result-box" style="margin-top:24px;">
+      <h3>Insight inicial</h3>
+      <p id="insightText"></p>
+    </div>
+
+    <div class="radar" id="radar"></div>
+
+    <div class="cta-box">
+      <h3>Seu relatório completo revela o que este resultado ainda não mostra.</h3>
+      <p>
+        A análise executiva aprofunda comportamento sob pressão, pontos cegos,
+        estilo de comunicação, impacto na equipe e plano de evolução.
+      </p>
+      <button class="btn">Acessar Relatório Executivo</button>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://qdgljsbntpsjulfwxolf.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const dimensions = {
+  D1: "Influência e Presença",
+  D2: "Comunicação Estratégica",
+  D3: "Tomada de Decisão",
+  D4: "Liderança sob Pressão",
+  D5: "Gestão de Pessoas",
+  D6: "Visão Estratégica",
+  D7: "Execução e Controle"
+};
+
+const profileInfo = {
+  COMMANDER: { name: "COMMANDER", desc: "Liderança de decisão, autoridade e ação sob pressão.", risk: "Centralização", riskText: "Você pode assumir controle demais em cenários críticos, reduzindo escuta e autonomia." },
+  STRATEGYK: { name: "STRATEGYK", desc: "Liderança analítica, racional e orientada à estratégia.", risk: "Excesso de análise", riskText: "Você pode demorar a agir quando busca segurança racional antes de avançar." },
+  MENTORIX: { name: "MENTORIX", desc: "Liderança voltada ao desenvolvimento humano e confiança.", risk: "Excesso de tolerância", riskText: "Você pode evitar confrontos necessários para preservar relações." },
+  EXECUTRON: { name: "EXECUTRON", desc: "Liderança de performance, entrega e cobrança por resultado.", risk: "Desgaste da equipe", riskText: "Você pode pressionar demais quando o ritmo de entrega fica abaixo do esperado." },
+  DIPLOMATIK: { name: "DIPLOMATIK", desc: "Liderança de equilíbrio, mediação e estabilidade relacional.", risk: "Evitar confronto", riskText: "Você pode adiar decisões difíceis para preservar harmonia no ambiente." },
+  VISIONEX: { name: "VISIONEX", desc: "Liderança de inovação, transformação e visão de futuro.", risk: "Dispersão", riskText: "Você pode gerar muitas ideias sem consolidar execução suficiente." },
+  GUARDIAN: { name: "GUARDIAN", desc: "Liderança de estabilidade, método e segurança operacional.", risk: "Rigidez", riskText: "Você pode resistir a mudanças quando percebe risco à previsibilidade." }
+};
+
+function q(text, dims, profiles) {
+  return { text, dims, profiles };
+}
+
+const questions = [
+  q("As pessoas normalmente prestam atenção quando exponho uma direção ou decisão.", {D1:3,D2:1}, {COMMANDER:2,VISIONEX:1,MENTORIX:1}),
+  q("Sinto que minha presença influencia o ambiente, mesmo antes de eu falar muito.", {D1:3,D4:1}, {COMMANDER:2,DIPLOMATIK:1,VISIONEX:1}),
+  q("Costumo conseguir adesão das pessoas sem precisar impor minha autoridade formal.", {D1:3,D2:2,D5:1}, {MENTORIX:2,DIPLOMATIK:2,VISIONEX:1}),
+  q("Quando preciso conduzir um grupo, naturalmente assumo uma posição de referência.", {D1:3,D3:1}, {COMMANDER:2,EXECUTRON:1,VISIONEX:1}),
+  q("Tenho facilidade em mobilizar pessoas em torno de um objetivo.", {D1:3,D2:2,D6:1}, {VISIONEX:2,MENTORIX:1,DIPLOMATIK:1}),
+  q("Percebo quando minha postura muda o nível de energia da equipe.", {D1:2,D5:3,D2:1}, {MENTORIX:2,DIPLOMATIK:1,VISIONEX:1}),
+  q("Antes de comunicar uma decisão importante, procuro organizar a mensagem com clareza.", {D2:3,D6:2}, {STRATEGYK:2,DIPLOMATIK:1,GUARDIAN:1}),
+  q("Costumo adaptar minha comunicação conforme o perfil das pessoas envolvidas.", {D2:3,D5:2,D1:1}, {DIPLOMATIK:2,MENTORIX:2,VISIONEX:1}),
+  q("Tenho facilidade em conduzir conversas difíceis sem perder o controle emocional.", {D2:3,D4:2,D5:1}, {DIPLOMATIK:2,MENTORIX:1,STRATEGYK:1}),
+  q("Quando há ruído na equipe, procuro alinhar expectativas antes de cobrar resultados.", {D2:3,D5:2,D7:1}, {MENTORIX:2,DIPLOMATIK:2,GUARDIAN:1}),
+  q("Prefiro ser direto, mesmo que minha comunicação pareça dura em alguns momentos.", {D2:2,D3:2,D7:1}, {COMMANDER:2,EXECUTRON:2}),
+  q("Escuto opiniões diferentes antes de concluir uma decisão importante.", {D2:3,D5:2,D6:1}, {DIPLOMATIK:2,MENTORIX:2,STRATEGYK:1}),
+  q("Tenho facilidade em tomar decisões difíceis quando a situação exige rapidez.", {D3:3,D4:2,D1:1}, {COMMANDER:3,EXECUTRON:1}),
+  q("Antes de decidir, costumo avaliar os impactos futuros da escolha.", {D3:2,D6:3}, {STRATEGYK:3,GUARDIAN:1,VISIONEX:1}),
+  q("Tenho dificuldade em aceitar decisões tomadas sem análise suficiente.", {D3:2,D6:3,D7:1}, {STRATEGYK:2,GUARDIAN:2}),
+  q("Quando ninguém decide, prefiro assumir a responsabilidade.", {D3:3,D1:2,D4:2}, {COMMANDER:3,EXECUTRON:1}),
+  q("Costumo decidir melhor quando tenho dados, contexto e tempo mínimo de análise.", {D3:3,D6:3}, {STRATEGYK:3,GUARDIAN:1}),
+  q("Mesmo sem todas as informações, consigo avançar quando a decisão é necessária.", {D3:3,D4:2,D1:1}, {COMMANDER:2,VISIONEX:1,EXECUTRON:1}),
+  q("Quando algo sai do controle, minha primeira reação é tentar organizar tudo rapidamente.", {D4:3,D7:2}, {EXECUTRON:2,GUARDIAN:2,COMMANDER:1}),
+  q("Sob pressão, costumo confiar mais em mim do que na equipe.", {D4:3,D7:2,D5:-2}, {COMMANDER:3,EXECUTRON:1}),
+  q("Em momentos de crise, consigo manter clareza suficiente para orientar os outros.", {D4:3,D1:2,D2:1}, {COMMANDER:2,STRATEGYK:1,DIPLOMATIK:1}),
+  q("Quando estou sob pressão, minha tolerância a erros diminui.", {D4:3,D7:2,D5:-1}, {EXECUTRON:2,COMMANDER:2}),
+  q("Mesmo em conflito, procuro preservar o equilíbrio da equipe.", {D4:2,D2:2,D5:3}, {DIPLOMATIK:3,MENTORIX:2}),
+  q("Quando há pressão externa, procuro proteger a equipe de desgaste desnecessário.", {D4:2,D5:3,D7:1}, {MENTORIX:2,GUARDIAN:2,DIPLOMATIK:1}),
+  q("Tenho satisfação em ver pessoas evoluindo profissionalmente com minha orientação.", {D5:3,D1:1}, {MENTORIX:3,DIPLOMATIK:1}),
+  q("Prefiro desenvolver autonomia do que criar dependência da minha aprovação.", {D5:3,D2:2,D7:1}, {MENTORIX:2,DIPLOMATIK:1,STRATEGYK:1}),
+  q("Tenho dificuldade em delegar tarefas importantes sem acompanhar de perto.", {D7:2,D4:2,D5:-2}, {COMMANDER:2,EXECUTRON:2,GUARDIAN:1}),
+  q("Percebo rapidamente quando alguém da equipe perde motivação.", {D5:3,D2:2}, {MENTORIX:3,DIPLOMATIK:1}),
+  q("Acredito que confiança é mais eficiente do que vigilância constante.", {D5:3,D2:1,D7:-1}, {MENTORIX:2,DIPLOMATIK:2}),
+  q("Quando alguém erra, procuro entender a causa antes de apenas cobrar.", {D5:3,D2:2,D4:1}, {MENTORIX:2,DIPLOMATIK:2}),
+  q("Costumo perceber riscos antes que eles se tornem problemas evidentes.", {D6:3,D3:2}, {STRATEGYK:3,GUARDIAN:1}),
+  q("Tenho facilidade em enxergar oportunidades onde outros veem apenas obstáculos.", {D6:3,D1:2,D3:1}, {VISIONEX:3,STRATEGYK:1}),
+  q("Penso no longo prazo mesmo quando preciso resolver problemas imediatos.", {D6:3,D3:2,D7:1}, {STRATEGYK:2,GUARDIAN:1,VISIONEX:1}),
+  q("Gosto de questionar métodos antigos quando acredito existir uma forma melhor.", {D6:3,D1:1,D3:1}, {VISIONEX:3,STRATEGYK:1}),
+  q("Prefiro construir soluções sustentáveis a resolver apenas o problema imediato.", {D6:3,D7:2,D3:1}, {STRATEGYK:2,GUARDIAN:2}),
+  q("Tenho tendência a imaginar cenários futuros antes de agir.", {D6:3,D3:1}, {STRATEGYK:2,VISIONEX:2}),
+  q("Resultados concretos são mais importantes do que boas intenções.", {D7:3,D3:2}, {EXECUTRON:3,COMMANDER:1}),
+  q("Tenho dificuldade com pessoas que prometem muito e entregam pouco.", {D7:3,D4:2}, {EXECUTRON:3,COMMANDER:1}),
+  q("Gosto de acompanhar de perto o andamento das entregas importantes.", {D7:3,D4:2}, {EXECUTRON:2,GUARDIAN:2,COMMANDER:1}),
+  q("Organização e método são essenciais para uma liderança confiável.", {D7:3,D6:2}, {GUARDIAN:3,STRATEGYK:1,EXECUTRON:1}),
+  q("Quando metas não são cumpridas, sinto necessidade de agir rapidamente.", {D7:3,D3:2,D4:2}, {EXECUTRON:3,COMMANDER:2}),
+  q("Prefiro processos claros a improvisações constantes.", {D7:3,D6:2}, {GUARDIAN:3,STRATEGYK:1})
+];
+
+const scale = [
+  { label: "Discordo totalmente", value: 1 },
+  { label: "Discordo", value: 2 },
+  { label: "Neutro", value: 3 },
+  { label: "Concordo", value: 4 },
+  { label: "Concordo totalmente", value: 5 }
+];
+
+let current = 0;
+let answers = Array(questions.length).fill(null);
+let pendingResult = null;
+let leadData = null;
+
+function startQuiz() {
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const question = questions[current];
+
+  document.getElementById("questionCounter").textContent = `Pergunta ${current + 1} de ${questions.length}`;
+
+  const progress = Math.round((current / questions.length) * 100);
+  document.getElementById("progressPercent").textContent = `${progress}%`;
+  document.getElementById("progressBar").style.width = `${progress}%`;
+
+  document.getElementById("questionText").textContent = question.text;
+
+  const answersBox = document.getElementById("answers");
+  answersBox.innerHTML = "";
+
+  scale.forEach(item => {
+    const btn = document.createElement("button");
+    btn.className = "answer";
+    btn.textContent = item.label;
+
+    if (answers[current] === item.value) {
+      btn.classList.add("selected");
+    }
+
+    btn.onclick = () => {
+      answers[current] = item.value;
+      renderQuestion();
+    };
+
+    answersBox.appendChild(btn);
+  });
+
+  document.getElementById("nextBtn").textContent =
+    current === questions.length - 1 ? "Finalizar" : "Próxima";
+}
+
+function nextQuestion() {
+  if (!answers[current]) {
+    alert("Selecione uma resposta para continuar.");
+    return;
+  }
+
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+function prevQuestion() {
+  if (current > 0) {
+    current--;
+    renderQuestion();
+  }
+}
+
+function finishQuiz() {
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("loading").classList.remove("hidden");
+
+  const phrases = [
+    "Cruzando indicadores comportamentais.",
+    "Interpretando perfil predominante.",
+    "Analisando comportamento sob pressão.",
+    "Gerando radar inicial de liderança."
+  ];
+
+  let i = 0;
+  const interval = setInterval(() => {
+    document.getElementById("loadingText").textContent = phrases[i % phrases.length];
+    i++;
+  }, 900);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    pendingResult = calculateResult();
+    showLeadForm();
+  }, 3600);
+}
+
+function calculateResult() {
+  const dimScores = {};
+  const dimMax = {};
+  const profileScores = {};
+
+  Object.keys(dimensions).forEach(d => {
+    dimScores[d] = 0;
+    dimMax[d] = 0;
+  });
+
+  Object.keys(profileInfo).forEach(p => profileScores[p] = 0);
+
+  questions.forEach((question, index) => {
+    const answer = answers[index];
+
+    Object.entries(question.dims).forEach(([dim, weight]) => {
+      dimScores[dim] += answer * weight;
+      dimMax[dim] += 5 * Math.abs(weight);
+    });
+
+    Object.entries(question.profiles).forEach(([profile, weight]) => {
+      profileScores[profile] += answer * weight;
+    });
+  });
+
+  const dimPercent = {};
+  Object.keys(dimensions).forEach(dim => {
+    dimPercent[dim] = Math.max(0, Math.round((dimScores[dim] / dimMax[dim]) * 100));
+  });
+
+  const sortedProfiles = Object.entries(profileScores).sort((a, b) => b[1] - a[1]);
+  const main = sortedProfiles[0][0];
+  const second = sortedProfiles[1][0];
+
+  const maxProfileScore = sortedProfiles[0][1];
+  const possibleMax = Math.max(...Object.values(profileScores));
+  const intensityPercent = Math.round((maxProfileScore / possibleMax) * 100);
+
+  return {
+    dimPercent,
+    profileScores,
+    main,
+    second,
+    intensityPercent,
+    insight: generateInsight(main)
+  };
+}
+
+function generateInsight(main) {
+  const insights = {
+    COMMANDER: "Você tende a assumir direção quando há pressão. Isso gera velocidade e clareza, mas pode reduzir escuta e autonomia se usado em excesso.",
+    STRATEGYK: "Você tende a enxergar riscos e consequências antes da maioria das pessoas. Sua força está na análise, mas o excesso de cautela pode atrasar avanços importantes.",
+    MENTORIX: "Você tende a liderar desenvolvendo pessoas e criando vínculos de confiança. Sua força humana é alta, mas pode haver dificuldade em confrontar quando necessário.",
+    EXECUTRON: "Você tende a transformar cobrança em resultado. Sua orientação para entrega é forte, mas pode gerar desgaste quando a equipe não acompanha seu ritmo.",
+    DIPLOMATIK: "Você tende a preservar equilíbrio e reduzir conflitos. Sua liderança gera estabilidade, mas pode atrasar decisões difíceis quando o confronto é necessário.",
+    VISIONEX: "Você tende a enxergar possibilidades antes dos demais. Sua força está na inovação, mas pode haver risco de dispersão quando há excesso de ideias.",
+    GUARDIAN: "Você tende a proteger processos, pessoas e previsibilidade. Sua força está na consistência, mas pode haver resistência a mudanças rápidas."
+  };
+
+  return insights[main] || "Seu perfil demonstra padrões de liderança que merecem análise mais aprofundada.";
+}
+
+function getIntensityLabel(percent) {
+  if (percent >= 80) return "Muito elevada";
+  if (percent >= 60) return "Elevada";
+  if (percent >= 40) return "Moderada";
+  return "Baixa";
+}
+
+function showLeadForm() {
+  document.getElementById("loading").classList.add("hidden");
+  document.getElementById("leadForm").classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function submitLeadForm() {
+  const nome = document.getElementById("leadNome").value.trim();
+  const email = document.getElementById("leadEmail").value.trim();
+  const whatsapp = document.getElementById("leadWhatsapp").value.trim();
+  const cargo = document.getElementById("leadCargo").value.trim();
+  const empresa = document.getElementById("leadEmpresa").value.trim();
+  const lgpd = document.getElementById("leadLgpd").checked;
+
+  const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  if (!nome || !emailValido || !whatsapp || !cargo || !empresa || !lgpd) {
+    document.getElementById("leadError").classList.remove("hidden");
+    return;
+  }
+
+  document.getElementById("leadError").classList.add("hidden");
+
+  leadData = {
+    nome,
+    email,
+    telefone: whatsapp,
+    cargo_funcao: cargo,
+    empresa_orgao: empresa,
+    lgpd_aceite: true,
+    lgpd_aceite_data: new Date().toISOString()
+  };
+
+  document.getElementById("leadForm").classList.add("hidden");
+  showResult(pendingResult);
+}
+
+async function saveAssessmentResult(result) {
+  const payload = {
+    nome: leadData?.nome || null,
+    email: leadData?.email || null,
+    telefone: leadData?.telefone || null,
+    cargo_funcao: leadData?.cargo_funcao || null,
+    empresa_orgao: leadData?.empresa_orgao || null,
+    lgpd_aceite: leadData?.lgpd_aceite || false,
+    lgpd_aceite_data: leadData?.lgpd_aceite_data || null,
+
+    respostas: answers,
+    dimensoes: result.dimPercent,
+    perfis: result.profileScores,
+
+    perfil_predominante: result.main,
+    perfil_complementar: result.second,
+    intensidade: getIntensityLabel(result.intensityPercent),
+    insight_inicial: result.insight,
+
+    risco_titulo: profileInfo[result.main].risk,
+    risco_texto: profileInfo[result.main].riskText,
+
+    user_agent: navigator.userAgent,
+    origem: window.location.href
+  };
+
+  const { data, error } = await supabaseClient
+    .from("assessment_responses")
+    .insert(payload)
+    .select("id")
+    .single();
+
+  if (error) {
+    console.error("Erro ao salvar no Supabase:", error);
+    return null;
+  }
+
+  console.log("Resultado salvo com sucesso:", data.id);
+  return data.id;
+}
+
+async function showResult(result) {
+  const savedId = await saveAssessmentResult(result);
+
+  document.getElementById("result").classList.remove("hidden");
+
+  const mainInfo = profileInfo[result.main];
+  const secondInfo = profileInfo[result.second];
+
+  document.getElementById("mainProfile").textContent = mainInfo.name;
+  document.getElementById("mainProfileDesc").textContent = mainInfo.desc;
+  document.getElementById("secondProfile").textContent = secondInfo.name;
+  document.getElementById("secondProfileDesc").textContent = secondInfo.desc;
+  document.getElementById("intensity").textContent = getIntensityLabel(result.intensityPercent);
+  document.getElementById("riskTitle").textContent = mainInfo.risk;
+  document.getElementById("riskText").textContent = mainInfo.riskText;
+  document.getElementById("insightText").textContent = result.insight;
+
+  const radar = document.getElementById("radar");
+  radar.innerHTML = "";
+
+  Object.entries(result.dimPercent).forEach(([dim, percent]) => {
+    const row = document.createElement("div");
+    row.className = "dimension";
+    row.innerHTML = `
+      <span>${dimensions[dim]}</span>
+      <div class="dim-bar"><span style="width:${percent}%"></span></div>
+      <strong>${percent}%</strong>
+    `;
+    radar.appendChild(row);
+  });
+
+  const ctaBox = document.querySelector(".cta-box");
+
+  if (savedId) {
+    ctaBox.innerHTML = `
+      <h3>Seu relatório completo revela o que este resultado ainda não mostra.</h3>
+      <p>
+        A análise executiva aprofunda comportamento sob pressão, pontos cegos,
+        estilo de comunicação, impacto na equipe e plano de evolução.
+      </p>
+      <a class="btn" href="relatorio-executivo.html?id=${savedId}" target="_blank">
+        Acessar Relatório Executivo
+      </a>
+    `;
+  } else {
+    ctaBox.innerHTML = `
+      <h3>Resultado gerado, mas houve falha ao salvar o registro.</h3>
+      <p>
+        Verifique a conexão com o Supabase antes de acessar o relatório executivo.
+      </p>
+    `;
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>

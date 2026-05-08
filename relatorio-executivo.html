@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeaderK 360 | Relatório Executivo</title>
+
+  <style>
+    :root {
+      --bg: #05070d;
+      --navy: #07111f;
+      --card: rgba(255,255,255,.055);
+      --line: rgba(255,255,255,.13);
+      --gold: #c8a96b;
+      --gold2: #efd58a;
+      --blue: #3ba7ff;
+      --text: #f5f7fa;
+      --muted: #b8c1d1;
+      --soft: rgba(200,169,107,.11);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(59,167,255,.14), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(200,169,107,.16), transparent 32%),
+        linear-gradient(180deg, #04060b, #07111f 45%, #04060b);
+      line-height: 1.65;
+    }
+
+    .page {
+      width: min(1180px, 94%);
+      margin: 0 auto;
+      padding: 54px 0;
+    }
+
+    .cover {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 30px 0;
+    }
+
+    .cover img {
+      width: min(820px, 100%);
+      border-radius: 28px;
+      box-shadow: 0 40px 120px rgba(0,0,0,.7);
+      border: 1px solid rgba(200,169,107,.28);
+    }
+
+    .section {
+      position: relative;
+      margin: 42px 0;
+      padding: 54px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025)),
+        radial-gradient(circle at top right, rgba(200,169,107,.12), transparent 36%);
+      box-shadow: 0 30px 90px rgba(0,0,0,.42);
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("logo-leaderk360_full.png") center / 560px no-repeat;
+      opacity: .035;
+      pointer-events: none;
+    }
+
+    .section > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .kicker {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(200,169,107,.4);
+      background: rgba(200,169,107,.08);
+      color: var(--gold2);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 22px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.08;
+      letter-spacing: -1.1px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 70px);
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: clamp(30px, 4vw, 50px);
+      margin-bottom: 22px;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 17px;
+      margin-bottom: 18px;
+      text-align: justify;
+    }
+
+    .gold {
+      color: var(--gold2);
+    }
+
+    .divider {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, rgba(200,169,107,.7), transparent);
+      margin: 32px 0;
+    }
+
+    .executive-sheet {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .sheet-item {
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+    }
+
+    .sheet-item span {
+      display: block;
+      color: var(--gold2);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .sheet-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .summary-card {
+      min-height: 190px;
+      padding: 24px;
+      border-radius: 26px;
+      border: 1px solid rgba(200,169,107,.24);
+      background:
+        radial-gradient(circle at top, rgba(200,169,107,.13), transparent 45%),
+        rgba(255,255,255,.04);
+    }
+
+    .summary-card strong {
+      display: block;
+      color: var(--gold2);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 14px;
+    }
+
+    .summary-card p {
+      font-size: 15.5px;
+      margin: 0;
+    }
+
+    .executive-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .profile-card {
+      padding: 32px;
+      border-radius: 28px;
+      border: 1px solid rgba(200,169,107,.24);
+      background:
+        linear-gradient(180deg, rgba(200,169,107,.11), rgba(255,255,255,.03));
+    }
+
+    .profile-name {
+      font-size: clamp(36px, 5vw, 66px);
+      font-weight: 900;
+      color: var(--gold2);
+      letter-spacing: -2px;
+      line-height: .95;
+      margin-bottom: 14px;
+    }
+
+    .profile-sub {
+      color: var(--text);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .metrics {
+      display: grid;
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .metric {
+      display: grid;
+      grid-template-columns: 210px 1fr 54px;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .bar {
+      height: 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--gold2));
+    }
+
+    .radar-circle {
+      margin: 34px auto 4px;
+      width: min(520px, 100%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,107,.24);
+      background:
+        radial-gradient(circle, rgba(200,169,107,.10) 0 2px, transparent 3px),
+        conic-gradient(from 180deg, rgba(59,167,255,.24), rgba(200,169,107,.28), rgba(59,167,255,.24));
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 70px rgba(0,0,0,.42);
+    }
+
+    .radar-inner {
+      width: 72%;
+      height: 72%;
+      border-radius: 50%;
+      background: rgba(5,7,13,.86);
+      border: 1px solid rgba(255,255,255,.12);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .radar-inner b {
+      display: block;
+      font-size: clamp(34px, 5vw, 64px);
+      color: var(--gold2);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .radar-inner span {
+      color: var(--muted);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .cards-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .info-card {
+      padding: 26px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+
+    .info-card strong {
+      display: block;
+      color: var(--gold2);
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 12px;
+    }
+
+    .info-card p {
+      font-size: 15.5px;
+      margin-bottom: 0;
+    }
+
+    .quote {
+      margin-top: 26px;
+      padding: 32px;
+      border-left: 4px solid var(--gold2);
+      border-radius: 22px;
+      background: rgba(200,169,107,.08);
+    }
+
+    .quote p {
+      color: var(--text);
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .index-item {
+      text-align: center;
+      padding: 26px 16px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+
+    .index-item b {
+      display: block;
+      font-size: 38px;
+      color: var(--gold2);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .index-item span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .timeline-number {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      color: #07101d;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .signature {
+      margin-top: 42px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--gold2);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin: 50px 0 20px;
+    }
+
+    @media print {
+      body {
+        background: #05070d;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      .section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        box-shadow: none;
+      }
+
+      .cover {
+        min-height: 100vh;
+        page-break-after: always;
+      }
+
+      .cover img {
+        width: 100%;
+        max-width: none;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .section {
+        padding: 34px 22px;
+      }
+
+      .executive-grid,
+      .cards-3,
+      .cards-2,
+      .index-grid,
+      .summary-grid,
+      .executive-sheet {
+        grid-template-columns: 1fr;
+      }
+
+      .metric {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+
+      .signature {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="page">
+
+  <section class="cover">
+    <img src="Capa_rel.png" alt="Capa do Relatório Executivo LeaderK 360">
+  </section>
+
+  <section class="section">
+    <span class="kicker">Ficha Executiva</span>
+    <h1>Relatório Executivo Personalizado</h1>
+
+    <p>
+      Este documento consolida a leitura estratégica do seu perfil de liderança a partir das respostas fornecidas no LeaderK 360. A análise combina interpretação comportamental, intensidade de perfil, indicadores multidimensionais e padrões prováveis de atuação em ambientes de pressão, responsabilidade e influência.
+    </p>
+
+    <div class="executive-sheet">
+      <div class="sheet-item"><span>Nome</span><strong id="nomeAvaliado">-</strong></div>
+      <div class="sheet-item"><span>Cargo/Função</span><strong id="cargoFuncao">-</strong></div>
+      <div class="sheet-item"><span>Empresa/Órgão</span><strong id="empresaOrgao">-</strong></div>
+      <div class="sheet-item"><span>Data da Avaliação</span><strong id="dataAvaliacao">-</strong></div>
+      <div class="sheet-item"><span>Perfil Predominante</span><strong id="fichaPerfil">-</strong></div>
+      <div class="sheet-item"><span>Perfil Complementar</span><strong id="fichaComplementar">-</strong></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Resumo Executivo</span>
+    <h1>Uma leitura estratégica sobre sua forma de liderar.</h1>
+
+    <p id="resumoExecutivo1"></p>
+    <p id="resumoExecutivo2"></p>
+    <p>
+      O LeaderK 360 avalia sete dimensões estratégicas: influência e presença, comunicação estratégica, tomada de decisão, liderança sob pressão, gestão de pessoas, visão estratégica e execução e controle. O cruzamento dessas dimensões permite identificar não apenas seu perfil predominante, mas também os pontos de força, os pontos cegos e os comportamentos que podem ampliar ou limitar sua liderança.
+    </p>
+
+    <div class="quote">
+      <p id="frasePerfil">“O verdadeiro diferencial não está apenas em liderar. Está em compreender o impacto que sua liderança produz.”</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Painel Executivo</span>
+    <h2>Sumário visual da análise</h2>
+
+    <div class="summary-grid">
+      <div class="summary-card"><strong>Força Central</strong><p id="sumForca"></p></div>
+      <div class="summary-card"><strong>Risco Oculto</strong><p id="sumRisco"></p></div>
+      <div class="summary-card"><strong>Estilo sob Pressão</strong><p id="sumPressao"></p></div>
+      <div class="summary-card"><strong>Prioridade de Evolução</strong><p id="sumEvolucao"></p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Identificação do Perfil</span>
+
+    <div class="executive-grid">
+      <div class="profile-card">
+        <h2>Perfil Predominante</h2>
+        <div class="profile-name" id="perfilPredominante">-</div>
+        <div class="profile-sub" id="perfilSubtitulo">-</div>
+        <p id="perfilDescricao"></p>
+      </div>
+
+      <div class="profile-card">
+        <h2>Perfil Complementar</h2>
+        <div class="profile-name" id="perfilComplementar">-</div>
+        <div class="profile-sub">Influência secundária de comportamento</div>
+        <p id="perfilComplementarDescricao"></p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p id="assinaturaComportamental"></p>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Radar das 7 Dimensões</span>
+    <h2>Mapa estratégico da liderança</h2>
+
+    <p>
+      O radar das sete dimensões apresenta a intensidade relativa dos principais eixos de liderança avaliados. Percentuais elevados indicam forte expressão comportamental naquela dimensão. Percentuais moderados indicam presença situacional ou dependente do contexto. Percentuais baixos sugerem áreas com menor expressão ou oportunidade de desenvolvimento.
+    </p>
+
+    <div class="radar-circle">
+      <div class="radar-inner">
+        <b id="mediaGeral">0%</b>
+        <span>Índice médio das dimensões</span>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><span>Influência e Presença</span><div class="bar"><span data-dim="D1" style="width:0%"></span></div><strong data-value="D1">0%</strong></div>
+      <div class="metric"><span>Comunicação Estratégica</span><div class="bar"><span data-dim="D2" style="width:0%"></span></div><strong data-value="D2">0%</strong></div>
+      <div class="metric"><span>Tomada de Decisão</span><div class="bar"><span data-dim="D3" style="width:0%"></span></div><strong data-value="D3">0%</strong></div>
+      <div class="metric"><span>Liderança sob Pressão</span><div class="bar"><span data-dim="D4" style="width:0%"></span></div><strong data-value="D4">0%</strong></div>
+      <div class="metric"><span>Gestão de Pessoas</span><div class="bar"><span data-dim="D5" style="width:0%"></span></div><strong data-value="D5">0%</strong></div>
+      <div class="metric"><span>Visão Estratégica</span><div class="bar"><span data-dim="D6" style="width:0%"></span></div><strong data-value="D6">0%</strong></div>
+      <div class="metric"><span>Execução e Controle</span><div class="bar"><span data-dim="D7" style="width:0%"></span></div><strong data-value="D7">0%</strong></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Forças Centrais</span>
+    <h2>Competências que sustentam sua liderança</h2>
+
+    <div class="cards-3" id="forcasCentrais"></div>
+
+    <div class="divider"></div>
+
+    <p id="forcasConclusao"></p>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Pontos Cegos</span>
+    <h2>O que pode limitar sua influência</h2>
+
+    <p>
+      Pontos cegos não representam defeitos absolutos. Eles são manifestações excessivas de forças naturais. Em muitos casos, aquilo que torna um líder eficiente em determinado cenário também pode gerar resistência, desgaste ou distanciamento quando utilizado sem adaptação ao contexto humano.
+    </p>
+
+    <div class="cards-2" id="pontosCegos"></div>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Comportamento sob Pressão</span>
+    <h2>Como sua liderança tende a reagir em cenários críticos</h2>
+
+    <p id="pressaoTexto1"></p>
+    <p id="pressaoTexto2"></p>
+
+    <div class="index-grid">
+      <div class="index-item"><b data-value="D3">0%</b><span>Decisão</span></div>
+      <div class="index-item"><b data-value="D4">0%</b><span>Pressão</span></div>
+      <div class="index-item"><b data-value="D7">0%</b><span>Execução</span></div>
+      <div class="index-item"><b data-value="D5">0%</b><span>Gestão Humana</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Impacto na Equipe</span>
+    <h2>Como sua liderança pode ser percebida pelas pessoas</h2>
+
+    <p id="impactoTexto1"></p>
+    <p id="impactoTexto2"></p>
+
+    <div class="quote">
+      <p id="impactoFrase"></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Plano de Evolução</span>
+    <h2>Direcionamentos práticos para elevar sua liderança</h2>
+
+    <div class="timeline" id="planoEvolucao"></div>
+  </section>
+
+  <section class="section">
+    <span class="kicker">Conclusão Estratégica</span>
+    <h2>Sua liderança deixa padrões. A evolução começa quando eles se tornam visíveis.</h2>
+
+    <p id="conclusao1"></p>
+    <p id="conclusao2"></p>
+    <p id="conclusao3"></p>
+
+    <div class="signature">
+      <div>
+        <strong class="gold">LeaderK 360</strong><br>
+        Assessment Estratégico de Liderança
+      </div>
+      <div>
+        Relatório Executivo Confidencial<br>
+        Documento gerado para fins de autoconhecimento e desenvolvimento executivo.
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    Liderança é uma escolha. Excelência é um hábito.
+  </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://qdgljsbntpsjulfwxolf.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY";
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const profileTexts = {
+  COMMANDER: {
+    titulo: "O Líder de Decisão e Autoridade",
+    descricao: "O perfil Commander indica uma liderança orientada à decisão, autoridade, ação rápida e controle em cenários de pressão. Trata-se de um padrão comum em líderes que assumem responsabilidade quando o ambiente exige direção, firmeza e clareza.",
+    frase: "“Direção sem consciência pode virar imposição. Autoridade madura transforma comando em segurança.”",
+    resumo1: "Seu resultado aponta uma liderança marcada por presença, decisão e capacidade de assumir responsabilidade quando o ambiente exige clareza. Esse perfil tende a ganhar relevância em cenários de pressão, crise, baixa organização ou ausência de direção.",
+    resumo2: "O desafio estratégico consiste em equilibrar firmeza com escuta, velocidade com participação e controle com autonomia. A maturidade desse perfil aparece quando a autoridade deixa de depender apenas da força decisória e passa a gerar confiança sustentável.",
+    forcaResumo: "Direção, coragem decisória e capacidade de organizar ambientes sob pressão.",
+    riscoResumo: "Centralização excessiva e redução da escuta quando a urgência aumenta.",
+    pressaoResumo: "Tende a assumir controle, acelerar decisões e reduzir incerteza.",
+    evolucaoResumo: "Delegar com critério e preservar escuta mesmo em cenários críticos.",
+    complementar: "Quando aparece como influência secundária, o Commander adiciona firmeza, coragem decisória e capacidade de direção ao perfil predominante.",
+    assinatura: "A assinatura comportamental Commander revela uma liderança que tende a assumir o centro da decisão quando há incerteza. Seu impacto cresce quando essa força é combinada com escuta, delegação e leitura emocional da equipe.",
+    forcas: [
+      ["Decisão sob pressão", "Você tende a assumir responsabilidade quando o ambiente exige velocidade, direção e posicionamento firme."],
+      ["Clareza de comando", "Sua liderança transmite direção objetiva e senso imediato de prioridade."],
+      ["Energia de execução", "Você valoriza avanço prático, responsabilidade e resposta rápida diante de problemas."]
+    ],
+    cegos: [
+      ["Centralização excessiva", "Pode haver tendência a confiar mais no próprio julgamento do que na capacidade da equipe."],
+      ["Escuta reduzida sob tensão", "Quando a urgência aumenta, sua comunicação pode parecer menos receptiva."],
+      ["Impaciência com falhas", "A orientação para resultado pode reduzir tolerância a erros e justificativas frágeis."],
+      ["Sobrecarga pessoal", "O senso de responsabilidade pode levar você a assumir mais do que deveria."]
+    ],
+    pressao1: "Sob pressão, o perfil Commander tende a buscar controle, organização e decisão. Esse movimento pode ser funcional em momentos de crise, especialmente quando o ambiente está confuso ou a equipe está insegura.",
+    pressao2: "O ponto de atenção está em diferenciar comando de centralização. A liderança se torna mais madura quando mantém direção sem retirar da equipe sua autonomia e responsabilidade.",
+    impacto1: "A equipe tende a perceber sua liderança como firme, objetiva e direcionadora. Em cenários de dúvida, sua presença pode gerar segurança e foco.",
+    impacto2: "Ao mesmo tempo, pessoas com maior necessidade de escuta e participação podem sentir pressão diante de um estilo mais direto.",
+    impactoFrase: "Alta performance sustentável exige mais do que cobrança. Exige clareza, confiança e maturidade na forma de conduzir pessoas.",
+    evolucao: [
+      ["Delegar com critério", "Estabeleça critérios claros de entrega, prazos, limites de decisão e pontos de acompanhamento."],
+      ["Separar urgência real de urgência emocional", "Antes de assumir o controle, avalie se a equipe pode resolver com orientação."],
+      ["Ampliar escuta antes da decisão final", "Crie espaço breve para coleta de percepções em decisões relevantes."],
+      ["Transformar cobrança em desenvolvimento", "Diferencie falta de competência, falta de clareza, falta de recurso e falta de compromisso."]
+    ],
+    conclusao: [
+      "O perfil identificado demonstra forte capacidade de direção, decisão e execução.",
+      "O principal desafio evolutivo está em calibrar a intensidade do comando para que ele não se transforme em centralização.",
+      "Liderar em alto nível não significa abandonar sua natureza predominante, mas aprender a utilizá-la com precisão."
+    ]
+  },
+
+  STRATEGYK: {
+    titulo: "O Líder de Inteligência Estratégica",
+    descricao: "O perfil Strategyk indica uma liderança analítica, racional e orientada à antecipação de cenários. Trata-se de um padrão comum em líderes que avaliam riscos, consequências e caminhos sustentáveis antes de agir.",
+    frase: "“Estratégia é enxergar antes. Maturidade é saber quando a análise já é suficiente para avançar.”",
+    resumo1: "Seu resultado aponta uma liderança guiada por análise, leitura de cenário e busca por decisões sustentáveis. Esse perfil tende a atuar melhor quando consegue compreender variáveis, riscos e consequências antes de se posicionar.",
+    resumo2: "O desafio estratégico está em evitar que a profundidade analítica se transforme em lentidão decisória. A maturidade desse perfil aparece quando a visão estratégica se converte em ação clara, comunicação acessível e execução coordenada.",
+    forcaResumo: "Antecipação de riscos, pensamento sistêmico e consistência decisória.",
+    riscoResumo: "Excesso de análise, distanciamento emocional e demora para avançar.",
+    pressaoResumo: "Tende a buscar dados, cenários e previsibilidade antes de decidir.",
+    evolucaoResumo: "Transformar análise em decisão dentro de janelas adequadas de tempo.",
+    complementar: "Quando aparece como influência secundária, o Strategyk adiciona profundidade analítica, prudência e visão de consequência ao perfil predominante.",
+    assinatura: "A assinatura comportamental Strategyk revela uma liderança orientada por inteligência, previsão e racionalidade. Seu impacto cresce quando a análise se traduz em comunicação simples, timing decisório e ação concreta.",
+    forcas: [
+      ["Leitura de cenário", "Você tende a perceber riscos, variáveis e consequências antes da maioria."],
+      ["Decisão racional", "Sua liderança busca consistência e reduz decisões impulsivas."],
+      ["Visão sistêmica", "Você conecta problemas imediatos a impactos futuros e estruturais."]
+    ],
+    cegos: [
+      ["Excesso de análise", "A busca por segurança racional pode atrasar movimentos necessários."],
+      ["Frieza percebida", "A equipe pode interpretar objetividade analítica como distância emocional."],
+      ["Baixa tolerância à improvisação", "Ambientes desorganizados podem gerar desgaste pela falta de previsibilidade."],
+      ["Comunicação complexa", "Sua análise pode ser sofisticada demais para parte da equipe."]
+    ],
+    pressao1: "Sob pressão, o Strategyk tende a buscar contexto, dados e leitura de risco antes de agir. Esse padrão reduz decisões precipitadas e melhora a qualidade das escolhas.",
+    pressao2: "O ponto de atenção está no tempo. Em alguns cenários, uma decisão suficientemente boa tomada no momento certo supera uma decisão perfeita tomada tarde demais.",
+    impacto1: "A equipe tende a perceber sua liderança como racional, consistente e tecnicamente confiável.",
+    impacto2: "Por outro lado, pode sentir falta de calor relacional, incentivo emocional ou direcionamento mais simples em momentos de incerteza.",
+    impactoFrase: "Estratégia só gera valor quando sai da análise e chega à ação compreensível para a equipe.",
+    evolucao: [
+      ["Definir prazos para análise", "Estabeleça limites objetivos para encerrar diagnóstico e iniciar ação."],
+      ["Traduzir complexidade", "Comunique decisões estratégicas em linguagem clara e operacional."],
+      ["Assumir riscos calculados", "Nem toda incerteza precisa ser eliminada antes de avançar."],
+      ["Aproximar análise de pessoas", "Combine racionalidade com escuta emocional e presença junto à equipe."]
+    ],
+    conclusao: [
+      "O perfil identificado demonstra forte capacidade de análise, antecipação e leitura estratégica.",
+      "O principal desafio evolutivo está em evitar que a profundidade da análise reduza velocidade decisória.",
+      "Liderar em alto nível exige transformar inteligência estratégica em direção clara, simples e executável."
+    ]
+  },
+
+  MENTORIX: {
+    titulo: "O Líder de Desenvolvimento Humano",
+    descricao: "O perfil Mentorix indica uma liderança voltada ao crescimento de pessoas, escuta, confiança e desenvolvimento da equipe. Trata-se de um padrão comum em líderes que constroem resultado por meio de vínculo e evolução humana.",
+    frase: "“Desenvolver pessoas é multiplicar liderança. O limite surge quando acolher substitui confrontar.”",
+    resumo1: "Seu resultado aponta uma liderança orientada ao desenvolvimento humano, construção de confiança e fortalecimento de pessoas. Esse perfil tende a gerar ambientes de segurança, escuta e crescimento progressivo.",
+    resumo2: "O desafio estratégico está em equilibrar acolhimento com firmeza. A maturidade desse perfil aparece quando o desenvolvimento humano não impede conversas difíceis, cobranças claras e decisões necessárias.",
+    forcaResumo: "Desenvolvimento de pessoas, escuta qualificada e construção de confiança.",
+    riscoResumo: "Excesso de tolerância, dificuldade de confronto e desgaste emocional.",
+    pressaoResumo: "Tende a proteger pessoas e preservar vínculos mesmo em tensão.",
+    evolucaoResumo: "Fortalecer conversas difíceis e cobrança objetiva sem perder humanidade.",
+    complementar: "Quando aparece como influência secundária, o Mentorix adiciona sensibilidade humana, escuta e capacidade de desenvolvimento ao perfil predominante.",
+    assinatura: "A assinatura comportamental Mentorix revela uma liderança que influencia por confiança, vínculo e crescimento de pessoas. Seu impacto cresce quando humanidade e responsabilidade caminham juntas.",
+    forcas: [
+      ["Desenvolvimento humano", "Você tende a investir na evolução de pessoas e talentos."],
+      ["Escuta e confiança", "Sua liderança cria abertura para diálogo e aprendizado."],
+      ["Clima de segurança", "Você favorece ambientes nos quais as pessoas se sentem consideradas."]
+    ],
+    cegos: [
+      ["Excesso de tolerância", "Pode haver demora para confrontar comportamentos inadequados."],
+      ["Desgaste emocional", "A absorção constante de demandas humanas pode gerar sobrecarga."],
+      ["Dificuldade de cobrança", "A preservação do vínculo pode enfraquecer conversas objetivas."],
+      ["Dependência da equipe", "Pessoas podem se apoiar demais na sua orientação."]
+    ],
+    pressao1: "Sob pressão, o Mentorix tende a proteger pessoas, preservar vínculos e buscar compreensão antes da cobrança. Isso fortalece confiança e reduz medo.",
+    pressao2: "O ponto de atenção está em não permitir que empatia se transforme em permissividade. Liderança humana também exige limites, clareza e responsabilização.",
+    impacto1: "A equipe tende a perceber sua liderança como próxima, acessível e desenvolvedora.",
+    impacto2: "Ao mesmo tempo, profissionais que precisam de limites claros podem confundir acolhimento com ausência de cobrança.",
+    impactoFrase: "Cuidar de pessoas não elimina a necessidade de responsabilizar comportamentos e resultados.",
+    evolucao: [
+      ["Praticar conversas difíceis", "Aborde problemas cedo, com respeito e objetividade."],
+      ["Definir limites de apoio", "Desenvolver não significa resolver tudo pela equipe."],
+      ["Cobrar com clareza", "Associe confiança a metas, combinados e consequências."],
+      ["Proteger sua energia", "Evite absorver emocionalmente todas as tensões do grupo."]
+    ],
+    conclusao: [
+      "O perfil identificado demonstra forte capacidade de desenvolver pessoas e construir confiança.",
+      "O principal desafio evolutivo está em equilibrar acolhimento com firmeza decisória.",
+      "Liderar em alto nível exige cuidar das pessoas sem abandonar responsabilidade, limites e desempenho."
+    ]
+  },
+
+  EXECUTRON: {
+    titulo: "O Líder de Performance e Entrega",
+    descricao: "O perfil Executron indica uma liderança orientada à execução, produtividade, cobrança e resultado concreto. Trata-se de um padrão comum em líderes que valorizam ritmo, entrega e responsabilidade operacional.",
+    frase: "“Entrega valida discurso. Sustentabilidade valida liderança.”",
+    resumo1: "Seu resultado aponta uma liderança orientada à performance, metas e concretização. Esse perfil tende a transformar planejamento em execução e discurso em resultado mensurável.",
+    resumo2: "O desafio estratégico está em sustentar desempenho sem gerar desgaste excessivo. A maturidade desse perfil aparece quando cobrança, método e ritmo são equilibrados com desenvolvimento humano.",
+    forcaResumo: "Execução, produtividade, ritmo e foco em resultados concretos.",
+    riscoResumo: "Pressão excessiva, impaciência e desgaste da equipe.",
+    pressaoResumo: "Tende a acelerar entregas, corrigir desvios e cobrar resposta imediata.",
+    evolucaoResumo: "Equilibrar cobrança com desenvolvimento, escuta e sustentabilidade.",
+    complementar: "Quando aparece como influência secundária, o Executron adiciona ritmo, objetividade e orientação para entrega ao perfil predominante.",
+    assinatura: "A assinatura comportamental Executron revela uma liderança orientada à entrega. Seu impacto cresce quando performance é acompanhada de clareza, método e cuidado com a energia da equipe.",
+    forcas: [
+      ["Foco em entrega", "Você tende a transformar intenção em resultado prático."],
+      ["Disciplina operacional", "Sua liderança valoriza método, acompanhamento e responsabilidade."],
+      ["Correção de desvios", "Você percebe rapidamente atrasos, falhas e queda de ritmo."]
+    ],
+    cegos: [
+      ["Impaciência", "Pode haver baixa tolerância a ritmos diferentes do seu."],
+      ["Desgaste da equipe", "A intensidade da cobrança pode gerar pressão emocional."],
+      ["Pouco espaço para aprendizado", "Erros podem ser tratados como falhas antes de serem compreendidos."],
+      ["Redução da escuta", "A urgência por entrega pode diminuir abertura para percepções da equipe."]
+    ],
+    pressao1: "Sob pressão, o Executron tende a acelerar, cobrar, organizar tarefas e exigir entregas objetivas. Esse padrão é valioso em ambientes de baixa produtividade.",
+    pressao2: "O ponto de atenção está na sustentabilidade. Resultados obtidos por pressão contínua podem perder força se a equipe não for desenvolvida junto com a cobrança.",
+    impacto1: "A equipe tende a perceber sua liderança como produtiva, exigente e orientada a metas.",
+    impacto2: "Ao mesmo tempo, pode sentir pressão elevada se a cobrança não vier acompanhada de clareza, suporte e reconhecimento.",
+    impactoFrase: "Performance sustentável nasce quando entrega e desenvolvimento caminham juntos.",
+    evolucao: [
+      ["Diferenciar erro de negligência", "Nem toda falha é falta de compromisso; investigue a causa."],
+      ["Criar rituais de acompanhamento", "Substitua cobranças reativas por check-ins estruturados."],
+      ["Reconhecer progresso", "Equipes de alta performance precisam também perceber avanço."],
+      ["Medir sustentabilidade", "Observe sinais de fadiga, queda de engajamento e resistência silenciosa."]
+    ],
+    conclusao: [
+      "O perfil identificado demonstra forte capacidade de transformar objetivos em entrega.",
+      "O principal desafio evolutivo está em evitar que a cobrança reduza engajamento e segurança psicológica.",
+      "Liderar em alto nível exige produzir resultados sem consumir a capacidade humana que sustenta esses resultados."
+    ]
+  },
+
+  DIPLOMATIK: {
+    titulo: "O Líder de Equilíbrio e Mediação",
+    descricao: "O perfil Diplomatik indica uma liderança relacional, equilibrada e voltada à mediação de conflitos. Trata-se de um padrão comum em líderes que preservam estabilidade, harmonia e alinhamento humano.",
+    frase: "“Equilíbrio sustenta ambientes. Decisão sustenta avanços.”",
+    resumo1: "Seu resultado aponta uma liderança orientada à mediação, estabilidade relacional e preservação de equilíbrio. Esse perfil tende a reduzir conflitos, aproximar pessoas e criar ambientes de cooperação.",
+    resumo2: "O desafio estratégico está em não permitir que a busca por harmonia adie decisões necessárias. A maturidade desse perfil aparece quando equilíbrio e firmeza coexistem.",
+    forcaResumo: "Mediação, equilíbrio emocional e capacidade de alinhar pessoas.",
+    riscoResumo: "Evitar confrontos, adiar decisões difíceis e excesso de cautela.",
+    pressaoResumo: "Tende a preservar harmonia e reduzir tensão antes de decidir.",
+    evolucaoResumo: "Assumir conversas difíceis sem perder equilíbrio relacional.",
+    complementar: "Quando aparece como influência secundária, o Diplomatik adiciona equilíbrio, escuta e capacidade de mediação ao perfil predominante.",
+    assinatura: "A assinatura comportamental Diplomatik revela uma liderança que influencia pela estabilidade relacional. Seu impacto cresce quando a harmonia não impede posicionamento claro.",
+    forcas: [
+      ["Mediação de conflitos", "Você tende a reduzir tensões e aproximar perspectivas divergentes."],
+      ["Equilíbrio emocional", "Sua liderança preserva estabilidade em ambientes sensíveis."],
+      ["Alinhamento humano", "Você favorece cooperação, diálogo e entendimento coletivo."]
+    ],
+    cegos: [
+      ["Evitar confronto", "Pode haver tendência a postergar conversas desconfortáveis."],
+      ["Decisão tardia", "A busca por consenso pode atrasar movimentos necessários."],
+      ["Excesso de cautela", "Ambientes críticos podem exigir mais firmeza do que conciliação."],
+      ["Ambiguidade", "A tentativa de agradar lados distintos pode enfraquecer a clareza."]
+    ],
+    pressao1: "Sob pressão, o Diplomatik tende a reduzir tensão, preservar vínculos e buscar equilíbrio antes de decidir. Isso protege o ambiente emocional.",
+    pressao2: "O ponto de atenção está em não transformar equilíbrio em adiamento. Conflitos não resolvidos tendem a retornar com maior intensidade.",
+    impacto1: "A equipe tende a perceber sua liderança como equilibrada, acessível e justa.",
+    impacto2: "Ao mesmo tempo, pode esperar mais firmeza quando decisões difíceis precisam ser tomadas.",
+    impactoFrase: "Harmonia sem decisão pode preservar o ambiente, mas atrasar a evolução.",
+    evolucao: [
+      ["Nomear conflitos", "Trate tensões com clareza antes que se tornem padrões silenciosos."],
+      ["Decidir sem unanimidade", "Nem toda boa decisão terá aprovação plena."],
+      ["Estabelecer limites", "Equilíbrio também exige fronteiras e consequências."],
+      ["Comunicar posição final", "Depois de ouvir, assuma claramente a direção escolhida."]
+    ],
+    conclusao: [
+      "O perfil identificado demonstra forte capacidade de equilibrar relações e mediar conflitos.",
+      "O principal desafio evolutivo está em decidir com firmeza mesmo quando há desconforto relacional.",
+      "Liderar em alto nível exige preservar o ambiente sem perder direção."
+    ]
+  },
+
+  VISIONEX: {
+    titulo: "O Líder de Transformação e Futuro",
+    descricao: "O perfil Visionex indica uma liderança criativa, inovadora e orientada à transformação. Trata-se de um padrão comum em líderes que enxergam oportunidades, mudanças e possibilidades antes da maioria.",
+    frase: "“Ver o futuro é potência. Construí-lo exige método.”",
+    resumo1: "Seu resultado aponta uma liderança voltada à inovação, mudança e leitura de oportunidades. Esse perfil tende a perceber possibilidades antes dos demais e a desafiar modelos estabelecidos.",
+    resumo2: "O desafio estratégico está em transformar visão em execução consistente. A maturidade desse perfil aparece quando criatividade encontra método, prioridade e sustentação operacional.",
+    forcaResumo: "Inovação, visão de futuro e capacidade de enxergar oportunidades.",
+    riscoResumo: "Dispersão, excesso de ideias e dificuldade de consolidação.",
+    pressaoResumo: "Tende a buscar alternativas novas e reposicionar o problema.",
+    evolucaoResumo: "Priorizar ideias, criar método e sustentar execução até o fim.",
+    complementar: "Quando aparece como influência secundária, o Visionex adiciona inovação, visão de futuro e abertura à transformação ao perfil predominante.",
+    assinatura: "A assinatura comportamental Visionex revela uma liderança orientada ao futuro. Seu impacto cresce quando a capacidade de imaginar se conecta a disciplina de executar.",
+    forcas: [
+      ["Visão de oportunidade", "Você tende a enxergar caminhos onde outros veem obstáculos."],
+      ["Inovação", "Sua liderança questiona padrões antigos e propõe alternativas."],
+      ["Energia transformadora", "Você mobiliza pessoas para novas possibilidades."]
+    ],
+    cegos: [
+      ["Dispersão", "Muitas ideias podem competir entre si e reduzir foco."],
+      ["Baixa consolidação", "Pode haver dificuldade em finalizar antes de iniciar nova frente."],
+      ["Impaciência com processos", "Estruturas tradicionais podem parecer lentas demais."],
+      ["Comunicação abstrata", "A visão pode precisar de tradução operacional para a equipe."]
+    ],
+    pressao1: "Sob pressão, o Visionex tende a buscar alternativas, reposicionar problemas e imaginar saídas não convencionais. Isso amplia possibilidades em cenários bloqueados.",
+    pressao2: "O ponto de atenção está em transformar possibilidades em rota. Sem prioridade e método, inovação pode se converter em dispersão.",
+    impacto1: "A equipe tende a perceber sua liderança como criativa, inspiradora e aberta ao novo.",
+    impacto2: "Ao mesmo tempo, pode sentir falta de previsibilidade se mudanças ocorrerem sem estrutura clara.",
+    impactoFrase: "Visão mobiliza. Método sustenta. Execução confirma.",
+    evolucao: [
+      ["Priorizar ideias", "Escolha poucas iniciativas críticas e sustente até a conclusão."],
+      ["Criar marcos de execução", "Transforme visão em etapas, prazos e responsáveis."],
+      ["Traduzir futuro em presente", "Explique como a visão se conecta à rotina da equipe."],
+      ["Proteger foco", "Evite abrir novas frentes antes de consolidar as essenciais."]
+    ],
+    conclusao: [
+      "O perfil identificado demonstra forte capacidade de inovação, imaginação estratégica e transformação.",
+      "O principal desafio evolutivo está em converter visão em execução disciplinada.",
+      "Liderar em alto nível exige enxergar o futuro e construir as pontes práticas para chegar até ele."
+    ]
+  },
+
+  GUARDIAN: {
+    titulo: "O Líder de Estabilidade e Segurança",
+    descricao: "O perfil Guardian indica uma liderança estável, cuidadosa e orientada à previsibilidade. Trata-se de um padrão comum em líderes que protegem processos, pessoas e consistência institucional.",
+    frase: "“Consistência protege. Evolução exige saber quando flexibilizar.”",
+    resumo1: "Seu resultado aponta uma liderança orientada à estabilidade, método e segurança operacional. Esse perfil tende a proteger processos, reduzir riscos e preservar consistência.",
+    resumo2: "O desafio estratégico está em evitar que prudência se transforme em rigidez. A maturidade desse perfil aparece quando segurança e adaptação caminham juntas.",
+    forcaResumo: "Estabilidade, previsibilidade, método e proteção institucional.",
+    riscoResumo: "Rigidez, resistência à mudança e excesso de prudência.",
+    pressaoResumo: "Tende a organizar, proteger e buscar previsibilidade.",
+    evolucaoResumo: "Flexibilizar processos quando o contexto exigir adaptação.",
+    complementar: "Quando aparece como influência secundária, o Guardian adiciona consistência, segurança e senso de proteção ao perfil predominante.",
+    assinatura: "A assinatura comportamental Guardian revela uma liderança que sustenta estabilidade e confiança operacional. Seu impacto cresce quando segurança não bloqueia evolução.",
+    forcas: [
+      ["Consistência", "Você tende a proteger padrões, processos e previsibilidade."],
+      ["Responsabilidade", "Sua liderança demonstra cuidado com consequências e riscos."],
+      ["Organização", "Você valoriza método, continuidade e segurança operacional."]
+    ],
+    cegos: [
+      ["Resistência à mudança", "Mudanças rápidas podem ser percebidas como ameaça à estabilidade."],
+      ["Excesso de prudência", "A busca por segurança pode atrasar oportunidades."],
+      ["Rigidez processual", "Processos podem se tornar mais importantes que o objetivo final."],
+      ["Baixa tolerância ao improviso", "Ambientes fluidos podem gerar desconforto e retração."]
+    ],
+    pressao1: "Sob pressão, o Guardian tende a organizar, proteger e buscar previsibilidade. Isso reduz risco e sustenta estabilidade em ambientes sensíveis.",
+    pressao2: "O ponto de atenção está em não confundir segurança com imobilidade. Algumas situações exigem adaptação rápida mesmo sem controle total.",
+    impacto1: "A equipe tende a perceber sua liderança como confiável, estável e responsável.",
+    impacto2: "Ao mesmo tempo, pode sentir limitação quando precisa inovar, experimentar ou agir com mais autonomia.",
+    impactoFrase: "Estabilidade é força quando protege o avanço, não quando impede o movimento.",
+    evolucao: [
+      ["Flexibilizar critérios", "Defina quais processos são essenciais e quais podem ser adaptados."],
+      ["Testar mudanças controladas", "Use pilotos e ciclos curtos para reduzir risco sem bloquear inovação."],
+      ["Delegar dentro de limites claros", "Autonomia pode existir com regras, critérios e monitoramento."],
+      ["Revisar processos antigos", "Nem todo padrão que trouxe segurança continua adequado ao futuro."]
+    ],
+    conclusao: [
+      "O perfil identificado demonstra forte capacidade de proteger processos, pessoas e consistência.",
+      "O principal desafio evolutivo está em evitar que prudência se transforme em rigidez.",
+      "Liderar em alto nível exige preservar o que sustenta resultados e adaptar o que impede evolução."
+    ]
+  }
+};
+
+async function carregarRelatorio() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    alert("ID do relatório não encontrado.");
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("assessment_responses")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error || !data) {
+    console.error(error);
+    alert("Não foi possível carregar o relatório.");
+    return;
+  }
+
+  preencherRelatorio(data);
+}
+
+function preencherRelatorio(data) {
+  const perfil = data.perfil_predominante || "COMMANDER";
+  const complementar = data.perfil_complementar || "-";
+  const dimensoes = data.dimensoes || {};
+  const texto = profileTexts[perfil] || profileTexts.COMMANDER;
+  const textoComp = profileTexts[complementar];
+
+  document.getElementById("nomeAvaliado").textContent = data.nome || "-";
+  document.getElementById("cargoFuncao").textContent = data.cargo_funcao || "-";
+  document.getElementById("empresaOrgao").textContent = data.empresa_orgao || "-";
+  document.getElementById("dataAvaliacao").textContent = formatarData(data.created_at);
+  document.getElementById("fichaPerfil").textContent = perfil;
+  document.getElementById("fichaComplementar").textContent = complementar;
+
+  document.getElementById("resumoExecutivo1").textContent = texto.resumo1;
+  document.getElementById("resumoExecutivo2").textContent = texto.resumo2;
+  document.getElementById("frasePerfil").textContent = texto.frase;
+
+  document.getElementById("sumForca").textContent = texto.forcaResumo;
+  document.getElementById("sumRisco").textContent = texto.riscoResumo;
+  document.getElementById("sumPressao").textContent = texto.pressaoResumo;
+  document.getElementById("sumEvolucao").textContent = texto.evolucaoResumo;
+
+  document.getElementById("perfilPredominante").textContent = perfil;
+  document.getElementById("perfilComplementar").textContent = complementar;
+  document.getElementById("perfilSubtitulo").textContent = texto.titulo;
+  document.getElementById("perfilDescricao").textContent = texto.descricao;
+  document.getElementById("perfilComplementarDescricao").textContent = textoComp ? textoComp.complementar : "O perfil complementar representa uma influência secundária que modifica a forma como o perfil predominante se manifesta em decisões, comunicação, pressão e gestão de pessoas.";
+  document.getElementById("assinaturaComportamental").textContent = texto.assinatura;
+
+  preencherCards("forcasCentrais", texto.forcas);
+  preencherCards("pontosCegos", texto.cegos);
+
+  document.getElementById("forcasConclusao").textContent = "As forças centrais identificadas demonstram os recursos comportamentais que mais sustentam sua liderança. Quando bem calibradas, essas características ampliam influência, consistência e capacidade de gerar resultado sem perder maturidade relacional.";
+
+  document.getElementById("pressaoTexto1").textContent = texto.pressao1;
+  document.getElementById("pressaoTexto2").textContent = texto.pressao2;
+  document.getElementById("impactoTexto1").textContent = texto.impacto1;
+  document.getElementById("impactoTexto2").textContent = texto.impacto2;
+  document.getElementById("impactoFrase").textContent = texto.impactoFrase;
+
+  preencherTimeline(texto.evolucao);
+
+  document.getElementById("conclusao1").textContent = texto.conclusao[0];
+  document.getElementById("conclusao2").textContent = texto.conclusao[1];
+  document.getElementById("conclusao3").textContent = texto.conclusao[2];
+
+  atualizarBarra("D1", dimensoes.D1);
+  atualizarBarra("D2", dimensoes.D2);
+  atualizarBarra("D3", dimensoes.D3);
+  atualizarBarra("D4", dimensoes.D4);
+  atualizarBarra("D5", dimensoes.D5);
+  atualizarBarra("D6", dimensoes.D6);
+  atualizarBarra("D7", dimensoes.D7);
+
+  const valores = ["D1","D2","D3","D4","D5","D6","D7"].map(d => Number(dimensoes[d] || 0));
+  const media = Math.round(valores.reduce((a,b) => a + b, 0) / valores.length);
+  document.getElementById("mediaGeral").textContent = media + "%";
+}
+
+function preencherCards(containerId, items) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "info-card";
+    card.innerHTML = `<strong>${item[0]}</strong><p>${item[1]}</p>`;
+    container.appendChild(card);
+  });
+}
+
+function preencherTimeline(items) {
+  const container = document.getElementById("planoEvolucao");
+  container.innerHTML = "";
+
+  items.forEach((item, index) => {
+    const row = document.createElement("div");
+    row.className = "timeline-item";
+    row.innerHTML = `
+      <div class="timeline-number">${index + 1}</div>
+      <div>
+        <h3>${item[0]}</h3>
+        <p>${item[1]}</p>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function atualizarBarra(dim, valor) {
+  const bars = document.querySelectorAll(`[data-dim="${dim}"]`);
+  const numbers = document.querySelectorAll(`[data-value="${dim}"]`);
+  const percent = Number(valor || 0);
+
+  bars.forEach(bar => bar.style.width = percent + "%");
+  numbers.forEach(number => number.textContent = percent + "%");
+}
+
+function formatarData(value) {
+  if (!value) return "-";
+  return new Date(value).toLocaleDateString("pt-BR");
+}
+
+carregarRelatorio();
+</script>
+
+</body>
+</html>
