@@ -144,6 +144,12 @@
       box-shadow: 0 0 46px rgba(200,169,107,.42);
     }
 
+    .btn:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .btn.secondary {
       background: rgba(255,255,255,.05);
       color: var(--text);
@@ -593,7 +599,7 @@
         A análise executiva aprofunda comportamento sob pressão, pontos cegos,
         estilo de comunicação, impacto na equipe e plano de evolução.
       </p>
-      <button class="btn">Acessar Relatório Executivo</button>
+      <button class="btn" disabled>Aguardando geração do resultado</button>
     </div>
   </section>
 </div>
@@ -958,23 +964,60 @@ async function showResult(result) {
     ctaBox.innerHTML = `
       <h3>Seu relatório completo revela o que este resultado ainda não mostra.</h3>
       <p>
-        A análise executiva aprofunda comportamento sob pressão, pontos cegos,
-        estilo de comunicação, impacto na equipe e plano de evolução.
+        Desbloqueie sua análise executiva premium com pontos cegos, comportamento sob pressão,
+        impacto na equipe e plano estratégico de evolução.
       </p>
-      <a class="btn" href="relatorio-executivo.html?id=${savedId}" target="_blank">
-        Acessar Relatório Executivo
-      </a>
+      <button class="btn" onclick="startStripeCheckout('${savedId}', this)">
+        Desbloquear Relatório Executivo — R$ 47,00
+      </button>
     `;
   } else {
     ctaBox.innerHTML = `
       <h3>Resultado gerado, mas houve falha ao salvar o registro.</h3>
-      <p>
-        Verifique a conexão com o Supabase antes de acessar o relatório executivo.
-      </p>
+      <p>Verifique a conexão com o Supabase antes de prosseguir.</p>
     `;
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function startStripeCheckout(assessmentId, button) {
+  try {
+    button.disabled = true;
+    button.textContent = "Redirecionando para pagamento...";
+
+    const response = await fetch(
+      "https://qdgljsbntpsjulfwxolf.supabase.co/functions/v1/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_ANON_KEY
+        },
+        body: JSON.stringify({
+          assessment_id: assessmentId
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.url) {
+      console.error(data);
+      alert("Não foi possível iniciar o pagamento. Tente novamente.");
+      button.disabled = false;
+      button.textContent = "Desbloquear Relatório Executivo — R$ 47,00";
+      return;
+    }
+
+    window.location.href = data.url;
+
+  } catch (error) {
+    console.error("Erro no checkout:", error);
+    alert("Erro ao conectar com o pagamento. Tente novamente.");
+    button.disabled = false;
+    button.textContent = "Desbloquear Relatório Executivo — R$ 47,00";
+  }
 }
 </script>
 
