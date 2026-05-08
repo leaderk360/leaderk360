@@ -35,6 +35,30 @@
       line-height: 1.65;
     }
 
+    .pdf-actions {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 9999;
+}
+
+.pdf-btn {
+  border: none;
+  cursor: pointer;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #efd58a, #c8a96b);
+  color: #07101d;
+  font-weight: 900;
+  box-shadow: 0 0 34px rgba(200,169,107,.35);
+}
+
+@media print {
+  .pdf-actions {
+    display: none;
+  }
+}
+
     .page {
       width: min(1180px, 94%);
       margin: 0 auto;
@@ -482,7 +506,9 @@
 </head>
 
 <body>
-
+<div class="pdf-actions">
+  <button onclick="window.print()" class="pdf-btn">Baixar PDF</button>
+</div>
 <main class="page">
 
   <section class="cover">
@@ -496,7 +522,7 @@
     <p>
       Este documento consolida a leitura estratégica do seu perfil de liderança a partir das respostas fornecidas no LeaderK 360. A análise combina interpretação comportamental, intensidade de perfil, indicadores multidimensionais e padrões prováveis de atuação em ambientes de pressão, responsabilidade e influência.
     </p>
-
+    
     <div class="executive-sheet">
       <div class="sheet-item"><span>Nome</span><strong id="nomeAvaliado">-</strong></div>
       <div class="sheet-item"><span>Cargo/Função</span><strong id="cargoFuncao">-</strong></div>
