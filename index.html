@@ -11,15 +11,12 @@
   <style>
     :root {
       --bg: #050914;
-      --bg2: #07111f;
-      --bg3: #0b1628;
       --gold: #d6b45a;
       --gold2: #f1d27a;
       --text: #ffffff;
-      --muted: rgba(255,255,255,.72);
+      --muted: rgba(255,255,255,.74);
       --line: rgba(214,180,90,.22);
-      --card: rgba(255,255,255,.045);
-      --blue: #0f2b52;
+      --card: rgba(5,9,20,.62);
     }
 
     * {
@@ -34,8 +31,13 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
       color: var(--text);
+      background:
+        linear-gradient(rgba(3,8,18,.88), rgba(3,8,18,.94)),
+        url("reuniaolider.png");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       overflow-x: hidden;
     }
 
@@ -55,9 +57,9 @@
       left: 0;
       width: 100%;
       z-index: 999;
-      background: rgba(5,9,20,.86);
+      background: rgba(5,9,20,.90);
       backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(214,180,90,.12);
+      border-bottom: 1px solid rgba(214,180,90,.16);
     }
 
     .nav-wrap {
@@ -112,10 +114,6 @@
       font-weight: 700;
     }
 
-    nav a {
-      transition: .25s ease;
-    }
-
     nav a:hover {
       color: var(--gold);
     }
@@ -130,46 +128,52 @@
     }
 
     .hero {
-      position: relative;
       min-height: 100vh;
-      padding: 160px 8% 110px;
+      padding: 150px 8% 90px;
       display: flex;
       align-items: center;
-      background:
-        radial-gradient(circle at top right, rgba(214,180,90,.18), transparent 34%),
-        radial-gradient(circle at bottom left, rgba(38,110,180,.22), transparent 35%),
-        linear-gradient(135deg, #050914, #07111f 50%, #020611);
-      overflow: hidden;
+      position: relative;
+      background: transparent;
     }
 
     .hero::before {
-      content: "";
+      content: "EXECUTIVO";
       position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(rgba(5,9,20,.88), rgba(5,9,20,.78)),
-        url("Capa_rel.png");
-      background-size: cover;
-      background-position: center right;
-      opacity: .18;
+      top: 115px;
+      left: 10%;
+      font-size: clamp(80px, 16vw, 230px);
+      font-family: Georgia, serif;
+      font-weight: 900;
+      color: rgba(255,255,255,.035);
+      letter-spacing: 8px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-layout {
+      position: relative;
+      z-index: 2;
+      width: min(1320px, 100%);
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr .95fr;
+      gap: 60px;
+      align-items: center;
     }
 
     .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 920px;
+      max-width: 760px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
       padding: 10px 18px;
       border: 1px solid var(--line);
       border-radius: 999px;
       color: var(--gold);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 1.8px;
       text-transform: uppercase;
       margin-bottom: 26px;
@@ -177,10 +181,10 @@
     }
 
     .hero h1 {
-      font-size: clamp(44px, 7vw, 86px);
+      font-size: clamp(44px, 6vw, 78px);
       line-height: .98;
       letter-spacing: -3px;
-      max-width: 980px;
+      max-width: 780px;
       margin-bottom: 28px;
     }
 
@@ -189,11 +193,23 @@
     }
 
     .hero p {
-      max-width: 760px;
+      max-width: 700px;
       font-size: 21px;
       line-height: 1.75;
       color: var(--muted);
       margin-bottom: 38px;
+    }
+
+    .hero-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 520px;
+    }
+
+    .hero-image img {
+      width: min(100%, 640px);
+      filter: drop-shadow(0 40px 90px rgba(0,0,0,.55));
     }
 
     .buttons {
@@ -223,7 +239,7 @@
     .btn-dark {
       background: rgba(255,255,255,.045);
       color: white;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.14);
     }
 
     .btn-gold:hover,
@@ -231,12 +247,10 @@
       transform: translateY(-3px);
     }
 
-    section {
-      position: relative;
-    }
-
     .section {
       padding: 115px 8%;
+      background: transparent;
+      position: relative;
     }
 
     .section-inner {
@@ -278,11 +292,12 @@
     }
 
     .card {
-      background: linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+      background: var(--card);
       border: 1px solid var(--line);
       border-radius: 28px;
       padding: 34px;
       box-shadow: 0 28px 80px rgba(0,0,0,.22);
+      backdrop-filter: blur(14px);
       transition: .3s ease;
     }
 
@@ -303,10 +318,6 @@
       line-height: 1.8;
     }
 
-    .assessment {
-      background: linear-gradient(to bottom, #07111f, #050914);
-    }
-
     .assessment-layout {
       display: grid;
       grid-template-columns: 1.1fr .9fr;
@@ -315,12 +326,11 @@
     }
 
     .assessment-panel {
-      background:
-        radial-gradient(circle at top right, rgba(214,180,90,.16), transparent 32%),
-        linear-gradient(145deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background: var(--card);
       border: 1px solid var(--line);
       border-radius: 36px;
       padding: 44px;
+      backdrop-filter: blur(16px);
     }
 
     .assessment-panel h3 {
@@ -353,32 +363,27 @@
       color: var(--gold);
     }
 
-    .mock-report {
-      min-height: 480px;
-      border-radius: 34px;
+    .report-layout {
+      display: grid;
+      grid-template-columns: .95fr 1fr;
+      gap: 58px;
+      align-items: center;
+    }
+
+    .report-image-box {
       border: 1px solid var(--line);
-      background:
-        linear-gradient(rgba(5,9,20,.3), rgba(5,9,20,.85)),
-        url("Capa_rel.png");
-      background-size: cover;
-      background-position: center;
-      box-shadow: 0 40px 100px rgba(0,0,0,.38);
-      overflow: hidden;
-      position: relative;
+      border-radius: 34px;
+      padding: 24px;
+      background: rgba(5,9,20,.52);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 40px 100px rgba(0,0,0,.35);
     }
 
-    .mock-report::after {
-      content: "Relatório Executivo Premium";
-      position: absolute;
-      left: 28px;
-      bottom: 28px;
-      color: var(--gold);
-      font-size: 24px;
-      font-weight: 900;
-    }
-
-    .methodology {
-      background: #050c18;
+    .report-image-box img {
+      border-radius: 26px;
+      width: 100%;
+      object-fit: cover;
+      box-shadow: 0 25px 70px rgba(0,0,0,.5);
     }
 
     .method-flow {
@@ -390,9 +395,10 @@
 
     .flow-step {
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.035);
+      background: var(--card);
       border-radius: 24px;
       padding: 28px;
+      backdrop-filter: blur(14px);
     }
 
     .flow-step strong {
@@ -414,25 +420,10 @@
 
     .enterprise-hero {
       padding: 135px 8%;
-      background:
-        linear-gradient(rgba(2,10,25,.9), rgba(2,10,25,.94)),
-        url("https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=2070");
-      background-size: cover;
-      background-position: center;
-      overflow: hidden;
-    }
-
-    .enterprise-hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(214,180,90,.16), transparent 34%);
-      pointer-events: none;
+      background: transparent;
     }
 
     .enterprise-content {
-      position: relative;
-      z-index: 2;
       width: min(1200px, 100%);
       margin: auto;
       max-width: 950px;
@@ -466,14 +457,6 @@
       margin-bottom: 40px;
     }
 
-    .enterprise-insights {
-      background: #07111f;
-    }
-
-    .dashboard-preview {
-      background: linear-gradient(to bottom, #07111f, #040914);
-    }
-
     .dashboard-mockup {
       display: grid;
       grid-template-columns: 380px 1fr;
@@ -482,11 +465,12 @@
     }
 
     .metric-card {
-      background: rgba(255,255,255,.035);
+      background: var(--card);
       border: 1px solid var(--line);
       border-radius: 26px;
       padding: 32px;
       margin-bottom: 22px;
+      backdrop-filter: blur(14px);
     }
 
     .metric-card h4 {
@@ -512,9 +496,8 @@
       min-height: 520px;
       border-radius: 34px;
       border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at top right, rgba(214,180,90,.18), transparent 34%),
-        linear-gradient(145deg, #0b1628, #050914);
+      background: rgba(5,9,20,.62);
+      backdrop-filter: blur(16px);
       box-shadow: 0 40px 90px rgba(0,0,0,.45);
       padding: 34px;
       position: relative;
@@ -574,10 +557,6 @@
       border-radius: 999px;
     }
 
-    .target-section {
-      background: #050c18;
-    }
-
     .target-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -588,7 +567,8 @@
       padding: 26px;
       border-radius: 18px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.025);
+      background: var(--card);
+      backdrop-filter: blur(14px);
       text-align: center;
       font-size: 18px;
       font-weight: 800;
@@ -601,10 +581,6 @@
       transform: translateY(-4px);
     }
 
-    .platform-architecture {
-      background: linear-gradient(to bottom, #050c18, #07111f);
-    }
-
     .architecture-flow {
       display: flex;
       flex-wrap: wrap;
@@ -614,23 +590,20 @@
     }
 
     .flow-box {
-      background: linear-gradient(145deg, #0c1730, #0a1326);
+      background: var(--card);
       border: 1px solid var(--line);
       color: white;
       padding: 23px 28px;
       border-radius: 18px;
       font-weight: 800;
       text-align: center;
+      backdrop-filter: blur(14px);
     }
 
     .flow-arrow {
       color: var(--gold);
       font-size: 28px;
       font-weight: 900;
-    }
-
-    .solutions {
-      background: #07111f;
     }
 
     .pricing-grid {
@@ -643,15 +616,13 @@
       border: 1px solid var(--line);
       border-radius: 30px;
       padding: 38px;
-      background: rgba(255,255,255,.035);
+      background: var(--card);
+      backdrop-filter: blur(14px);
     }
 
     .price-card.featured {
-      background:
-        radial-gradient(circle at top right, rgba(214,180,90,.18), transparent 36%),
-        linear-gradient(145deg, #111f38, #07111f);
       border-color: rgba(214,180,90,.5);
-      transform: translateY(-8px);
+      box-shadow: 0 35px 80px rgba(0,0,0,.34);
     }
 
     .price-card h3 {
@@ -681,16 +652,17 @@
 
     .enterprise-final-cta {
       padding: 135px 8%;
-      background:
-        linear-gradient(rgba(2,8,20,.92), rgba(2,8,20,.95)),
-        url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2070");
-      background-size: cover;
-      background-position: center;
+      background: transparent;
     }
 
     .cta-box {
       width: min(1000px, 100%);
       margin: auto;
+      background: rgba(5,9,20,.55);
+      border: 1px solid var(--line);
+      border-radius: 36px;
+      padding: 58px;
+      backdrop-filter: blur(16px);
     }
 
     .cta-box span {
@@ -714,10 +686,6 @@
       margin-bottom: 40px;
     }
 
-    .contact {
-      background: #050914;
-    }
-
     .contact-box {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -725,11 +693,13 @@
       align-items: start;
     }
 
-    .contact-info {
+    .contact-info,
+    .contact-form {
       border: 1px solid var(--line);
       border-radius: 30px;
       padding: 38px;
-      background: rgba(255,255,255,.035);
+      background: var(--card);
+      backdrop-filter: blur(14px);
     }
 
     .contact-info h3 {
@@ -745,10 +715,6 @@
     }
 
     .contact-form {
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 38px;
-      background: rgba(255,255,255,.035);
       display: grid;
       gap: 14px;
     }
@@ -777,39 +743,33 @@
 
     footer {
       padding: 42px 8%;
-      background: #020611;
+      background: rgba(2,6,17,.92);
       border-top: 1px solid rgba(214,180,90,.12);
       color: rgba(255,255,255,.55);
       text-align: center;
       font-size: 14px;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1080px) {
       nav {
         display: none;
       }
 
+      .hero-layout,
       .assessment-layout,
+      .report-layout,
       .dashboard-mockup,
       .contact-box {
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        padding-top: 140px;
-      }
-
-      .dashboard-screen {
+      .hero-image {
         min-height: auto;
       }
 
-      .dash-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .enterprise-content h2,
-      .cta-box h2 {
-        letter-spacing: -1px;
+      .hero-image img {
+        max-width: 520px;
+        margin: auto;
       }
     }
 
@@ -857,8 +817,13 @@
       .assessment-panel,
       .card,
       .contact-info,
-      .contact-form {
+      .contact-form,
+      .cta-box {
         padding: 28px;
+      }
+
+      .dash-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -892,27 +857,33 @@
   <main>
 
     <section id="inicio" class="hero">
-      <div class="hero-content">
-        <div class="eyebrow">Assessment Estratégico de Liderança</div>
+      <div class="hero-layout">
+        <div class="hero-content">
+          <div class="eyebrow">Assessment Estratégico de Liderança</div>
 
-        <h1>
-          Sua liderança. <span>Seu impacto.</span> Seu legado.
-        </h1>
+          <h1>
+            Sua liderança. <span>Seu impacto.</span> Seu legado.
+          </h1>
 
-        <p>
-          O LeaderK 360 identifica padrões de liderança, comportamento sob pressão,
-          tomada de decisão, influência, maturidade institucional e pontos cegos que
-          podem acelerar ou limitar sua evolução executiva.
-        </p>
+          <p>
+            O LeaderK 360 identifica padrões de liderança, comportamento sob pressão,
+            tomada de decisão, influência, maturidade institucional e pontos cegos que
+            podem acelerar ou limitar sua evolução executiva.
+          </p>
 
-        <div class="buttons">
-          <a class="btn-gold" href="questoes.html">Fazer Assessment Individual</a>
-          <a class="btn-dark" href="#enterprise">Conhecer Executive Intelligence</a>
+          <div class="buttons">
+            <a class="btn-gold" href="questoes.html">Fazer Assessment Individual</a>
+            <a class="btn-dark" href="#enterprise">Conhecer Executive Intelligence</a>
+          </div>
+        </div>
+
+        <div class="hero-image">
+          <img src="Capa_site.png" alt="LeaderK 360 Executive Intelligence" />
         </div>
       </div>
     </section>
 
-    <section id="assessment" class="section assessment">
+    <section id="assessment" class="section">
       <div class="section-inner assessment-layout">
         <div>
           <div class="section-header">
@@ -951,7 +922,7 @@
       </div>
     </section>
 
-    <section id="metodologia" class="section methodology">
+    <section id="metodologia" class="section">
       <div class="section-inner">
         <div class="section-header">
           <span>LeaderK Matrix</span>
@@ -992,8 +963,10 @@
     </section>
 
     <section id="relatorios" class="section">
-      <div class="section-inner assessment-layout">
-        <div class="mock-report"></div>
+      <div class="section-inner report-layout">
+        <div class="report-image-box">
+          <img src="Rel_site.png" alt="Relatório Executivo Premium LeaderK 360" />
+        </div>
 
         <div>
           <div class="section-header">
@@ -1041,7 +1014,7 @@
       </div>
     </section>
 
-    <section class="section enterprise-insights">
+    <section class="section">
       <div class="section-inner">
         <div class="section-header">
           <span>Inteligência Organizacional</span>
@@ -1076,7 +1049,7 @@
       </div>
     </section>
 
-    <section id="dashboard-preview" class="section dashboard-preview">
+    <section id="dashboard-preview" class="section">
       <div class="section-inner">
         <div class="section-header">
           <span>Executive Analytics</span>
@@ -1148,7 +1121,7 @@
       </div>
     </section>
 
-    <section id="rh" class="section target-section">
+    <section id="rh" class="section">
       <div class="section-inner">
         <div class="section-header">
           <span>Aplicação Corporativa</span>
@@ -1172,7 +1145,7 @@
       </div>
     </section>
 
-    <section class="section platform-architecture">
+    <section class="section">
       <div class="section-inner">
         <div class="section-header">
           <span>LeaderK Matrix</span>
@@ -1199,7 +1172,7 @@
       </div>
     </section>
 
-    <section class="section solutions">
+    <section class="section">
       <div class="section-inner">
         <div class="section-header">
           <span>Soluções LeaderK 360</span>
@@ -1261,7 +1234,7 @@
       </div>
     </section>
 
-    <section id="contato" class="section contact">
+    <section id="contato" class="section">
       <div class="section-inner contact-box">
         <div class="contact-info">
           <span class="enterprise-tag">Contato Corporativo</span>
