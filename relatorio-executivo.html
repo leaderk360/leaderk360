@@ -34,24 +34,6 @@
       line-height: 1.65;
     }
 
-    .pdf-actions {
-      position: fixed;
-      top: 22px;
-      right: 22px;
-      z-index: 9999;
-    }
-
-    .pdf-btn {
-      border: none;
-      cursor: pointer;
-      padding: 14px 22px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #efd58a, #c8a96b);
-      color: #07101d;
-      font-weight: 900;
-      box-shadow: 0 0 34px rgba(200,169,107,.35);
-    }
-
     .page {
       width: min(1180px, 94%);
       margin: 0 auto;
@@ -71,6 +53,31 @@
       box-shadow: 0 40px 120px rgba(0,0,0,.7);
       border: 1px solid rgba(200,169,107,.28);
     }
+
+    .premium-access-note {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 9999;
+  max-width: 340px;
+  padding: 14px 20px;
+  border-radius: 999px;
+  background: rgba(7, 16, 29, .92);
+  border: 1px solid rgba(200,169,107,.42);
+  color: #efd58a;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 0 34px rgba(0,0,0,.35);
+}
+
+@media (max-width: 900px) {
+  .premium-access-note {
+    position: static;
+    margin: 18px auto;
+    border-radius: 18px;
+    text-align: center;
+    width: min(92%, 520px);
+  }
 
     .section {
       position: relative;
@@ -599,10 +606,10 @@
 
 <body>
 
-<div class="pdf-actions">
-  <button onclick="window.print()" class="pdf-btn">Baixar PDF</button>
+<div class="premium-access-note">
+  Relatório Executivo Premium liberado. Uma cópia de acesso será enviada ao e-mail cadastrado.
 </div>
-
+  
 <main class="page">
 
   <section class="cover">
