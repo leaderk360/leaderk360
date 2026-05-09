@@ -361,7 +361,7 @@
 
     .dimension {
       display: grid;
-      grid-template-columns: 190px 1fr 46px;
+      grid-template-columns: 220px 1fr 46px;
       gap: 12px;
       align-items: center;
       color: var(--muted);
@@ -449,18 +449,18 @@
 
   <section id="intro" class="card intro">
     <div class="badges">
-      <div class="badge">42 perguntas</div>
-      <div class="badge">7 dimensões</div>
+      <div class="badge">56 perguntas</div>
+      <div class="badge">8 dimensões</div>
       <div class="badge">Resultado gratuito</div>
-      <div class="badge">Cerca de 5 minutos</div>
+      <div class="badge">Cerca de 7 minutos</div>
     </div>
 
     <h1>Descubra os padrões que definem sua forma de <span>liderar.</span></h1>
 
     <p>
       Responda ao assessment para identificar seu perfil predominante de liderança,
-      seu perfil complementar, sua intensidade comportamental e um primeiro insight
-      sobre seus pontos cegos.
+      seu perfil complementar, sua intensidade comportamental, sua maturidade institucional
+      e um primeiro insight sobre seus pontos cegos.
     </p>
 
     <button class="btn" onclick="startQuiz()">Iniciar Assessment</button>
@@ -469,7 +469,7 @@
   <section id="quiz" class="card hidden">
     <div class="progress-wrap">
       <div class="progress-info">
-        <span id="questionCounter">Pergunta 1 de 42</span>
+        <span id="questionCounter">Pergunta 1 de 56</span>
         <span id="progressPercent">0%</span>
       </div>
       <div class="progress"><span id="progressBar"></span></div>
@@ -557,7 +557,8 @@
 
     <p>
       Este é apenas o resultado inicial. O relatório completo aprofunda sua liderança
-      sob pressão, pontos cegos, comunicação, influência e impacto provável na equipe.
+      sob pressão, pontos cegos, comunicação, influência, maturidade institucional
+      e impacto provável na equipe.
     </p>
 
     <div class="result-grid">
@@ -597,7 +598,7 @@
       <h3>Seu relatório completo revela o que este resultado ainda não mostra.</h3>
       <p>
         A análise executiva aprofunda comportamento sob pressão, pontos cegos,
-        estilo de comunicação, impacto na equipe e plano de evolução.
+        estilo de comunicação, maturidade institucional, impacto na equipe e plano de evolução.
       </p>
       <button class="btn" disabled>Aguardando geração do resultado</button>
     </div>
@@ -608,7 +609,7 @@
 
 <script>
 const SUPABASE_URL = "https://qdgljsbntpsjulfwxolf.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY";
+const SUPABASE_ANON_KEY = "COLE_SUA_ANON_KEY_AQUI";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -619,17 +620,53 @@ const dimensions = {
   D4: "Liderança sob Pressão",
   D5: "Gestão de Pessoas",
   D6: "Visão Estratégica",
-  D7: "Execução e Controle"
+  D7: "Execução e Controle",
+  D8: "Maturidade Institucional"
 };
 
 const profileInfo = {
-  COMMANDER: { name: "COMMANDER", desc: "Liderança de decisão, autoridade e ação sob pressão.", risk: "Centralização", riskText: "Você pode assumir controle demais em cenários críticos, reduzindo escuta e autonomia." },
-  STRATEGYK: { name: "STRATEGYK", desc: "Liderança analítica, racional e orientada à estratégia.", risk: "Excesso de análise", riskText: "Você pode demorar a agir quando busca segurança racional antes de avançar." },
-  MENTORIX: { name: "MENTORIX", desc: "Liderança voltada ao desenvolvimento humano e confiança.", risk: "Excesso de tolerância", riskText: "Você pode evitar confrontos necessários para preservar relações." },
-  EXECUTRON: { name: "EXECUTRON", desc: "Liderança de performance, entrega e cobrança por resultado.", risk: "Desgaste da equipe", riskText: "Você pode pressionar demais quando o ritmo de entrega fica abaixo do esperado." },
-  DIPLOMATIK: { name: "DIPLOMATIK", desc: "Liderança de equilíbrio, mediação e estabilidade relacional.", risk: "Evitar confronto", riskText: "Você pode adiar decisões difíceis para preservar harmonia no ambiente." },
-  VISIONEX: { name: "VISIONEX", desc: "Liderança de inovação, transformação e visão de futuro.", risk: "Dispersão", riskText: "Você pode gerar muitas ideias sem consolidar execução suficiente." },
-  GUARDIAN: { name: "GUARDIAN", desc: "Liderança de estabilidade, método e segurança operacional.", risk: "Rigidez", riskText: "Você pode resistir a mudanças quando percebe risco à previsibilidade." }
+  COMMANDER: {
+    name: "COMMANDER",
+    desc: "Liderança de decisão, autoridade e ação sob pressão.",
+    risk: "Centralização",
+    riskText: "Você pode assumir controle demais em cenários críticos, reduzindo escuta e autonomia."
+  },
+  STRATEGYK: {
+    name: "STRATEGYK",
+    desc: "Liderança analítica, racional e orientada à estratégia.",
+    risk: "Excesso de análise",
+    riskText: "Você pode demorar a agir quando busca segurança racional antes de avançar."
+  },
+  MENTORIX: {
+    name: "MENTORIX",
+    desc: "Liderança voltada ao desenvolvimento humano e confiança.",
+    risk: "Excesso de tolerância",
+    riskText: "Você pode evitar confrontos necessários para preservar relações."
+  },
+  EXECUTRON: {
+    name: "EXECUTRON",
+    desc: "Liderança de performance, entrega e cobrança por resultado.",
+    risk: "Desgaste da equipe",
+    riskText: "Você pode pressionar demais quando o ritmo de entrega fica abaixo do esperado."
+  },
+  DIPLOMATIK: {
+    name: "DIPLOMATIK",
+    desc: "Liderança de equilíbrio, mediação e estabilidade relacional.",
+    risk: "Evitar confronto",
+    riskText: "Você pode adiar decisões difíceis para preservar harmonia no ambiente."
+  },
+  VISIONEX: {
+    name: "VISIONEX",
+    desc: "Liderança de inovação, transformação e visão de futuro.",
+    risk: "Dispersão",
+    riskText: "Você pode gerar muitas ideias sem consolidar execução suficiente."
+  },
+  GUARDIAN: {
+    name: "GUARDIAN",
+    desc: "Liderança de estabilidade, método e segurança operacional.",
+    risk: "Rigidez",
+    riskText: "Você pode resistir a mudanças quando percebe risco à previsibilidade."
+  }
 };
 
 function q(text, dims, profiles) {
@@ -637,48 +674,69 @@ function q(text, dims, profiles) {
 }
 
 const questions = [
-  q("As pessoas normalmente prestam atenção quando exponho uma direção ou decisão.", {D1:3,D2:1}, {COMMANDER:2,VISIONEX:1,MENTORIX:1}),
-  q("Sinto que minha presença influencia o ambiente, mesmo antes de eu falar muito.", {D1:3,D4:1}, {COMMANDER:2,DIPLOMATIK:1,VISIONEX:1}),
-  q("Costumo conseguir adesão das pessoas sem precisar impor minha autoridade formal.", {D1:3,D2:2,D5:1}, {MENTORIX:2,DIPLOMATIK:2,VISIONEX:1}),
-  q("Quando preciso conduzir um grupo, naturalmente assumo uma posição de referência.", {D1:3,D3:1}, {COMMANDER:2,EXECUTRON:1,VISIONEX:1}),
-  q("Tenho facilidade em mobilizar pessoas em torno de um objetivo.", {D1:3,D2:2,D6:1}, {VISIONEX:2,MENTORIX:1,DIPLOMATIK:1}),
-  q("Percebo quando minha postura muda o nível de energia da equipe.", {D1:2,D5:3,D2:1}, {MENTORIX:2,DIPLOMATIK:1,VISIONEX:1}),
-  q("Antes de comunicar uma decisão importante, procuro organizar a mensagem com clareza.", {D2:3,D6:2}, {STRATEGYK:2,DIPLOMATIK:1,GUARDIAN:1}),
-  q("Costumo adaptar minha comunicação conforme o perfil das pessoas envolvidas.", {D2:3,D5:2,D1:1}, {DIPLOMATIK:2,MENTORIX:2,VISIONEX:1}),
-  q("Tenho facilidade em conduzir conversas difíceis sem perder o controle emocional.", {D2:3,D4:2,D5:1}, {DIPLOMATIK:2,MENTORIX:1,STRATEGYK:1}),
-  q("Quando há ruído na equipe, procuro alinhar expectativas antes de cobrar resultados.", {D2:3,D5:2,D7:1}, {MENTORIX:2,DIPLOMATIK:2,GUARDIAN:1}),
-  q("Prefiro ser direto, mesmo que minha comunicação pareça dura em alguns momentos.", {D2:2,D3:2,D7:1}, {COMMANDER:2,EXECUTRON:2}),
-  q("Escuto opiniões diferentes antes de concluir uma decisão importante.", {D2:3,D5:2,D6:1}, {DIPLOMATIK:2,MENTORIX:2,STRATEGYK:1}),
-  q("Tenho facilidade em tomar decisões difíceis quando a situação exige rapidez.", {D3:3,D4:2,D1:1}, {COMMANDER:3,EXECUTRON:1}),
-  q("Antes de decidir, costumo avaliar os impactos futuros da escolha.", {D3:2,D6:3}, {STRATEGYK:3,GUARDIAN:1,VISIONEX:1}),
-  q("Tenho dificuldade em aceitar decisões tomadas sem análise suficiente.", {D3:2,D6:3,D7:1}, {STRATEGYK:2,GUARDIAN:2}),
-  q("Quando ninguém decide, prefiro assumir a responsabilidade.", {D3:3,D1:2,D4:2}, {COMMANDER:3,EXECUTRON:1}),
-  q("Costumo decidir melhor quando tenho dados, contexto e tempo mínimo de análise.", {D3:3,D6:3}, {STRATEGYK:3,GUARDIAN:1}),
-  q("Mesmo sem todas as informações, consigo avançar quando a decisão é necessária.", {D3:3,D4:2,D1:1}, {COMMANDER:2,VISIONEX:1,EXECUTRON:1}),
-  q("Quando algo sai do controle, minha primeira reação é tentar organizar tudo rapidamente.", {D4:3,D7:2}, {EXECUTRON:2,GUARDIAN:2,COMMANDER:1}),
-  q("Sob pressão, costumo confiar mais em mim do que na equipe.", {D4:3,D7:2,D5:-2}, {COMMANDER:3,EXECUTRON:1}),
-  q("Em momentos de crise, consigo manter clareza suficiente para orientar os outros.", {D4:3,D1:2,D2:1}, {COMMANDER:2,STRATEGYK:1,DIPLOMATIK:1}),
-  q("Quando estou sob pressão, minha tolerância a erros diminui.", {D4:3,D7:2,D5:-1}, {EXECUTRON:2,COMMANDER:2}),
-  q("Mesmo em conflito, procuro preservar o equilíbrio da equipe.", {D4:2,D2:2,D5:3}, {DIPLOMATIK:3,MENTORIX:2}),
-  q("Quando há pressão externa, procuro proteger a equipe de desgaste desnecessário.", {D4:2,D5:3,D7:1}, {MENTORIX:2,GUARDIAN:2,DIPLOMATIK:1}),
-  q("Tenho satisfação em ver pessoas evoluindo profissionalmente com minha orientação.", {D5:3,D1:1}, {MENTORIX:3,DIPLOMATIK:1}),
-  q("Prefiro desenvolver autonomia do que criar dependência da minha aprovação.", {D5:3,D2:2,D7:1}, {MENTORIX:2,DIPLOMATIK:1,STRATEGYK:1}),
-  q("Tenho dificuldade em delegar tarefas importantes sem acompanhar de perto.", {D7:2,D4:2,D5:-2}, {COMMANDER:2,EXECUTRON:2,GUARDIAN:1}),
-  q("Percebo rapidamente quando alguém da equipe perde motivação.", {D5:3,D2:2}, {MENTORIX:3,DIPLOMATIK:1}),
-  q("Acredito que confiança é mais eficiente do que vigilância constante.", {D5:3,D2:1,D7:-1}, {MENTORIX:2,DIPLOMATIK:2}),
-  q("Quando alguém erra, procuro entender a causa antes de apenas cobrar.", {D5:3,D2:2,D4:1}, {MENTORIX:2,DIPLOMATIK:2}),
-  q("Costumo perceber riscos antes que eles se tornem problemas evidentes.", {D6:3,D3:2}, {STRATEGYK:3,GUARDIAN:1}),
-  q("Tenho facilidade em enxergar oportunidades onde outros veem apenas obstáculos.", {D6:3,D1:2,D3:1}, {VISIONEX:3,STRATEGYK:1}),
-  q("Penso no longo prazo mesmo quando preciso resolver problemas imediatos.", {D6:3,D3:2,D7:1}, {STRATEGYK:2,GUARDIAN:1,VISIONEX:1}),
-  q("Gosto de questionar métodos antigos quando acredito existir uma forma melhor.", {D6:3,D1:1,D3:1}, {VISIONEX:3,STRATEGYK:1}),
-  q("Prefiro construir soluções sustentáveis a resolver apenas o problema imediato.", {D6:3,D7:2,D3:1}, {STRATEGYK:2,GUARDIAN:2}),
-  q("Tenho tendência a imaginar cenários futuros antes de agir.", {D6:3,D3:1}, {STRATEGYK:2,VISIONEX:2}),
-  q("Resultados concretos são mais importantes do que boas intenções.", {D7:3,D3:2}, {EXECUTRON:3,COMMANDER:1}),
-  q("Tenho dificuldade com pessoas que prometem muito e entregam pouco.", {D7:3,D4:2}, {EXECUTRON:3,COMMANDER:1}),
-  q("Gosto de acompanhar de perto o andamento das entregas importantes.", {D7:3,D4:2}, {EXECUTRON:2,GUARDIAN:2,COMMANDER:1}),
-  q("Organização e método são essenciais para uma liderança confiável.", {D7:3,D6:2}, {GUARDIAN:3,STRATEGYK:1,EXECUTRON:1}),
-  q("Quando metas não são cumpridas, sinto necessidade de agir rapidamente.", {D7:3,D3:2,D4:2}, {EXECUTRON:3,COMMANDER:2}),
-  q("Prefiro processos claros a improvisações constantes.", {D7:3,D6:2}, {GUARDIAN:3,STRATEGYK:1})
+  q("Quando estou diante de um grupo, consigo transmitir presença e segurança sem precisar impor autoridade.", {D1:3,D2:1}, {COMMANDER:1,DIPLOMATIK:1,MENTORIX:1}),
+  q("As pessoas costumam procurar minha opinião quando precisam de direção ou clareza.", {D1:3,D3:1}, {COMMANDER:1,STRATEGYK:1,MENTORIX:1}),
+  q("Tenho facilidade em influenciar pessoas mesmo quando não ocupo formalmente a posição de comando.", {D1:3,D2:2,D8:1}, {DIPLOMATIK:2,MENTORIX:1,VISIONEX:1}),
+  q("Minha postura costuma elevar o nível de atenção e comprometimento das pessoas ao meu redor.", {D1:3,D5:1}, {COMMANDER:1,EXECUTRON:1,MENTORIX:1}),
+  q("Consigo mobilizar pessoas em torno de uma ideia antes mesmo de existir uma ordem formal.", {D1:2,D2:2,D6:2}, {VISIONEX:2,DIPLOMATIK:1}),
+  q("Quando entro em uma reunião, procuro primeiro compreender o ambiente antes de tentar conduzi-lo.", {D1:1,D2:2,D8:2}, {DIPLOMATIK:2,STRATEGYK:1,MENTORIX:1}),
+
+  q("Antes de comunicar uma decisão importante, procuro organizar minha mensagem com clareza.", {D2:3,D6:1}, {STRATEGYK:1,DIPLOMATIK:1,GUARDIAN:1}),
+  q("Consigo adaptar minha comunicação conforme o perfil das pessoas envolvidas.", {D2:3,D5:2}, {DIPLOMATIK:2,MENTORIX:2}),
+  q("Tenho facilidade em explicar temas complexos de forma simples e compreensível.", {D2:3,D6:2}, {STRATEGYK:2,VISIONEX:1}),
+  q("Em conversas difíceis, procuro ser firme sem ser agressivo.", {D2:3,D4:1,D8:1}, {DIPLOMATIK:2,MENTORIX:1,COMMANDER:1}),
+  q("Quando discordo de alguém, tento preservar o respeito antes de defender minha posição.", {D2:2,D5:2,D8:2}, {DIPLOMATIK:3,MENTORIX:1}),
+  q("Prefiro uma comunicação direta, mesmo que ela possa parecer dura em determinados momentos.", {D2:1,D3:2,D7:1}, {COMMANDER:2,EXECUTRON:1}),
+
+  q("Tenho facilidade em tomar decisões quando o ambiente está incerto.", {D3:3,D4:2}, {COMMANDER:2,VISIONEX:1}),
+  q("Antes de decidir, costumo avaliar consequências, riscos e impactos futuros.", {D3:2,D6:3}, {STRATEGYK:3,GUARDIAN:1}),
+  q("Quando há muita dúvida no ambiente, prefiro estruturar critérios antes de escolher um caminho.", {D3:2,D6:2,D7:1}, {STRATEGYK:2,GUARDIAN:2}),
+  q("Se ninguém assume uma decisão necessária, tendo a assumir a responsabilidade.", {D3:3,D1:1,D4:1}, {COMMANDER:3,EXECUTRON:1}),
+  q("Consigo decidir mesmo sem ter todas as informações, quando a situação exige avanço.", {D3:3,D4:1,D6:1}, {COMMANDER:1,VISIONEX:2,EXECUTRON:1}),
+  q("Tenho dificuldade em aceitar decisões tomadas sem análise mínima suficiente.", {D3:1,D6:3,D8:1}, {STRATEGYK:2,GUARDIAN:1}),
+
+  q("Sob pressão, consigo manter clareza suficiente para orientar os outros.", {D4:3,D1:1,D2:1}, {COMMANDER:1,STRATEGYK:1,DIPLOMATIK:1}),
+  q("Quando algo sai do controle, minha tendência é organizar prioridades rapidamente.", {D4:2,D7:3}, {EXECUTRON:2,GUARDIAN:1,COMMANDER:1}),
+  q("Em momentos de crise, consigo preservar equilíbrio emocional antes de agir.", {D4:3,D2:1,D8:1}, {DIPLOMATIK:2,STRATEGYK:1,MENTORIX:1}),
+  q("Sob pressão, minha tolerância a falhas diminui bastante.", {D4:2,D7:1,D5:-2}, {EXECUTRON:2,COMMANDER:1}),
+  q("Quando a equipe está insegura, procuro transmitir estabilidade antes de cobrar desempenho.", {D4:2,D5:3,D2:1}, {MENTORIX:2,DIPLOMATIK:2,GUARDIAN:1}),
+  q("Em cenários críticos, costumo confiar mais no controle direto do que na delegação.", {D4:2,D7:2,D5:-2}, {COMMANDER:2,EXECUTRON:1}),
+
+  q("Tenho satisfação em desenvolver pessoas e vê-las evoluir profissionalmente.", {D5:3,D1:1}, {MENTORIX:3}),
+  q("Prefiro criar autonomia na equipe em vez de dependência da minha aprovação.", {D5:3,D7:1,D8:1}, {MENTORIX:2,DIPLOMATIK:1,STRATEGYK:1}),
+  q("Percebo rapidamente quando alguém da equipe perde motivação.", {D5:3,D2:1}, {MENTORIX:3,DIPLOMATIK:1}),
+  q("Quando alguém erra, procuro entender a causa antes de simplesmente cobrar.", {D5:3,D2:2}, {MENTORIX:2,DIPLOMATIK:2}),
+  q("Tenho facilidade em lidar com pessoas de perfis muito diferentes.", {D5:2,D2:2,D8:1}, {DIPLOMATIK:2,MENTORIX:2}),
+  q("Tenho dificuldade em delegar tarefas importantes sem acompanhar de perto.", {D7:2,D4:1,D5:-2}, {COMMANDER:1,EXECUTRON:2,GUARDIAN:1}),
+
+  q("Costumo enxergar riscos antes que eles se tornem problemas evidentes.", {D6:3,D3:2}, {STRATEGYK:3,GUARDIAN:1}),
+  q("Tenho facilidade em perceber oportunidades onde outras pessoas veem apenas obstáculos.", {D6:3,D1:1}, {VISIONEX:3,STRATEGYK:1}),
+  q("Penso no longo prazo mesmo quando estou resolvendo problemas imediatos.", {D6:3,D3:1,D7:1}, {STRATEGYK:2,VISIONEX:1,GUARDIAN:1}),
+  q("Gosto de questionar métodos antigos quando acredito existir uma forma melhor.", {D6:3,D1:1}, {VISIONEX:3,STRATEGYK:1}),
+  q("Prefiro construir soluções sustentáveis a resolver apenas o problema imediato.", {D6:3,D7:2}, {STRATEGYK:2,GUARDIAN:2}),
+  q("Tenho tendência a imaginar cenários futuros antes de agir.", {D6:3,D3:1}, {VISIONEX:2,STRATEGYK:2}),
+
+  q("Resultados concretos são mais importantes do que boas intenções.", {D7:3,D3:1}, {EXECUTRON:3,COMMANDER:1}),
+  q("Tenho dificuldade com pessoas que prometem muito e entregam pouco.", {D7:3,D4:1}, {EXECUTRON:3,COMMANDER:1}),
+  q("Gosto de acompanhar de perto o andamento das entregas importantes.", {D7:3,D4:1}, {EXECUTRON:2,GUARDIAN:2}),
+  q("Organização e método são essenciais para uma liderança confiável.", {D7:3,D6:1}, {GUARDIAN:3,STRATEGYK:1}),
+  q("Quando metas não são cumpridas, sinto necessidade de agir rapidamente.", {D7:3,D3:2,D4:1}, {EXECUTRON:3,COMMANDER:1}),
+  q("Prefiro processos claros a improvisações constantes.", {D7:3,D6:1}, {GUARDIAN:3,STRATEGYK:1}),
+
+  q("Quando recebo uma decisão superior da qual discordo, consigo executá-la com profissionalismo.", {D8:3,D7:1,D2:1}, {GUARDIAN:2,DIPLOMATIK:2,STRATEGYK:1}),
+  q("Consigo defender institucionalmente uma decisão mesmo quando ela não foi minha preferência inicial.", {D8:3,D1:1,D2:1}, {DIPLOMATIK:2,GUARDIAN:1,COMMANDER:1}),
+  q("Quando estou subordinado a uma autoridade, procuro compreender o contexto antes de criticar a decisão.", {D8:3,D2:1,D6:1}, {STRATEGYK:2,DIPLOMATIK:2,GUARDIAN:1}),
+  q("Tenho dificuldade em aceitar ordens quando acredito que minha solução seria melhor.", {D8:-3,D3:1,D4:1}, {COMMANDER:2,VISIONEX:1}),
+  q("Consigo influenciar superiores sem parecer confrontador.", {D8:3,D2:2,D1:1}, {DIPLOMATIK:3,MENTORIX:1,STRATEGYK:1}),
+  q("Quando não estou no comando, ainda assim busco contribuir para que o resultado aconteça.", {D8:3,D7:2,D5:1}, {GUARDIAN:2,MENTORIX:1,EXECUTRON:1}),
+  q("Se uma decisão superior contraria minha preferência, evito contaminar a equipe com minha insatisfação.", {D8:3,D5:2,D2:1}, {DIPLOMATIK:2,GUARDIAN:2,MENTORIX:1}),
+  q("Tenho tendência a resistir quando preciso seguir diretrizes com as quais não concordo totalmente.", {D8:-3,D4:1,D3:1}, {COMMANDER:1,VISIONEX:1,EXECUTRON:1}),
+  q("Consigo liderar bem mesmo quando preciso cumprir diretrizes definidas por outra pessoa.", {D8:3,D7:2,D1:1}, {GUARDIAN:2,EXECUTRON:1,DIPLOMATIK:1}),
+  q("Quando uma autoridade superior toma uma decisão, procuro alinhar minha equipe sem demonstrar disputa interna.", {D8:3,D2:2,D5:1}, {DIPLOMATIK:3,GUARDIAN:1}),
+  q("Tenho facilidade em discordar com elegância e propor alternativas sem romper hierarquia.", {D8:3,D2:2,D6:1}, {DIPLOMATIK:2,STRATEGYK:2}),
+  q("Quando estou em posição subordinada, costumo perder motivação se minhas ideias não são adotadas.", {D8:-3,D5:-1,D4:1}, {VISIONEX:1,COMMANDER:1}),
+  q("Consigo respeitar uma cadeia de comando sem abrir mão do meu senso crítico.", {D8:3,D6:2,D3:1}, {STRATEGYK:2,GUARDIAN:1,DIPLOMATIK:1}),
+  q("Quando uma ordem é legítima, executo com seriedade mesmo que eu preferisse outro caminho.", {D8:3,D7:2}, {GUARDIAN:2,EXECUTRON:1,DIPLOMATIK:1})
 ];
 
 const scale = [
@@ -764,6 +822,7 @@ function finishQuiz() {
     "Cruzando indicadores comportamentais.",
     "Interpretando perfil predominante.",
     "Analisando comportamento sob pressão.",
+    "Avaliando maturidade institucional.",
     "Gerando radar inicial de liderança."
   ];
 
@@ -783,40 +842,72 @@ function finishQuiz() {
 function calculateResult() {
   const dimScores = {};
   const dimMax = {};
-  const profileScores = {};
+  const rawProfileScores = {};
+  const profileMax = {};
 
   Object.keys(dimensions).forEach(d => {
     dimScores[d] = 0;
     dimMax[d] = 0;
   });
 
-  Object.keys(profileInfo).forEach(p => profileScores[p] = 0);
+  Object.keys(profileInfo).forEach(p => {
+    rawProfileScores[p] = 0;
+    profileMax[p] = 0;
+  });
 
   questions.forEach((question, index) => {
     const answer = answers[index];
 
     Object.entries(question.dims).forEach(([dim, weight]) => {
-      dimScores[dim] += answer * weight;
-      dimMax[dim] += 5 * Math.abs(weight);
+      const absWeight = Math.abs(weight);
+      const effectiveAnswer = weight >= 0 ? answer : (6 - answer);
+
+      dimScores[dim] += effectiveAnswer * absWeight;
+      dimMax[dim] += 5 * absWeight;
     });
 
     Object.entries(question.profiles).forEach(([profile, weight]) => {
-      profileScores[profile] += answer * weight;
+      if (!rawProfileScores.hasOwnProperty(profile)) return;
+
+      const absWeight = Math.abs(weight);
+      const effectiveAnswer = weight >= 0 ? answer : (6 - answer);
+
+      rawProfileScores[profile] += effectiveAnswer * absWeight;
+      profileMax[profile] += 5 * absWeight;
     });
   });
 
   const dimPercent = {};
+
   Object.keys(dimensions).forEach(dim => {
-    dimPercent[dim] = Math.max(0, Math.round((dimScores[dim] / dimMax[dim]) * 100));
+    dimPercent[dim] = dimMax[dim]
+      ? Math.max(0, Math.min(100, Math.round((dimScores[dim] / dimMax[dim]) * 100)))
+      : 0;
   });
 
-  const sortedProfiles = Object.entries(profileScores).sort((a, b) => b[1] - a[1]);
-  const main = sortedProfiles[0][0];
-  const second = sortedProfiles[1][0];
+  const profileScores = {};
 
-  const maxProfileScore = sortedProfiles[0][1];
-  const possibleMax = Math.max(...Object.values(profileScores));
-  const intensityPercent = Math.round((maxProfileScore / possibleMax) * 100);
+  Object.keys(rawProfileScores).forEach(profile => {
+    profileScores[profile] = profileMax[profile]
+      ? Math.round((rawProfileScores[profile] / profileMax[profile]) * 100)
+      : 0;
+  });
+
+  const sortedProfiles = Object.entries(profileScores)
+    .sort((a, b) => b[1] - a[1]);
+
+  let main = sortedProfiles[0][0];
+  let second = sortedProfiles[1][0];
+
+  const topScore = sortedProfiles[0][1];
+  const secondScore = sortedProfiles[1][1];
+
+  if ((topScore - secondScore) <= 3) {
+    main = resolveTieByDimensions(sortedProfiles.slice(0, 3), dimPercent);
+    second = sortedProfiles.find(([profile]) => profile !== main)?.[0] || sortedProfiles[1][0];
+  }
+
+  const intensityPercent = topScore;
 
   return {
     dimPercent,
@@ -828,25 +919,42 @@ function calculateResult() {
   };
 }
 
+function resolveTieByDimensions(topProfiles, dimPercent) {
+  const dimensionAffinity = {
+    COMMANDER: (dimPercent.D3 * 1.4) + (dimPercent.D4 * 1.3) + (dimPercent.D1 * 0.8),
+    STRATEGYK: (dimPercent.D6 * 1.5) + (dimPercent.D3 * 1.1) + (dimPercent.D8 * 0.8),
+    MENTORIX: (dimPercent.D5 * 1.6) + (dimPercent.D2 * 1.1) + (dimPercent.D8 * 0.7),
+    EXECUTRON: (dimPercent.D7 * 1.6) + (dimPercent.D3 * 1.0) + (dimPercent.D4 * 0.8),
+    DIPLOMATIK: (dimPercent.D2 * 1.4) + (dimPercent.D8 * 1.4) + (dimPercent.D5 * 0.9),
+    VISIONEX: (dimPercent.D6 * 1.5) + (dimPercent.D1 * 1.0) + (dimPercent.D3 * 0.7),
+    GUARDIAN: (dimPercent.D7 * 1.2) + (dimPercent.D8 * 1.4) + (dimPercent.D6 * 0.9)
+  };
+
+  return topProfiles
+    .map(([profile]) => [profile, dimensionAffinity[profile] || 0])
+    .sort((a, b) => b[1] - a[1])[0][0];
+}
+
 function generateInsight(main) {
   const insights = {
     COMMANDER: "Você tende a assumir direção quando há pressão. Isso gera velocidade e clareza, mas pode reduzir escuta e autonomia se usado em excesso.",
     STRATEGYK: "Você tende a enxergar riscos e consequências antes da maioria das pessoas. Sua força está na análise, mas o excesso de cautela pode atrasar avanços importantes.",
     MENTORIX: "Você tende a liderar desenvolvendo pessoas e criando vínculos de confiança. Sua força humana é alta, mas pode haver dificuldade em confrontar quando necessário.",
     EXECUTRON: "Você tende a transformar cobrança em resultado. Sua orientação para entrega é forte, mas pode gerar desgaste quando a equipe não acompanha seu ritmo.",
-    DIPLOMATIK: "Você tende a preservar equilíbrio e reduzir conflitos. Sua liderança gera estabilidade, mas pode atrasar decisões difíceis quando o confronto é necessário.",
+    DIPLOMATIK: "Você tende a preservar equilíbrio, respeito institucional e redução de conflitos. Sua liderança gera estabilidade, mas pode atrasar decisões difíceis quando o confronto é necessário.",
     VISIONEX: "Você tende a enxergar possibilidades antes dos demais. Sua força está na inovação, mas pode haver risco de dispersão quando há excesso de ideias.",
-    GUARDIAN: "Você tende a proteger processos, pessoas e previsibilidade. Sua força está na consistência, mas pode haver resistência a mudanças rápidas."
+    GUARDIAN: "Você tende a proteger processos, instituições e previsibilidade. Sua força está na consistência, mas pode haver resistência a mudanças rápidas."
   };
 
   return insights[main] || "Seu perfil demonstra padrões de liderança que merecem análise mais aprofundada.";
 }
 
 function getIntensityLabel(percent) {
-  if (percent >= 80) return "Muito elevada";
-  if (percent >= 60) return "Elevada";
-  if (percent >= 40) return "Moderada";
-  return "Baixa";
+  if (percent >= 82) return "Muito elevada";
+  if (percent >= 68) return "Elevada";
+  if (percent >= 54) return "Moderada";
+  if (percent >= 40) return "Baixa";
+  return "Muito baixa";
 }
 
 function showLeadForm() {
@@ -965,7 +1073,7 @@ async function showResult(result) {
       <h3>Seu relatório completo revela o que este resultado ainda não mostra.</h3>
       <p>
         Desbloqueie sua análise executiva premium com pontos cegos, comportamento sob pressão,
-        impacto na equipe e plano estratégico de evolução.
+        maturidade institucional, impacto na equipe e plano estratégico de evolução.
       </p>
       <button class="btn" onclick="startStripeCheckout('${savedId}', this)">
         Desbloquear Relatório Executivo — R$ 47,00
@@ -991,10 +1099,10 @@ async function startStripeCheckout(assessmentId, button) {
       {
         method: "POST",
         headers: {
-  "Content-Type": "application/json",
-  "apikey": SUPABASE_ANON_KEY,
-  "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-},
+          "Content-Type": "application/json",
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+        },
         body: JSON.stringify({
           assessment_id: assessmentId
         })
