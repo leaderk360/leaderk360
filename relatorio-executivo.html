@@ -35,7 +35,7 @@
     }
 
     .page {
-      width: min(1180px, 94%);
+      width: min(920px, 94%);
       margin: 0 auto;
       padding: 54px 0;
     }
@@ -48,7 +48,7 @@
     }
 
     .cover img {
-      width: min(820px, 100%);
+      width: 100%;
       border-radius: 28px;
       box-shadow: 0 40px 120px rgba(0,0,0,.7);
       border: 1px solid rgba(200,169,107,.28);
@@ -193,6 +193,66 @@
       gap: 16px;
       margin-top: 30px;
     }
+
+  .executive-score {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 34px;
+  align-items: center;
+  margin: 38px 0;
+}
+
+.score-ring {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 36px;
+  background:
+    radial-gradient(circle at center, #06101d 0 52%, transparent 53%),
+    conic-gradient(#efd58a 0deg, #3ba7ff 230deg, rgba(255,255,255,.08) 230deg 360deg);
+  box-shadow: 0 0 70px rgba(200,169,107,.28);
+}
+
+.score-ring strong {
+  font-size: 62px;
+  color: #efd58a;
+  line-height: 1;
+}
+
+.score-ring span {
+  display: block;
+  margin-top: 10px;
+  color: #c7cedb;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.score-copy h3 {
+  color: #fff;
+  font-size: 30px;
+}
+
+.score-copy p {
+  color: #b8c1d1;
+}
+
+@media (max-width: 900px) {
+  .executive-score {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .score-copy {
+    text-align: center;
+  }
+
+  .score-copy p {
+    text-align: center;
+  }
 
     .sheet-item {
       padding: 20px;
@@ -726,12 +786,20 @@
       O radar das sete dimensões apresenta a intensidade relativa dos principais eixos de liderança avaliados. Percentuais elevados indicam forte expressão comportamental naquela dimensão. Percentuais moderados indicam presença situacional ou dependente do contexto. Percentuais baixos sugerem áreas com menor expressão ou oportunidade de desenvolvimento.
     </p>
 
-    <div class="radar-circle">
-      <div class="radar-inner">
-        <b id="mediaGeral">0%</b>
-        <span>Índice médio das dimensões</span>
-      </div>
-    </div>
+   <div class="executive-score">
+  <div class="score-ring">
+    <strong id="mediaGeral">0%</strong>
+    <span>Índice Geral de Liderança</span>
+  </div>
+
+  <div class="score-copy">
+    <h3>Leitura multidimensional do perfil</h3>
+    <p>
+      Este índice representa a média consolidada das sete dimensões analisadas pela metodologia LeaderK Matrix™,
+      funcionando como leitura sintética da intensidade estratégica do perfil.
+    </p>
+  </div>
+</div>
 
     <div class="metrics">
       <div class="metric"><span>Influência e Presença</span><div class="bar"><span data-dim="D1"></span></div><strong data-value="D1">0%</strong></div>
