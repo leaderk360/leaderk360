@@ -9,16 +9,15 @@
     :root {
       --bg: #05070d;
       --navy: #07111f;
-      --card: rgba(255,255,255,.055);
-      --line: rgba(255,255,255,.13);
       --gold: #c8a96b;
       --gold2: #efd58a;
       --blue: #3ba7ff;
       --text: #f5f7fa;
       --muted: #b8c1d1;
-      --darkText: #333842;
+      --darkText: #303640;
       --paper: #f6f3ec;
       --paper2: #fffaf0;
+      --line: rgba(200,169,107,.22);
     }
 
     * {
@@ -30,21 +29,40 @@
     body {
       font-family: Inter, Arial, sans-serif;
       color: var(--darkText);
-      background: linear-gradient(180deg, #06101d, #0a1524);
+      background:
+        radial-gradient(circle at top right, rgba(59,167,255,.13), transparent 28%),
+        linear-gradient(180deg, #06101d, #091524 45%, #06101d);
       line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    .premium-access-note {
+      position: fixed;
+      top: 22px;
+      right: 22px;
+      z-index: 9999;
+      max-width: 360px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      background: rgba(7, 16, 29, .92);
+      border: 1px solid rgba(200,169,107,.42);
+      color: #efd58a;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 0 34px rgba(0,0,0,.35);
     }
 
     .page {
       width: min(920px, 94%);
       margin: 0 auto;
-      padding: 54px 0;
+      padding: 48px 0;
     }
 
     .cover {
       min-height: 100vh;
       display: grid;
       place-items: center;
-      padding: 30px 0;
+      padding: 24px 0 54px;
     }
 
     .cover img {
@@ -54,35 +72,10 @@
       border: 1px solid rgba(200,169,107,.28);
     }
 
-    .premium-access-note {
-  position: fixed;
-  top: 22px;
-  right: 22px;
-  z-index: 9999;
-  max-width: 340px;
-  padding: 14px 20px;
-  border-radius: 999px;
-  background: rgba(7, 16, 29, .92);
-  border: 1px solid rgba(200,169,107,.42);
-  color: #efd58a;
-  font-size: 13px;
-  font-weight: 800;
-  box-shadow: 0 0 34px rgba(0,0,0,.35);
-}
-
-@media (max-width: 900px) {
-  .premium-access-note {
-    position: static;
-    margin: 18px auto;
-    border-radius: 18px;
-    text-align: center;
-    width: min(92%, 520px);
-  }
-
     .section {
       position: relative;
       margin: 42px 0;
-      padding: 54px;
+      padding: 48px;
       border-radius: 34px;
       background:
         linear-gradient(135deg, rgba(255,255,255,.96), rgba(246,243,236,.98)),
@@ -96,7 +89,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: url("logo-leaderk360_full.png") center / 560px no-repeat;
+      background: url("logo-leaderk360_full.png") center / 520px no-repeat;
       opacity: .025;
       pointer-events: none;
     }
@@ -142,13 +135,13 @@
     }
 
     h1 {
-      font-size: clamp(38px, 5vw, 68px);
+      font-size: clamp(38px, 5vw, 64px);
       margin-bottom: 24px;
       color: #2d3139;
     }
 
     h2 {
-      font-size: clamp(30px, 4vw, 48px);
+      font-size: clamp(30px, 4vw, 46px);
       margin-bottom: 22px;
       color: #353a43;
     }
@@ -172,14 +165,6 @@
       text-align: justify;
     }
 
-    .gold {
-      color: var(--gold);
-    }
-
-    .dark-section .gold {
-      color: var(--gold2);
-    }
-
     .divider {
       height: 1px;
       width: 100%;
@@ -187,82 +172,58 @@
       margin: 32px 0;
     }
 
-    .executive-sheet {
+    .executive-sheet,
+    .summary-grid,
+    .cards-2,
+    .cards-3,
+    .index-grid,
+    .method-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
-      margin-top: 30px;
+      margin-top: 28px;
     }
 
-  .executive-score {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 34px;
-  align-items: center;
-  margin: 38px 0;
-}
+    .executive-sheet {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-.score-ring {
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 36px;
-  background:
-    radial-gradient(circle at center, #06101d 0 52%, transparent 53%),
-    conic-gradient(#efd58a 0deg, #3ba7ff 230deg, rgba(255,255,255,.08) 230deg 360deg);
-  box-shadow: 0 0 70px rgba(200,169,107,.28);
-}
+    .summary-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-.score-ring strong {
-  font-size: 62px;
-  color: #efd58a;
-  line-height: 1;
-}
+    .method-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-.score-ring span {
-  display: block;
-  margin-top: 10px;
-  color: #c7cedb;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-}
+    .cards-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-.score-copy h3 {
-  color: #fff;
-  font-size: 30px;
-}
+    .cards-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
-.score-copy p {
-  color: #b8c1d1;
-}
+    .index-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
 
-@media (max-width: 900px) {
-  .executive-score {
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
-
-  .score-copy {
-    text-align: center;
-  }
-
-  .score-copy p {
-    text-align: center;
-  }
+    .sheet-item,
+    .summary-card,
+    .info-card,
+    .index-item {
+      border-radius: 24px;
+      border: 1px solid rgba(200,169,107,.20);
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 12px 30px rgba(0,0,0,.05);
+    }
 
     .sheet-item {
       padding: 20px;
-      border-radius: 22px;
-      border: 1px solid rgba(200,169,107,.22);
-      background: rgba(255,255,255,.78);
-      box-shadow: 0 10px 26px rgba(0,0,0,.05);
     }
 
-    .sheet-item span {
+    .sheet-item span,
+    .summary-card strong,
+    .info-card strong {
       display: block;
       color: var(--gold);
       font-size: 12px;
@@ -279,11 +240,14 @@
       line-height: 1.25;
     }
 
-    .method-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin: 34px 0;
+    .summary-card {
+      min-height: 165px;
+      padding: 24px;
+    }
+
+    .summary-card p {
+      font-size: 15.5px;
+      margin: 0;
     }
 
     .method-card {
@@ -309,42 +273,10 @@
       font-weight: 800;
     }
 
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-top: 28px;
-    }
-
-    .summary-card {
-      min-height: 190px;
-      padding: 24px;
-      border-radius: 26px;
-      border: 1px solid rgba(200,169,107,.24);
-      background:
-        radial-gradient(circle at top, rgba(200,169,107,.13), transparent 45%),
-        rgba(255,255,255,.72);
-      box-shadow: 0 12px 34px rgba(0,0,0,.06);
-    }
-
-    .summary-card strong {
-      display: block;
-      color: var(--gold);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 14px;
-    }
-
-    .summary-card p {
-      font-size: 15.5px;
-      margin: 0;
-    }
-
     .executive-grid {
       display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 28px;
+      grid-template-columns: 1fr;
+      gap: 22px;
       align-items: stretch;
     }
 
@@ -358,7 +290,7 @@
     }
 
     .profile-name {
-      font-size: clamp(36px, 5vw, 66px);
+      font-size: clamp(36px, 5vw, 60px);
       font-weight: 900;
       color: var(--gold);
       letter-spacing: -2px;
@@ -373,6 +305,52 @@
       margin-bottom: 20px;
     }
 
+    .executive-score {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 34px;
+      align-items: center;
+      margin: 38px 0;
+    }
+
+    .score-ring {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 36px;
+      background:
+        radial-gradient(circle at center, #06101d 0 52%, transparent 53%),
+        conic-gradient(#efd58a 0deg, #3ba7ff 230deg, rgba(255,255,255,.08) 230deg 360deg);
+      box-shadow: 0 0 70px rgba(200,169,107,.28);
+    }
+
+    .score-ring strong {
+      font-size: 62px;
+      color: #efd58a;
+      line-height: 1;
+    }
+
+    .score-ring span {
+      display: block;
+      margin-top: 10px;
+      color: #c7cedb;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .score-copy h3 {
+      color: #fff;
+      font-size: 30px;
+    }
+
+    .score-copy p {
+      color: #b8c1d1;
+    }
+
     .metrics {
       display: grid;
       gap: 16px;
@@ -384,14 +362,14 @@
       grid-template-columns: 210px 1fr 54px;
       align-items: center;
       gap: 14px;
-      color: #566070;
+      color: #b8c1d1;
       font-size: 14px;
     }
 
     .bar {
       height: 13px;
       border-radius: 999px;
-      background: rgba(0,0,0,.08);
+      background: rgba(255,255,255,.09);
       overflow: hidden;
     }
 
@@ -402,84 +380,19 @@
       background: linear-gradient(90deg, #3ba7ff, #efd58a);
     }
 
-    .radar-circle {
-      margin: 34px auto 4px;
-      width: min(500px, 100%);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      border: 1px solid rgba(200,169,107,.24);
-      background:
-        radial-gradient(circle, rgba(200,169,107,.18) 0 2px, transparent 3px),
-        conic-gradient(from 180deg, rgba(59,167,255,.26), rgba(200,169,107,.32), rgba(59,167,255,.26));
-      display: grid;
-      place-items: center;
-      box-shadow: inset 0 0 70px rgba(0,0,0,.14);
-    }
-
-    .radar-inner {
-      width: 72%;
-      height: 72%;
-      border-radius: 50%;
-      background: rgba(255,255,255,.82);
-      border: 1px solid rgba(200,169,107,.22);
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 30px;
-    }
-
-    .radar-inner b {
-      display: block;
-      font-size: clamp(34px, 5vw, 64px);
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .radar-inner span {
-      color: #646c78;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-
-    .cards-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 26px;
-    }
-
-    .cards-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      margin-top: 26px;
-    }
-
     .info-card {
       padding: 26px;
-      border-radius: 24px;
-      border: 1px solid rgba(200,169,107,.20);
-      background: rgba(255,255,255,.76);
-      box-shadow: 0 12px 30px rgba(0,0,0,.05);
     }
 
-    .dark-section .info-card {
+    .dark-section .info-card,
+    .dark-section .summary-card,
+    .dark-section .index-item {
       background: rgba(255,255,255,.045);
       border-color: rgba(200,169,107,.22);
     }
 
-    .info-card strong {
-      display: block;
-      color: var(--gold);
-      font-size: 15px;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      margin-bottom: 12px;
-    }
-
-    .dark-section .info-card strong {
+    .dark-section .info-card strong,
+    .dark-section .summary-card strong {
       color: var(--gold2);
     }
 
@@ -490,7 +403,7 @@
 
     .quote {
       margin-top: 26px;
-      padding: 32px;
+      padding: 30px;
       border-left: 4px solid var(--gold);
       border-radius: 22px;
       background: rgba(200,169,107,.10);
@@ -503,7 +416,7 @@
 
     .quote p {
       color: #333842;
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 800;
       margin-bottom: 0;
     }
@@ -512,24 +425,9 @@
       color: var(--text);
     }
 
-    .index-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-top: 26px;
-    }
-
     .index-item {
       text-align: center;
       padding: 26px 16px;
-      border-radius: 24px;
-      border: 1px solid rgba(200,169,107,.22);
-      background: rgba(255,255,255,.76);
-      box-shadow: 0 12px 30px rgba(0,0,0,.05);
-    }
-
-    .dark-section .index-item {
-      background: rgba(255,255,255,.045);
     }
 
     .index-item b {
@@ -540,17 +438,9 @@
       margin-bottom: 10px;
     }
 
-    .dark-section .index-item b {
-      color: var(--gold2);
-    }
-
     .index-item span {
       color: #667080;
       font-size: 14px;
-    }
-
-    .dark-section .index-item span {
-      color: var(--muted);
     }
 
     .timeline {
@@ -584,7 +474,7 @@
       display: flex;
       justify-content: space-between;
       gap: 24px;
-      color: #606878;
+      color: #b8c1d1;
       font-size: 14px;
     }
 
@@ -597,60 +487,67 @@
       margin: 50px 0 20px;
     }
 
-    @media print {
-      .pdf-actions {
-        display: none;
-      }
-
-      body {
-        background: #f6f3ec;
+    @media (max-width: 900px) {
+      .premium-access-note {
+        position: static;
+        margin: 18px auto;
+        border-radius: 18px;
+        text-align: center;
+        width: min(92%, 520px);
       }
 
       .page {
-        width: 100%;
-        padding: 0;
-      }
-
-      .section {
-        box-shadow: none;
-        border-radius: 0;
-        margin: 0;
-        min-height: 100vh;
-        page-break-after: always;
-        break-inside: avoid;
+        width: min(920px, 94%);
+        padding: 24px 0;
       }
 
       .cover {
-        min-height: 100vh;
-        page-break-after: always;
+        min-height: auto;
+        padding: 18px 0 24px;
       }
 
       .cover img {
-        width: 100%;
-        max-width: none;
-        border-radius: 0;
-        box-shadow: none;
-        border: none;
+        border-radius: 18px;
       }
-    }
 
-    @media (max-width: 900px) {
       .section {
-        padding: 34px 22px;
+        padding: 30px 22px;
+        border-radius: 24px;
       }
 
-      .executive-grid,
-      .cards-3,
-      .cards-2,
-      .index-grid,
-      .summary-grid,
+      h1 {
+        font-size: clamp(34px, 9vw, 48px);
+      }
+
+      h2 {
+        font-size: clamp(28px, 8vw, 40px);
+      }
+
       .executive-sheet,
-      .method-grid {
+      .summary-grid,
+      .cards-2,
+      .cards-3,
+      .index-grid,
+      .method-grid,
+      .executive-score {
         grid-template-columns: 1fr;
+      }
+
+      .executive-score {
+        justify-items: center;
+      }
+
+      .score-copy {
+        text-align: center;
+      }
+
+      .score-copy p {
+        text-align: center;
       }
 
       .metric {
         grid-template-columns: 1fr;
+        gap: 8px;
       }
 
       .timeline-item {
@@ -669,7 +566,7 @@
 <div class="premium-access-note">
   Relatório Executivo Premium liberado. Uma cópia de acesso será enviada ao e-mail cadastrado.
 </div>
-  
+
 <main class="page">
 
   <section class="cover">
@@ -739,7 +636,7 @@
     </p>
 
     <div class="quote">
-      <p id="frasePerfil">“O verdadeiro diferencial não está apenas em liderar. Está em compreender o impacto que sua liderança produz.”</p>
+      <p id="frasePerfil"></p>
     </div>
   </section>
 
@@ -786,20 +683,22 @@
       O radar das sete dimensões apresenta a intensidade relativa dos principais eixos de liderança avaliados. Percentuais elevados indicam forte expressão comportamental naquela dimensão. Percentuais moderados indicam presença situacional ou dependente do contexto. Percentuais baixos sugerem áreas com menor expressão ou oportunidade de desenvolvimento.
     </p>
 
-   <div class="executive-score">
-  <div class="score-ring">
-    <strong id="mediaGeral">0%</strong>
-    <span>Índice Geral de Liderança</span>
-  </div>
+    <div class="executive-score">
+      <div class="score-ring" id="scoreRing">
+        <div>
+          <strong id="mediaGeral">0%</strong>
+          <span>Índice Geral de Liderança</span>
+        </div>
+      </div>
 
-  <div class="score-copy">
-    <h3>Leitura multidimensional do perfil</h3>
-    <p>
-      Este índice representa a média consolidada das sete dimensões analisadas pela metodologia LeaderK Matrix™,
-      funcionando como leitura sintética da intensidade estratégica do perfil.
-    </p>
-  </div>
-</div>
+      <div class="score-copy">
+        <h3>Leitura multidimensional do perfil</h3>
+        <p>
+          Este índice representa a média consolidada das sete dimensões analisadas pela metodologia LeaderK Matrix™,
+          funcionando como leitura sintética da intensidade estratégica do perfil.
+        </p>
+      </div>
+    </div>
 
     <div class="metrics">
       <div class="metric"><span>Influência e Presença</span><div class="bar"><span data-dim="D1"></span></div><strong data-value="D1">0%</strong></div>
@@ -877,7 +776,7 @@
 
     <div class="signature">
       <div>
-        <strong class="gold">LeaderK 360</strong><br>
+        <strong style="color:#efd58a;">LeaderK 360</strong><br>
         Assessment Estratégico de Liderança
       </div>
       <div>
@@ -914,74 +813,15 @@ const profileTexts = {
     evolucaoResumo: "Delegar com critério e preservar escuta mesmo em cenários críticos.",
     complementar: "Quando aparece como influência secundária, o Commander adiciona firmeza, coragem decisória e capacidade de direção ao perfil predominante.",
     assinatura: "A assinatura comportamental Commander revela uma liderança que tende a assumir o centro da decisão quando há incerteza. Seu impacto cresce quando essa força é combinada com escuta, delegação e leitura emocional da equipe.",
-    forcas: [
-      ["Decisão sob pressão", "Você tende a assumir responsabilidade quando o ambiente exige velocidade, direção e posicionamento firme."],
-      ["Clareza de comando", "Sua liderança transmite direção objetiva e senso imediato de prioridade."],
-      ["Energia de execução", "Você valoriza avanço prático, responsabilidade e resposta rápida diante de problemas."]
-    ],
-    cegos: [
-      ["Centralização excessiva", "Pode haver tendência a confiar mais no próprio julgamento do que na capacidade da equipe."],
-      ["Escuta reduzida sob tensão", "Quando a urgência aumenta, sua comunicação pode parecer menos receptiva."],
-      ["Impaciência com falhas", "A orientação para resultado pode reduzir tolerância a erros e justificativas frágeis."],
-      ["Sobrecarga pessoal", "O senso de responsabilidade pode levar você a assumir mais do que deveria."]
-    ],
+    forcas: [["Decisão sob pressão", "Você tende a assumir responsabilidade quando o ambiente exige velocidade, direção e posicionamento firme."],["Clareza de comando", "Sua liderança transmite direção objetiva e senso imediato de prioridade."],["Energia de execução", "Você valoriza avanço prático, responsabilidade e resposta rápida diante de problemas."]],
+    cegos: [["Centralização excessiva", "Pode haver tendência a confiar mais no próprio julgamento do que na capacidade da equipe."],["Escuta reduzida sob tensão", "Quando a urgência aumenta, sua comunicação pode parecer menos receptiva."],["Impaciência com falhas", "A orientação para resultado pode reduzir tolerância a erros e justificativas frágeis."],["Sobrecarga pessoal", "O senso de responsabilidade pode levar você a assumir mais do que deveria."]],
     pressao1: "Sob pressão, o perfil Commander tende a buscar controle, organização e decisão. Esse movimento pode ser funcional em momentos de crise, especialmente quando o ambiente está confuso ou a equipe está insegura.",
     pressao2: "O ponto de atenção está em diferenciar comando de centralização. A liderança se torna mais madura quando mantém direção sem retirar da equipe sua autonomia e responsabilidade.",
     impacto1: "A equipe tende a perceber sua liderança como firme, objetiva e direcionadora. Em cenários de dúvida, sua presença pode gerar segurança e foco.",
     impacto2: "Ao mesmo tempo, pessoas com maior necessidade de escuta e participação podem sentir pressão diante de um estilo mais direto.",
     impactoFrase: "Alta performance sustentável exige mais do que cobrança. Exige clareza, confiança e maturidade na forma de conduzir pessoas.",
-    evolucao: [
-      ["Delegar com critério", "Estabeleça critérios claros de entrega, prazos, limites de decisão e pontos de acompanhamento."],
-      ["Separar urgência real de urgência emocional", "Antes de assumir o controle, avalie se a equipe pode resolver com orientação."],
-      ["Ampliar escuta antes da decisão final", "Crie espaço breve para coleta de percepções em decisões relevantes."],
-      ["Transformar cobrança em desenvolvimento", "Diferencie falta de competência, falta de clareza, falta de recurso e falta de compromisso."]
-    ],
-    conclusao: [
-      "O perfil identificado demonstra forte capacidade de direção, decisão e execução.",
-      "O principal desafio evolutivo está em calibrar a intensidade do comando para que ele não se transforme em centralização.",
-      "Liderar em alto nível não significa abandonar sua natureza predominante, mas aprender a utilizá-la com precisão."
-    ]
-  },
-
-  STRATEGYK: {
-    titulo: "O Líder de Inteligência Estratégica",
-    descricao: "O perfil Strategyk indica uma liderança analítica, racional e orientada à antecipação de cenários.",
-    frase: "“Estratégia é enxergar antes. Maturidade é saber quando a análise já é suficiente para avançar.”",
-    resumo1: "Seu resultado aponta uma liderança guiada por análise, leitura de cenário e busca por decisões sustentáveis.",
-    resumo2: "O desafio estratégico está em evitar que a profundidade analítica se transforme em lentidão decisória.",
-    forcaResumo: "Antecipação de riscos, pensamento sistêmico e consistência decisória.",
-    riscoResumo: "Excesso de análise, distanciamento emocional e demora para avançar.",
-    pressaoResumo: "Tende a buscar dados, cenários e previsibilidade antes de decidir.",
-    evolucaoResumo: "Transformar análise em decisão dentro de janelas adequadas de tempo.",
-    complementar: "Quando aparece como influência secundária, o Strategyk adiciona profundidade analítica, prudência e visão de consequência.",
-    assinatura: "A assinatura comportamental Strategyk revela uma liderança orientada por inteligência, previsão e racionalidade.",
-    forcas: [
-      ["Leitura de cenário", "Você tende a perceber riscos, variáveis e consequências antes da maioria."],
-      ["Decisão racional", "Sua liderança busca consistência e reduz decisões impulsivas."],
-      ["Visão sistêmica", "Você conecta problemas imediatos a impactos futuros e estruturais."]
-    ],
-    cegos: [
-      ["Excesso de análise", "A busca por segurança racional pode atrasar movimentos necessários."],
-      ["Frieza percebida", "A equipe pode interpretar objetividade analítica como distância emocional."],
-      ["Baixa tolerância à improvisação", "Ambientes desorganizados podem gerar desgaste pela falta de previsibilidade."],
-      ["Comunicação complexa", "Sua análise pode ser sofisticada demais para parte da equipe."]
-    ],
-    pressao1: "Sob pressão, o Strategyk tende a buscar contexto, dados e leitura de risco antes de agir.",
-    pressao2: "Uma decisão suficientemente boa tomada no momento certo pode superar uma decisão perfeita tomada tarde demais.",
-    impacto1: "A equipe tende a perceber sua liderança como racional, consistente e tecnicamente confiável.",
-    impacto2: "Por outro lado, pode sentir falta de calor relacional ou direcionamento mais simples em momentos de incerteza.",
-    impactoFrase: "Estratégia só gera valor quando sai da análise e chega à ação compreensível para a equipe.",
-    evolucao: [
-      ["Definir prazos para análise", "Estabeleça limites objetivos para encerrar diagnóstico e iniciar ação."],
-      ["Traduzir complexidade", "Comunique decisões estratégicas em linguagem clara e operacional."],
-      ["Assumir riscos calculados", "Nem toda incerteza precisa ser eliminada antes de avançar."],
-      ["Aproximar análise de pessoas", "Combine racionalidade com escuta emocional e presença junto à equipe."]
-    ],
-    conclusao: [
-      "O perfil identificado demonstra forte capacidade de análise, antecipação e leitura estratégica.",
-      "O principal desafio evolutivo está em evitar que a profundidade da análise reduza velocidade decisória.",
-      "Liderar em alto nível exige transformar inteligência estratégica em direção clara, simples e executável."
-    ]
+    evolucao: [["Delegar com critério", "Estabeleça critérios claros de entrega, prazos, limites de decisão e pontos de acompanhamento."],["Separar urgência real de urgência emocional", "Antes de assumir o controle, avalie se a equipe pode resolver com orientação."],["Ampliar escuta antes da decisão final", "Crie espaço breve para coleta de percepções em decisões relevantes."],["Transformar cobrança em desenvolvimento", "Diferencie falta de competência, falta de clareza, falta de recurso e falta de compromisso."]],
+    conclusao: ["O perfil identificado demonstra forte capacidade de direção, decisão e execução.","O principal desafio evolutivo está em calibrar a intensidade do comando para que ele não se transforme em centralização.","Liderar em alto nível não significa abandonar sua natureza predominante, mas aprender a utilizá-la com precisão."]
   },
 
   MENTORIX: {
@@ -989,45 +829,27 @@ const profileTexts = {
     descricao: "O perfil Mentorix indica uma liderança voltada ao crescimento de pessoas, escuta, confiança e desenvolvimento da equipe.",
     frase: "“Desenvolver pessoas é multiplicar liderança. O limite surge quando acolher substitui confrontar.”",
     resumo1: "Seu resultado aponta uma liderança orientada ao desenvolvimento humano, construção de confiança e fortalecimento de pessoas.",
-    resumo2: "O desafio estratégico está em equilibrar acolhimento com firmeza.",
+    resumo2: "O desafio estratégico está em equilibrar acolhimento com firmeza. A maturidade desse perfil aparece quando o desenvolvimento humano não impede conversas difíceis, cobranças claras e decisões necessárias.",
     forcaResumo: "Desenvolvimento de pessoas, escuta qualificada e construção de confiança.",
     riscoResumo: "Excesso de tolerância, dificuldade de confronto e desgaste emocional.",
     pressaoResumo: "Tende a proteger pessoas e preservar vínculos mesmo em tensão.",
     evolucaoResumo: "Fortalecer conversas difíceis e cobrança objetiva sem perder humanidade.",
     complementar: "Quando aparece como influência secundária, o Mentorix adiciona sensibilidade humana, escuta e desenvolvimento.",
     assinatura: "A assinatura comportamental Mentorix revela uma liderança que influencia por confiança, vínculo e crescimento de pessoas.",
-    forcas: [
-      ["Desenvolvimento humano", "Você tende a investir na evolução de pessoas e talentos."],
-      ["Escuta e confiança", "Sua liderança cria abertura para diálogo e aprendizado."],
-      ["Clima de segurança", "Você favorece ambientes nos quais as pessoas se sentem consideradas."]
-    ],
-    cegos: [
-      ["Excesso de tolerância", "Pode haver demora para confrontar comportamentos inadequados."],
-      ["Desgaste emocional", "A absorção constante de demandas humanas pode gerar sobrecarga."],
-      ["Dificuldade de cobrança", "A preservação do vínculo pode enfraquecer conversas objetivas."],
-      ["Dependência da equipe", "Pessoas podem se apoiar demais na sua orientação."]
-    ],
+    forcas: [["Desenvolvimento humano", "Você tende a investir na evolução de pessoas e talentos."],["Escuta e confiança", "Sua liderança cria abertura para diálogo e aprendizado."],["Clima de segurança", "Você favorece ambientes nos quais as pessoas se sentem consideradas."]],
+    cegos: [["Excesso de tolerância", "Pode haver demora para confrontar comportamentos inadequados."],["Desgaste emocional", "A absorção constante de demandas humanas pode gerar sobrecarga."],["Dificuldade de cobrança", "A preservação do vínculo pode enfraquecer conversas objetivas."],["Dependência da equipe", "Pessoas podem se apoiar demais na sua orientação."]],
     pressao1: "Sob pressão, o Mentorix tende a proteger pessoas, preservar vínculos e buscar compreensão antes da cobrança.",
     pressao2: "O ponto de atenção está em não permitir que empatia se transforme em permissividade.",
     impacto1: "A equipe tende a perceber sua liderança como próxima, acessível e desenvolvedora.",
     impacto2: "Ao mesmo tempo, profissionais que precisam de limites claros podem confundir acolhimento com ausência de cobrança.",
     impactoFrase: "Cuidar de pessoas não elimina a necessidade de responsabilizar comportamentos e resultados.",
-    evolucao: [
-      ["Praticar conversas difíceis", "Aborde problemas cedo, com respeito e objetividade."],
-      ["Definir limites de apoio", "Desenvolver não significa resolver tudo pela equipe."],
-      ["Cobrar com clareza", "Associe confiança a metas, combinados e consequências."],
-      ["Proteger sua energia", "Evite absorver emocionalmente todas as tensões do grupo."]
-    ],
-    conclusao: [
-      "O perfil identificado demonstra forte capacidade de desenvolver pessoas e construir confiança.",
-      "O principal desafio evolutivo está em equilibrar acolhimento com firmeza decisória.",
-      "Liderar em alto nível exige cuidar das pessoas sem abandonar responsabilidade, limites e desempenho."
-    ]
+    evolucao: [["Praticar conversas difíceis", "Aborde problemas cedo, com respeito e objetividade."],["Definir limites de apoio", "Desenvolver não significa resolver tudo pela equipe."],["Cobrar com clareza", "Associe confiança a metas, combinados e consequências."],["Proteger sua energia", "Evite absorver emocionalmente todas as tensões do grupo."]],
+    conclusao: ["O perfil identificado demonstra forte capacidade de desenvolver pessoas e construir confiança.","O principal desafio evolutivo está em equilibrar acolhimento com firmeza decisória.","Liderar em alto nível exige cuidar das pessoas sem abandonar responsabilidade, limites e desempenho."]
   }
 };
 
-["EXECUTRON","DIPLOMATIK","VISIONEX","GUARDIAN"].forEach(p => {
-  profileTexts[p] = profileTexts[p] || profileTexts.COMMANDER;
+["STRATEGYK","EXECUTRON","DIPLOMATIK","VISIONEX","GUARDIAN"].forEach(p => {
+  if (!profileTexts[p]) profileTexts[p] = profileTexts.COMMANDER;
 });
 
 async function carregarRelatorio() {
@@ -1108,6 +930,7 @@ function preencherRelatorio(data) {
   const valores = ["D1","D2","D3","D4","D5","D6","D7"].map(d => Number(dimensoes[d] || 0));
   const media = Math.round(valores.reduce((a,b) => a + b, 0) / valores.length);
   document.getElementById("mediaGeral").textContent = media + "%";
+  atualizarScoreRing(media);
 }
 
 function preencherCards(containerId, items) {
@@ -1147,6 +970,15 @@ function atualizarBarra(dim, valor) {
 
   bars.forEach(bar => bar.style.width = percent + "%");
   numbers.forEach(number => number.textContent = percent + "%");
+}
+
+function atualizarScoreRing(media) {
+  const degrees = Math.round((media / 100) * 360);
+  const ring = document.getElementById("scoreRing");
+  ring.style.background = `
+    radial-gradient(circle at center, #06101d 0 52%, transparent 53%),
+    conic-gradient(#efd58a 0deg, #3ba7ff ${degrees}deg, rgba(255,255,255,.08) ${degrees}deg 360deg)
+  `;
 }
 
 function formatarData(value) {
