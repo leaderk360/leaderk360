@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<strong id="potencial-medio">81%</strong><!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -707,7 +707,7 @@
 
         <div class="profile-box">
           <div class="tag">Ambiente Premium</div>
-          <h3>Organização Demonstrativa</h3>
+         <h3 id="org-name">Organização Demonstrativa</h3>
           <p>
             Ciclo de avaliação: 2026<br />
             Base analisada: 124 líderes e colaboradores<br />
@@ -746,19 +746,19 @@
       <section class="grid-kpis">
         <div class="kpi">
           <span>Total avaliado</span>
-          <strong>124</strong>
+         <strong id="total-avaliados">124</strong>
           <p>Profissionais mapeados na matriz comportamental e executiva.</p>
         </div>
 
         <div class="kpi">
           <span>Risco médio</span>
-          <strong>38%</strong>
+<strong id="risco-medio">38%</strong>
           <p>Risco comportamental consolidado em nível institucional.</p>
         </div>
 
         <div class="kpi">
           <span>Potencial executivo</span>
-          <strong>81%</strong>
+<strong id="potencial-medio">81%</strong>
           <p>Índice médio de liderança, influência e maturidade decisória.</p>
         </div>
 
@@ -1002,7 +1002,7 @@
               </tr>
             </thead>
 
-            <tbody>
+<tbody id="membros-table">
               <tr>
                 <td><strong>Ana M.</strong></td>
                 <td>Governança</td>
@@ -1091,9 +1091,7 @@
       document.getElementById('total-avaliados').innerText = metrics.total_avaliados
       document.getElementById('risco-medio').innerText = metrics.risco_medio + '%'
       document.getElementById('potencial-medio').innerText = metrics.potencial_medio + '%'
-      document.getElementById('perfil-dominante').innerText = metrics.perfil_dominante
-      document.getElementById('perfil-risco').innerText = metrics.perfil_de_risco
-
+      
       const tbody = document.getElementById('membros-table')
       tbody.innerHTML = ''
 
