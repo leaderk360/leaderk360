@@ -1057,8 +1057,61 @@
         </div>
       </section>
 
-      <div class="footer-space"></div>
+            <div class="footer-space"></div>
     </main>
   </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+    const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY'
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    async function carregarDashboard() {
+      const { data: org } = await supabase
+        .from('organizations')
+        .select('*')
+        .limit(1)
+        .single()
+
+      const { data: metrics } = await supabase
+        .from('organization_metrics')
+        .select('*')
+        .eq('organization_id', org.id)
+        .single()
+
+      const { data: membros } = await supabase
+        .from('organization_members')
+        .select('*')
+        .eq('organization_id', org.id)
+
+      document.getElementById('org-name').innerText = org.nome
+      document.getElementById('total-avaliados').innerText = metrics.total_avaliados
+      document.getElementById('risco-medio').innerText = metrics.risco_medio + '%'
+      document.getElementById('potencial-medio').innerText = metrics.potencial_medio + '%'
+      document.getElementById('perfil-dominante').innerText = metrics.perfil_dominante
+      document.getElementById('perfil-risco').innerText = metrics.perfil_de_risco
+
+      const tbody = document.getElementById('membros-table')
+      tbody.innerHTML = ''
+
+      membros.forEach(m => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${m.nome}</td>
+            <td>${m.cargo}</td>
+            <td>${m.setor}</td>
+            <td>${m.perfil_predominante}</td>
+            <td>${m.risco_executivo}%</td>
+            <td>${m.potencial_lideranca}%</td>
+          </tr>
+        `
+      })
+    }
+
+    carregarDashboard()
+  </script>
 </body>
 </html>
