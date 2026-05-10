@@ -1,4 +1,4 @@
-<strong id="potencial-medio">81%</strong><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -9,9 +9,7 @@
   <style>
     :root {
       --bg: #040914;
-      --bg2: #07111f;
       --panel: rgba(7, 17, 31, .78);
-      --panel2: rgba(10, 24, 44, .82);
       --gold: #d6b45a;
       --gold2: #f1d27a;
       --text: #ffffff;
@@ -19,8 +17,6 @@
       --line: rgba(214,180,90,.22);
       --green: #55d6a5;
       --red: #e46f6f;
-      --blue: #6aa9ff;
-      --purple: #b68cff;
     }
 
     * {
@@ -77,7 +73,6 @@
     .brand h1 {
       font-size: 20px;
       line-height: 1;
-      letter-spacing: -.3px;
     }
 
     .brand h1 span {
@@ -102,7 +97,6 @@
 
     .nav a {
       display: flex;
-      align-items: center;
       justify-content: space-between;
       padding: 14px 16px;
       border-radius: 16px;
@@ -115,10 +109,6 @@
     .nav a.active {
       background: rgba(214,180,90,.10);
       color: var(--gold2);
-    }
-
-    .nav a small {
-      color: rgba(255,255,255,.36);
     }
 
     .sidebar-footer {
@@ -157,13 +147,13 @@
     }
 
     .headline span {
-      display: inline-block;
       color: var(--gold);
       font-size: 12px;
       font-weight: 900;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 12px;
+      display: inline-block;
     }
 
     .headline h2 {
@@ -320,7 +310,6 @@
 
     .panel-header {
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
       gap: 20px;
       margin-bottom: 26px;
@@ -337,7 +326,6 @@
     .panel-header h3 {
       margin-top: 8px;
       font-size: 26px;
-      letter-spacing: -.8px;
     }
 
     .panel-header p {
@@ -365,7 +353,7 @@
 
     .bar-row {
       display: grid;
-      grid-template-columns: 150px 1fr 58px;
+      grid-template-columns: 180px 1fr 58px;
       gap: 16px;
       align-items: center;
     }
@@ -386,6 +374,8 @@
       height: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, var(--gold2), var(--gold));
+      width: 0%;
+      transition: width .5s ease;
     }
 
     .bar-row strong {
@@ -463,54 +453,9 @@
     .profile-card span {
       display: block;
       font-size: 11px;
-      letter-spacing: .8px;
       color: rgba(255,255,255,.72);
       text-transform: uppercase;
       line-height: 1.35;
-    }
-
-    .matrix {
-      display: grid;
-      grid-template-columns: 150px repeat(4, 1fr);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 22px;
-      overflow: hidden;
-    }
-
-    .cell {
-      min-height: 74px;
-      padding: 14px;
-      border-right: 1px solid rgba(255,255,255,.07);
-      border-bottom: 1px solid rgba(255,255,255,.07);
-      background: rgba(255,255,255,.025);
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .cell.head {
-      background: rgba(214,180,90,.10);
-      color: var(--gold2);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .9px;
-      font-size: 11px;
-    }
-
-    .cell.label {
-      color: white;
-      font-weight: 900;
-    }
-
-    .cell.good {
-      color: var(--green);
-    }
-
-    .cell.mid {
-      color: var(--gold2);
-    }
-
-    .cell.risk {
-      color: var(--red);
     }
 
     table {
@@ -542,26 +487,12 @@
 
     .status {
       display: inline-flex;
-      align-items: center;
       padding: 7px 10px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 900;
-    }
-
-    .status.high {
-      background: rgba(85,214,165,.10);
-      color: var(--green);
-    }
-
-    .status.medium {
       background: rgba(214,180,90,.12);
       color: var(--gold2);
-    }
-
-    .status.danger {
-      background: rgba(228,111,111,.12);
-      color: var(--red);
     }
 
     .insight-box {
@@ -571,6 +502,7 @@
         radial-gradient(circle at top right, rgba(214,180,90,.16), transparent 38%),
         rgba(255,255,255,.035);
       border: 1px solid var(--line);
+      margin-bottom: 16px;
     }
 
     .insight-box h4 {
@@ -637,14 +569,6 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .matrix {
-        grid-template-columns: 1fr;
-      }
-
-      .cell {
-        min-height: auto;
-      }
-
       .bar-row {
         grid-template-columns: 1fr;
         gap: 8px;
@@ -678,18 +602,17 @@
         <a class="active" href="#visao-geral">Visão Geral <small>01</small></a>
         <a href="#riscos">Riscos Executivos <small>02</small></a>
         <a href="#perfis">Mapa de Perfis <small>03</small></a>
-        <a href="#matriz">Matriz de Decisão <small>04</small></a>
-        <a href="#ranking">Ranking Executivo <small>05</small></a>
+        <a href="#ranking">Ranking Executivo <small>04</small></a>
 
         <div class="nav-label">Operação</div>
-        <a href="#insights">Insights Estratégicos <small>06</small></a>
+        <a href="#insights">Insights Estratégicos <small>05</small></a>
         <a href="index.html">Voltar ao Site <small>↗</small></a>
       </div>
 
       <div class="sidebar-footer">
-        <strong>Documento demonstrativo</strong>
+        <strong>Painel institucional</strong>
         <p>
-          Painel conceitual com dados simulados para apresentação institucional do LeaderK Executive Intelligence Center.
+          Dashboard conectado ao Supabase para demonstração do LeaderK Executive Intelligence Center.
         </p>
       </div>
     </aside>
@@ -707,10 +630,10 @@
 
         <div class="profile-box">
           <div class="tag">Ambiente Premium</div>
-         <h3 id="org-name">Organização Demonstrativa</h3>
+          <h3 id="org-name">Carregando organização...</h3>
           <p>
             Ciclo de avaliação: 2026<br />
-            Base analisada: 124 líderes e colaboradores<br />
+            Base analisada: <span id="base-analisada">-</span> líderes e colaboradores<br />
             Status: Diagnóstico consolidado
           </p>
         </div>
@@ -746,25 +669,25 @@
       <section class="grid-kpis">
         <div class="kpi">
           <span>Total avaliado</span>
-         <strong id="total-avaliados">124</strong>
+          <strong id="total-avaliados">-</strong>
           <p>Profissionais mapeados na matriz comportamental e executiva.</p>
         </div>
 
         <div class="kpi">
           <span>Risco médio</span>
-<strong id="risco-medio">38%</strong>
+          <strong id="risco-medio">-</strong>
           <p>Risco comportamental consolidado em nível institucional.</p>
         </div>
 
         <div class="kpi">
           <span>Potencial executivo</span>
-<strong id="potencial-medio">81%</strong>
+          <strong id="potencial-medio">-</strong>
           <p>Índice médio de liderança, influência e maturidade decisória.</p>
         </div>
 
         <div class="kpi">
           <span>Aderência cultural</span>
-          <strong>72%</strong>
+          <strong id="compatibilidade-media">-</strong>
           <p>Compatibilidade entre perfis, funções e cultura desejada.</p>
         </div>
       </section>
@@ -786,32 +709,32 @@
           <div class="bars">
             <div class="bar-row">
               <label>Risco Executivo</label>
-              <div class="track"><div class="fill" style="width:38%"></div></div>
-              <strong>38%</strong>
+              <div class="track"><div id="bar-risco" class="fill"></div></div>
+              <strong id="bar-risco-text">-</strong>
             </div>
 
             <div class="bar-row">
               <label>Potencial de Liderança</label>
-              <div class="track"><div class="fill" style="width:81%"></div></div>
-              <strong>81%</strong>
+              <div class="track"><div id="bar-potencial" class="fill"></div></div>
+              <strong id="bar-potencial-text">-</strong>
             </div>
 
             <div class="bar-row">
               <label>Pressão e Colapso</label>
-              <div class="track"><div class="fill" style="width:46%"></div></div>
-              <strong>46%</strong>
+              <div class="track"><div id="bar-pressao" class="fill"></div></div>
+              <strong id="bar-pressao-text">-</strong>
             </div>
 
             <div class="bar-row">
               <label>Compatibilidade Institucional</label>
-              <div class="track"><div class="fill" style="width:72%"></div></div>
-              <strong>72%</strong>
+              <div class="track"><div id="bar-compatibilidade" class="fill"></div></div>
+              <strong id="bar-compatibilidade-text">-</strong>
             </div>
 
             <div class="bar-row">
               <label>Maturidade Decisória</label>
-              <div class="track"><div class="fill" style="width:77%"></div></div>
-              <strong>77%</strong>
+              <div class="track"><div id="bar-maturidade" class="fill"></div></div>
+              <strong id="bar-maturidade-text">-</strong>
             </div>
           </div>
         </div>
@@ -819,38 +742,29 @@
         <div class="panel">
           <div class="panel-header">
             <div>
-              <span>Silent Risks</span>
-              <h3>Riscos Silenciosos</h3>
-              <p>Fatores críticos detectados na leitura consolidada.</p>
+              <span>Institutional Signal</span>
+              <h3>Perfil Institucional</h3>
+              <p>Leitura dominante e classificação geral de risco.</p>
             </div>
           </div>
 
           <div class="risk-list">
             <div class="risk-item">
-              <div class="risk-dot">1</div>
+              <div class="risk-dot">P</div>
               <div>
-                <h4>Postergação Decisória</h4>
-                <p>Risco em áreas com alta necessidade de mediação institucional.</p>
+                <h4>Perfil dominante</h4>
+                <p>Perfil mais recorrente na organização.</p>
               </div>
-              <div class="risk-score">64</div>
+              <div id="perfil-dominante" class="risk-score">-</div>
             </div>
 
             <div class="risk-item">
-              <div class="risk-dot">2</div>
+              <div class="risk-dot">R</div>
               <div>
-                <h4>Centralização Operacional</h4>
-                <p>Concentração de decisões em lideranças de alta influência.</p>
+                <h4>Classificação de risco</h4>
+                <p>Resultado consolidado do risco executivo médio.</p>
               </div>
-              <div class="risk-score">58</div>
-            </div>
-
-            <div class="risk-item">
-              <div class="risk-dot">3</div>
-              <div>
-                <h4>Baixa Sucessão Natural</h4>
-                <p>Dependência de poucos perfis com maturidade institucional elevada.</p>
-              </div>
-              <div class="risk-score">51</div>
+              <div id="perfil-risco" class="risk-score">-</div>
             </div>
           </div>
         </div>
@@ -861,91 +775,24 @@
           <div>
             <span>Leadership Profile Map</span>
             <h3>Mapa de Perfis Predominantes</h3>
-            <p>
-              Distribuição dos perfis comportamentais identificados na base avaliada.
-            </p>
+            <p>Distribuição dos perfis comportamentais identificados na base avaliada.</p>
           </div>
-          <div class="mini-badge">124 avaliações</div>
+          <div class="mini-badge" id="profile-total-badge">- avaliações</div>
         </div>
 
         <div class="profiles-grid">
-          <div class="profile-card">
-            <strong>18</strong>
-            <span>Commander</span>
-          </div>
-          <div class="profile-card">
-            <strong>21</strong>
-            <span>Strategyk</span>
-          </div>
-          <div class="profile-card">
-            <strong>16</strong>
-            <span>Mentorix</span>
-          </div>
-          <div class="profile-card">
-            <strong>24</strong>
-            <span>Executron</span>
-          </div>
-          <div class="profile-card">
-            <strong>27</strong>
-            <span>Diplomatik</span>
-          </div>
-          <div class="profile-card">
-            <strong>09</strong>
-            <span>Visionex</span>
-          </div>
-          <div class="profile-card">
-            <strong>09</strong>
-            <span>Guardian</span>
-          </div>
+          <div class="profile-card"><strong id="count-commander">0</strong><span>Commander</span></div>
+          <div class="profile-card"><strong id="count-strategyk">0</strong><span>Strategyk</span></div>
+          <div class="profile-card"><strong id="count-mentorix">0</strong><span>Mentorix</span></div>
+          <div class="profile-card"><strong id="count-executron">0</strong><span>Executron</span></div>
+          <div class="profile-card"><strong id="count-diplomatik">0</strong><span>Diplomatik</span></div>
+          <div class="profile-card"><strong id="count-visionex">0</strong><span>Visionex</span></div>
+          <div class="profile-card"><strong id="count-guardian">0</strong><span>Guardian</span></div>
         </div>
       </section>
 
-      <section id="matriz" class="section-grid">
+      <section id="insights" class="section-grid">
         <div class="panel">
-          <div class="panel-header">
-            <div>
-              <span>Decision Matrix</span>
-              <h3>Matriz de Alocação Estratégica</h3>
-              <p>
-                Indicação conceitual de compatibilidade entre perfil, contexto e missão institucional.
-              </p>
-            </div>
-          </div>
-
-          <div class="matrix">
-            <div class="cell head">Contexto</div>
-            <div class="cell head">Crise</div>
-            <div class="cell head">Expansão</div>
-            <div class="cell head">Mediação</div>
-            <div class="cell head">Governança</div>
-
-            <div class="cell label">Commander</div>
-            <div class="cell good">Alta</div>
-            <div class="cell mid">Moderada</div>
-            <div class="cell risk">Baixa</div>
-            <div class="cell mid">Moderada</div>
-
-            <div class="cell label">Diplomatik</div>
-            <div class="cell mid">Moderada</div>
-            <div class="cell risk">Baixa</div>
-            <div class="cell good">Alta</div>
-            <div class="cell good">Alta</div>
-
-            <div class="cell label">Executron</div>
-            <div class="cell good">Alta</div>
-            <div class="cell good">Alta</div>
-            <div class="cell mid">Moderada</div>
-            <div class="cell mid">Moderada</div>
-
-            <div class="cell label">Strategyk</div>
-            <div class="cell mid">Moderada</div>
-            <div class="cell good">Alta</div>
-            <div class="cell mid">Moderada</div>
-            <div class="cell good">Alta</div>
-          </div>
-        </div>
-
-        <div id="insights" class="panel">
           <div class="panel-header">
             <div>
               <span>Strategic Insight</span>
@@ -955,23 +802,46 @@
 
           <div class="insight-box">
             <h4>Síntese Institucional</h4>
-            <p>
-              A organização apresenta alta concentração de perfis Diplomatik e Executron,
-              o que sugere combinação entre estabilidade relacional e capacidade de execução.
-              O principal ponto de atenção está na velocidade decisória em ambientes de conflito
-              e na sucessão de lideranças com alta maturidade institucional.
+            <p id="sintese-institucional">
+              Carregando leitura estratégica...
             </p>
           </div>
 
-          <br />
-
           <div class="insight-box">
             <h4>Recomendação de Alta Gestão</h4>
-            <p>
-              Estruturar plano de desenvolvimento para lideranças intermediárias,
-              com foco em tomada de decisão sob pressão, comunicação executiva,
-              delegação e responsabilização institucional.
+            <p id="recomendacao-gestao">
+              Carregando recomendação...
             </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <span>Decision Intelligence</span>
+              <h3>Sinais críticos</h3>
+              <p>Indicadores que merecem atenção da liderança.</p>
+            </div>
+          </div>
+
+          <div class="risk-list">
+            <div class="risk-item">
+              <div class="risk-dot">1</div>
+              <div>
+                <h4>Pressão institucional</h4>
+                <p>Nível médio de vulnerabilidade sob tensão.</p>
+              </div>
+              <div id="pressao-score" class="risk-score">-</div>
+            </div>
+
+            <div class="risk-item">
+              <div class="risk-dot">2</div>
+              <div>
+                <h4>Maturidade decisória</h4>
+                <p>Capacidade média de sustentar decisões complexas.</p>
+              </div>
+              <div id="maturidade-score" class="risk-score">-</div>
+            </div>
           </div>
         </div>
       </section>
@@ -980,12 +850,12 @@
         <div class="panel-header">
           <div>
             <span>Executive Ranking</span>
-            <h3>Ranking Executivo Demonstrativo</h3>
+            <h3>Ranking Executivo</h3>
             <p>
-              Lista simulada de líderes avaliados com base em potencial, risco e compatibilidade institucional.
+              Lista de líderes avaliados com base em potencial, risco e compatibilidade institucional.
             </p>
           </div>
-          <div class="mini-badge">Dados simulados</div>
+          <div class="mini-badge">Dados Supabase</div>
         </div>
 
         <div class="table-wrap">
@@ -993,71 +863,26 @@
             <thead>
               <tr>
                 <th>Profissional</th>
+                <th>Cargo</th>
                 <th>Setor</th>
                 <th>Perfil</th>
-                <th>Potencial</th>
                 <th>Risco</th>
+                <th>Potencial</th>
                 <th>Aderência</th>
                 <th>Status</th>
               </tr>
             </thead>
 
-<tbody id="membros-table">
+            <tbody id="membros-table">
               <tr>
-                <td><strong>Ana M.</strong></td>
-                <td>Governança</td>
-                <td>Strategyk</td>
-                <td>92%</td>
-                <td>24%</td>
-                <td>89%</td>
-                <td><span class="status high">Alta prioridade</span></td>
-              </tr>
-
-              <tr>
-                <td><strong>Carlos R.</strong></td>
-                <td>Operações</td>
-                <td>Executron</td>
-                <td>88%</td>
-                <td>41%</td>
-                <td>82%</td>
-                <td><span class="status high">Potencial sucessório</span></td>
-              </tr>
-
-              <tr>
-                <td><strong>Marina L.</strong></td>
-                <td>Relações Institucionais</td>
-                <td>Diplomatik</td>
-                <td>84%</td>
-                <td>36%</td>
-                <td>91%</td>
-                <td><span class="status high">Alta aderência</span></td>
-              </tr>
-
-              <tr>
-                <td><strong>João P.</strong></td>
-                <td>Projetos</td>
-                <td>Visionex</td>
-                <td>79%</td>
-                <td>54%</td>
-                <td>68%</td>
-                <td><span class="status medium">Monitorar execução</span></td>
-              </tr>
-
-              <tr>
-                <td><strong>Roberto S.</strong></td>
-                <td>Administração</td>
-                <td>Commander</td>
-                <td>76%</td>
-                <td>62%</td>
-                <td>71%</td>
-                <td><span class="status danger">Risco de centralização</span></td>
+                <td colspan="8">Carregando dados...</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-            <div class="footer-space"></div>
+      <div class="footer-space"></div>
     </main>
   </div>
 
@@ -1069,41 +894,143 @@
 
     const supabase = createClient(supabaseUrl, supabaseKey)
 
+    function pct(value) {
+      const n = Number(value || 0)
+      return `${n.toFixed(0)}%`
+    }
+
+    function setText(id, value) {
+      const el = document.getElementById(id)
+      if (el) el.innerText = value
+    }
+
+    function setBar(id, textId, value) {
+      const n = Math.max(0, Math.min(100, Number(value || 0)))
+      const bar = document.getElementById(id)
+      const text = document.getElementById(textId)
+      if (bar) bar.style.width = `${n}%`
+      if (text) text.innerText = `${n.toFixed(0)}%`
+    }
+
+    function statusLabel(risco, potencial) {
+      risco = Number(risco || 0)
+      potencial = Number(potencial || 0)
+
+      if (potencial >= 85 && risco <= 45) return 'Alta prioridade'
+      if (potencial >= 80) return 'Potencial sucessório'
+      if (risco >= 65) return 'Monitorar risco'
+      return 'Acompanhamento regular'
+    }
+
+    function normalizeProfile(profile) {
+      return String(profile || '').toLowerCase()
+    }
+
     async function carregarDashboard() {
-      const { data: org } = await supabase
+      const { data: org, error: orgError } = await supabase
         .from('organizations')
         .select('*')
         .limit(1)
         .single()
 
-      const { data: metrics } = await supabase
+      if (orgError || !org) {
+        console.error(orgError)
+        alert('Não foi possível carregar a organização.')
+        return
+      }
+
+      const { data: metrics, error: metricsError } = await supabase
         .from('organization_metrics')
         .select('*')
         .eq('organization_id', org.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
         .single()
 
-      const { data: membros } = await supabase
+      const { data: membros, error: membrosError } = await supabase
         .from('organization_members')
         .select('*')
         .eq('organization_id', org.id)
+        .order('potencial_lideranca', { ascending: false })
 
-      document.getElementById('org-name').innerText = org.nome
-      document.getElementById('total-avaliados').innerText = metrics.total_avaliados
-      document.getElementById('risco-medio').innerText = metrics.risco_medio + '%'
-      document.getElementById('potencial-medio').innerText = metrics.potencial_medio + '%'
-      
+      if (metricsError) console.warn(metricsError)
+      if (membrosError) console.warn(membrosError)
+
+      const lista = membros || []
+      const m = metrics || {}
+
+      setText('org-name', org.nome)
+      setText('base-analisada', m.total_avaliados ?? lista.length)
+      setText('total-avaliados', m.total_avaliados ?? lista.length)
+      setText('risco-medio', pct(m.risco_medio))
+      setText('potencial-medio', pct(m.potencial_medio))
+      setText('compatibilidade-media', pct(m.compatibilidade_media))
+      setText('perfil-dominante', m.perfil_dominante || '-')
+      setText('perfil-risco', m.perfil_de_risco || '-')
+      setText('profile-total-badge', `${m.total_avaliados ?? lista.length} avaliações`)
+      setText('pressao-score', pct(m.pressao_media))
+      setText('maturidade-score', pct(m.maturidade_media))
+
+      setBar('bar-risco', 'bar-risco-text', m.risco_medio)
+      setBar('bar-potencial', 'bar-potencial-text', m.potencial_medio)
+      setBar('bar-pressao', 'bar-pressao-text', m.pressao_media)
+      setBar('bar-compatibilidade', 'bar-compatibilidade-text', m.compatibilidade_media)
+      setBar('bar-maturidade', 'bar-maturidade-text', m.maturidade_media)
+
+      const counts = {
+        commander: 0,
+        strategyk: 0,
+        mentorix: 0,
+        executron: 0,
+        diplomatik: 0,
+        visionex: 0,
+        guardian: 0
+      }
+
+      lista.forEach(item => {
+        const p = normalizeProfile(item.perfil_predominante)
+        if (counts[p] !== undefined) counts[p]++
+      })
+
+      Object.entries(counts).forEach(([key, value]) => {
+        setText(`count-${key}`, String(value).padStart(2, '0'))
+      })
+
+      const perfil = m.perfil_dominante || 'não identificado'
+      const risco = Number(m.risco_medio || 0)
+      const potencial = Number(m.potencial_medio || 0)
+
+      setText(
+        'sintese-institucional',
+        `A organização apresenta predominância do perfil ${perfil}, com risco médio de ${pct(risco)} e potencial executivo médio de ${pct(potencial)}. A leitura sugere uma base relevante para decisões de desenvolvimento, sucessão e alocação estratégica.`
+      )
+
+      setText(
+        'recomendacao-gestao',
+        risco >= 55
+          ? 'Recomenda-se priorizar ações de mitigação de risco comportamental, revisão de alocação de lideranças e fortalecimento de rituais de decisão sob pressão.'
+          : 'Recomenda-se estruturar trilhas de desenvolvimento para ampliar maturidade decisória, compatibilidade institucional e preparação sucessória.'
+      )
+
       const tbody = document.getElementById('membros-table')
       tbody.innerHTML = ''
 
-      membros.forEach(m => {
+      if (!lista.length) {
+        tbody.innerHTML = `<tr><td colspan="8">Nenhum membro encontrado.</td></tr>`
+        return
+      }
+
+      lista.forEach(item => {
         tbody.innerHTML += `
           <tr>
-            <td>${m.nome}</td>
-            <td>${m.cargo}</td>
-            <td>${m.setor}</td>
-            <td>${m.perfil_predominante}</td>
-            <td>${m.risco_executivo}%</td>
-            <td>${m.potencial_lideranca}%</td>
+            <td><strong>${item.nome || '-'}</strong></td>
+            <td>${item.cargo || '-'}</td>
+            <td>${item.setor || '-'}</td>
+            <td>${item.perfil_predominante || '-'}</td>
+            <td>${pct(item.risco_executivo)}</td>
+            <td>${pct(item.potencial_lideranca)}</td>
+            <td>${pct(item.compatibilidade_institucional)}</td>
+            <td><span class="status">${statusLabel(item.risco_executivo, item.potencial_lideranca)}</span></td>
           </tr>
         `
       })
