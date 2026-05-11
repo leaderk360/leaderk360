@@ -833,6 +833,75 @@
 .counter {
   display: inline-block;
 }
+    .predictive-grid,
+.benchmark-grid,
+.timeline-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.predictive-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.predictive-card,
+.benchmark-card,
+.timeline-card {
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.035);
+  border: 1px solid rgba(214,180,90,.18);
+}
+
+.predictive-card h4,
+.benchmark-card h4,
+.timeline-card h4 {
+  color: var(--gold2);
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.predictive-card p,
+.benchmark-card p,
+.timeline-card p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.benchmark-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.timeline-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.timeline-period {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1180px) {
+  .predictive-grid,
+  .timeline-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .predictive-grid,
+  .timeline-grid,
+  .benchmark-row {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 
@@ -1078,6 +1147,60 @@
         </div>
       </section>
 
+<section id="predictive" class="panel panel-glow fade-up">
+  <div class="panel-header">
+    <div>
+      <span>Predictive Executive Intelligence</span>
+      <h3>Inteligência Preditiva Executiva</h3>
+      <p>Projeções institucionais com horizonte temporal, probabilidade, impacto e ação recomendada.</p>
+    </div>
+    <div class="mini-badge">Executive Forecasting</div>
+  </div>
+
+  <div id="predictive-grid" class="predictive-grid">
+    <div class="predictive-card">
+      <h4>Carregando...</h4>
+      <p>Buscando previsões executivas.</p>
+    </div>
+  </div>
+</section>
+
+<section id="benchmark" class="panel fade-up">
+  <div class="panel-header">
+    <div>
+      <span>Institutional Benchmark</span>
+      <h3>Comparativo Institucional de Mercado</h3>
+      <p>Comparação entre a organização e referências médias de mercado ou estruturas equivalentes.</p>
+    </div>
+    <div class="mini-badge">Benchmark Layer</div>
+  </div>
+
+  <div id="benchmark-grid" class="benchmark-grid">
+    <div class="benchmark-card">
+      <p>Carregando benchmark...</p>
+    </div>
+  </div>
+</section>
+
+<section id="timeline" class="panel fade-up">
+  <div class="panel-header">
+    <div>
+      <span>Executive Timeline</span>
+      <h3>Linha do Tempo Executiva</h3>
+      <p>Evolução institucional, sinais críticos e oportunidades ao longo do ciclo de análise.</p>
+    </div>
+    <div class="mini-badge">Strategic Evolution</div>
+  </div>
+
+  <div id="timeline-grid" class="timeline-grid">
+    <div class="timeline-card">
+      <h4>Carregando...</h4>
+      <p>Buscando eventos estratégicos.</p>
+    </div>
+  </div>
+</section>
+
+      
       <section id="governance" class="panel">
         <div class="panel-header">
           <div>
@@ -1223,6 +1346,22 @@ function animateCounter(el, finalValue, suffix = '') {
       const { data: heatmap } = await supabase.from('executive_heatmap').select('*').eq('organization_id', orgId)
       const { data: validations } = await supabase.from('human_validations').select('*').eq('organization_id', orgId).order('reviewed_at', { ascending: false }).limit(1)
       const { data: auditLogs } = await supabase.from('ai_audit_logs').select('*').eq('organization_id', orgId)
+      const { data: predictions } = await supabase
+  .from('predictive_intelligence')
+  .select('*')
+  .eq('organization_id', orgId)
+  .order('probability_score', { ascending: false })
+
+const { data: benchmarks } = await supabase
+  .from('institutional_benchmark')
+  .select('*')
+  .eq('organization_id', orgId)
+
+const { data: timeline } = await supabase
+  .from('executive_timeline')
+  .select('*')
+  .eq('organization_id', orgId)
+  .order('period_label', { ascending: true })
 
       const lista = membros || []
       const m = metrics || {}
@@ -1358,6 +1497,57 @@ function createParticles() {
 
     particles.appendChild(p)
   }
+  const predictiveGrid = document.getElementById('predictive-grid')
+predictiveGrid.innerHTML = ''
+
+;(predictions || []).forEach(item => {
+  predictiveGrid.innerHTML += `
+    <div class="predictive-card">
+      <h4>${item.prediction_title || '-'}</h4>
+      <p>${item.prediction_description || '-'}</p>
+      <div class="ai-meta">
+        <span class="pill">Probabilidade ${pct(item.probability_score)}</span>
+        <span class="pill">Impacto ${item.impact_level || '-'}</span>
+        <span class="pill">${item.time_horizon || '-'}</span>
+        <span class="pill">Confiança ${pct(item.confidence_score)}</span>
+      </div>
+      <br>
+      <p><strong style="color:#f1d27a;">Ação recomendada:</strong> ${item.recommended_action || '-'}</p>
+    </div>
+  `
+})
+
+const benchmarkGrid = document.getElementById('benchmark-grid')
+benchmarkGrid.innerHTML = ''
+
+;(benchmarks || []).forEach(item => {
+  benchmarkGrid.innerHTML += `
+    <div class="benchmark-card benchmark-row">
+      <h4>${item.indicator_name || '-'}</h4>
+      <p><strong style="color:#f1d27a;">Organização:</strong> ${pct(item.organization_score)}</p>
+      <p><strong style="color:#f1d27a;">Mercado:</strong> ${pct(item.market_score)}</p>
+      <p><strong style="color:#f1d27a;">Gap:</strong> ${pct(item.benchmark_gap)}</p>
+      <p style="grid-column: 1 / -1;">${item.interpretation || '-'}</p>
+    </div>
+  `
+})
+
+const timelineGrid = document.getElementById('timeline-grid')
+timelineGrid.innerHTML = ''
+
+;(timeline || []).forEach(item => {
+  timelineGrid.innerHTML += `
+    <div class="timeline-card">
+      <div class="timeline-period">${item.period_label || '-'}</div>
+      <h4>${item.event_title || '-'}</h4>
+      <p>${item.event_description || '-'}</p>
+      <div class="ai-meta">
+        <span class="pill">${item.trend_type || '-'}</span>
+        <span class="pill">Score ${pct(item.score)}</span>
+      </div>
+    </div>
+  `
+})
 }
 
 createParticles()
