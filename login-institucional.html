@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeaderK 360 | Acesso Institucional</title>
+
+  <style>
+    :root {
+      --gold: #d6b45a;
+      --gold2: #f1d27a;
+      --green: #55d6a5;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,.68);
+      --line: rgba(214,180,90,.22);
+      --panel: rgba(7,17,31,.82);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(214,180,90,.14), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(0,102,255,.14), transparent 35%),
+        linear-gradient(180deg,#020611 0%,#020814 100%);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .login-shell {
+      width: min(1080px, 100%);
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .intro,
+    .login-card {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: var(--panel);
+      box-shadow: 0 30px 90px rgba(0,0,0,.42);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .intro {
+      padding: 48px;
+      position: relative;
+    }
+
+    .intro::after {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      right: -180px;
+      top: -160px;
+      background: radial-gradient(circle, rgba(214,180,90,.18), transparent 70%);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+    }
+
+    .brand h1 {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .brand h1 span {
+      color: var(--gold);
+    }
+
+    .brand p {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .intro span.label {
+      display: inline-block;
+      color: var(--gold2);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro h2 {
+      font-size: clamp(38px, 5vw, 68px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+      max-width: 620px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .trust-item {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--gold2);
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .trust-item small {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .login-card {
+      padding: 42px;
+    }
+
+    .login-card .tag {
+      display: inline-block;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: rgba(85,214,165,.10);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .login-card h3 {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .login-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(214,180,90,.22);
+      background: rgba(255,255,255,.04);
+      color: white;
+      outline: none;
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+
+    input:focus {
+      border-color: rgba(214,180,90,.55);
+      box-shadow: 0 0 0 4px rgba(214,180,90,.08);
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 15px 20px;
+      margin-top: 8px;
+      background: linear-gradient(135deg, var(--gold2), var(--gold));
+      color: #06101e;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 18px 38px rgba(214,180,90,.22);
+    }
+
+    .message {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      min-height: 20px;
+    }
+
+    .message.error {
+      color: #ff9b9b;
+    }
+
+    .message.success {
+      color: var(--green);
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.5);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .login-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="login-shell">
+    <section class="intro">
+      <div class="brand">
+        <img src="logo-leaderk360.png" alt="LeaderK 360" />
+        <div>
+          <h1>LeaderK <span>360</span></h1>
+          <p>Executive Intelligence Center</p>
+        </div>
+      </div>
+
+      <span class="label">Institutional Access</span>
+      <h2>Inteligência Executiva para decisões críticas.</h2>
+      <p>
+        Ambiente reservado para organizações, instituições públicas, conselhos, gestores e áreas de RH
+        que utilizam o LeaderK Executive Intelligence Center para leitura estratégica de pessoas,
+        risco comportamental, sucessão, governança e maturidade decisória.
+      </p>
+
+      <div class="trust-grid">
+        <div class="trust-item">
+          <strong>AI Governance</strong>
+          <small>Estrutura preparada para rastreabilidade e supervisão humana.</small>
+        </div>
+
+        <div class="trust-item">
+          <strong>ISO 42001</strong>
+          <small>Arquitetura orientada à governança de sistemas de IA.</small>
+        </div>
+
+        <div class="trust-item">
+          <strong>Executive Layer</strong>
+          <small>Indicadores estratégicos para alta gestão e tomada de decisão.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-card">
+      <span class="tag">Acesso protegido</span>
+      <h3>Entrar no painel institucional</h3>
+      <p>
+        Informe o e-mail autorizado da organização. Nesta primeira versão, o acesso será validado
+        pela base institucional cadastrada no Supabase.
+      </p>
+
+      <form id="login-form">
+        <label for="email">E-mail institucional</label>
+        <input id="email" type="email" placeholder="seunome@organizacao.com.br" required />
+
+        <button type="submit">Acessar Executive Intelligence Center</button>
+
+        <div id="message" class="message"></div>
+      </form>
+
+      <div class="footer-note">
+        O acesso é registrado para fins de governança, rastreabilidade e futura auditoria de uso da plataforma.
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+    const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
+    const supabaseKey = 'COLE_AQUI_SUA_ANON_KEY'
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    const form = document.getElementById('login-form')
+    const emailInput = document.getElementById('email')
+    const message = document.getElementById('message')
+
+    function setMessage(text, type = '') {
+      message.className = 'message ' + type
+      message.innerText = text
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+
+      const email = emailInput.value.trim().toLowerCase()
+
+      setMessage('Validando acesso institucional...')
+
+      const { data, error } = await supabase
+        .from('organization_users')
+        .select('*, organizations(*)')
+        .eq('email', email)
+        .eq('status', 'active')
+        .single()
+
+      if (error || !data) {
+        setMessage('Acesso não autorizado. Verifique o e-mail ou solicite liberação institucional.', 'error')
+        return
+      }
+
+      localStorage.setItem('leaderk_org_user', JSON.stringify({
+        user_id: data.id,
+        organization_id: data.organization_id,
+        nome: data.nome,
+        email: data.email,
+        role: data.role,
+        organization_name: data.organizations?.nome || ''
+      }))
+
+      setMessage('Acesso autorizado. Redirecionando...', 'success')
+
+      setTimeout(() => {
+        window.location.href = 'dashboard-institucional.html'
+      }, 900)
+    })
+  </script>
+</body>
+</html>
