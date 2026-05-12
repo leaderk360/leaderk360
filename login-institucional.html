@@ -361,12 +361,11 @@
       return
     }
 
-    const { data, error } = await supabase
-      .from('organization_users')
-      .select('*, organizations(*)')
-      .eq('email', email)
-      .eq('status', 'active')
-      .single()
+    const { data: org, error: orgError } = await supabase
+  .from('organizations')
+  .select('*')
+  .eq('id', loggedUser.organization_id)
+  .single()
 
     if (error || !data) {
       await supabase.auth.signOut()
