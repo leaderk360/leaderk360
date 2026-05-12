@@ -870,10 +870,18 @@
 
       <div class="toolbar fade-up fade-delay-1">
         <div class="filters">
-          <select><option>Toda a organização</option></select>
-          <select><option>Todos os setores</option></select>
-          <select><option>Ciclo 2026</option></select>
-        </div>
+  <select id="scope-filter">
+    <option value="all">Toda a organização</option>
+  </select>
+
+  <select id="sector-filter">
+    <option value="all">Todos os setores</option>
+  </select>
+
+  <select id="cycle-filter">
+    <option value="2026">Ciclo 2026</option>
+  </select>
+</div>
         <button>Exportar Relatório Executivo</button>
       </div>
 
@@ -1231,7 +1239,142 @@ if (diffHours > SESSION_DURATION_HOURS) {
         particles.appendChild(p)
       }
     }
+let allMembers = []
+let allMetrics = {}
 
+function getDominantProfile(members) {
+  const counts = {}
+
+  members.forEach(item => {
+    const profile = item.perfil_predominante || 'Não identificado'
+    counts[profile] = (counts[profile] || 0) + 1
+  })
+
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])[0]?.[0] || '-'
+}
+
+function calculateFilteredMetrics(members) {
+  if (!members.length) {
+    return {
+      total_avaliados: 0,
+      risco_medio: 0,
+      potencial_medio: 0,
+      compatibilidade_media: 0,
+      perfil_dominante: '-',
+      perfil_de_risco: '-'
+    }
+  }
+
+  const avg = (field) =>
+    Math.round(
+      members.reduce((sum, item) => sum + Number(item[field] || 0), 0) / members.length
+    )
+
+  const riscoMedio = avg('risco_executivo')
+
+  return {
+    total_avaliados: members.length,
+    risco_medio: riscoMedio,
+    potencial_medio: avg('potencial_lideranca'),
+    compatibilidade_media: avg('compatibilidade_institucional'),
+    pressao_media: Math.min(100, Math.round(riscoMedio + 10)),
+    maturidade_media: Math.round((avg('potencial_lideranca') + avg('compatibilidade_institucional')) / 2),
+    perfil_dominante: getDominantProfile(members),
+    perfil_de_risco:
+      riscoMedio >= 70 ? 'Risco Crítico' :
+      riscoMedio >= 55 ? 'Risco Elevado' :
+      riscoMedio >= 40 ? 'Risco Moderado' :
+      'Risco Controlado'
+  }
+}
+
+function renderDashboardData(members, metrics) {
+  const lista = members || []
+  const m = metrics || {}
+
+  setText('base-analisada', m.total_avaliados ?? lista.length)
+
+  setText('total-avaliados', m.total_avaliados ?? lista.length)
+  setText('risco-medio', pct(m.risco_medio))
+  setText('potencial-medio', pct(m.potencial_medio))
+  setText('compatibilidade-media', pct(m.compatibilidade_media))
+
+  setText('perfil-dominante', m.perfil_dominante || '-')
+  setText('perfil-risco', m.perfil_de_risco || '-')
+
+  setBar('bar-risco', 'bar-risco-text', m.risco_medio)
+  setBar('bar-potencial', 'bar-potencial-text', m.potencial_medio)
+  setBar('bar-pressao', 'bar-pressao-text', m.pressao_media)
+  setBar('bar-compatibilidade', 'bar-compatibilidade-text', m.compatibilidade_media)
+  setBar('bar-maturidade', 'bar-maturidade-text', m.maturidade_media)
+
+  const perfil = m.perfil_dominante || 'não identificado'
+  const risco = Number(m.risco_medio || 0)
+  const potencial = Number(m.potencial_medio || 0)
+
+  setText(
+    'sintese-institucional',
+    `A seleção atual apresenta predominância do perfil ${perfil}, com risco médio de ${pct(risco)} e potencial executivo médio de ${pct(potencial)}. A leitura sugere uma base relevante para decisões de desenvolvimento, sucessão, governança e alocação estratégica.`
+  )
+
+  setText(
+    'recomendacao-gestao',
+    risco >= 55
+      ? 'Recomenda-se priorizar ações de mitigação de risco comportamental, revisão de alocação de lideranças e fortalecimento de rituais de decisão sob pressão.'
+      : 'Recomenda-se estruturar trilhas de desenvolvimento para ampliar maturidade decisória, compatibilidade institucional e preparação sucessória.'
+  )
+
+  const tbody = document.getElementById('membros-table')
+  tbody.innerHTML = ''
+
+  if (!lista.length) {
+    tbody.innerHTML = `<tr><td colspan="8">Nenhum membro encontrado.</td></tr>`
+    return
+  }
+
+  lista.forEach(item => {
+    tbody.innerHTML += `
+      <tr>
+        <td><strong>${item.nome || '-'}</strong></td>
+        <td>${item.cargo || '-'}</td>
+        <td>${item.setor || '-'}</td>
+        <td>${item.perfil_predominante || '-'}</td>
+        <td>${pct(item.risco_executivo)}</td>
+        <td>${pct(item.potencial_lideranca)}</td>
+        <td>${pct(item.compatibilidade_institucional)}</td>
+        <td><span class="status">${statusLabel(item.risco_executivo, item.potencial_lideranca)}</span></td>
+      </tr>
+    `
+  })
+}
+
+function populateSectorFilter(members) {
+  const sectorFilter = document.getElementById('sector-filter')
+  const sectors = [...new Set(members.map(item => item.setor).filter(Boolean))].sort()
+
+  sectorFilter.innerHTML = `<option value="all">Todos os setores</option>`
+
+  sectors.forEach(sector => {
+    sectorFilter.innerHTML += `<option value="${sector}">${sector}</option>`
+  })
+
+  sectorFilter.addEventListener('change', () => {
+    const selectedSector = sectorFilter.value
+
+    const filteredMembers =
+      selectedSector === 'all'
+        ? allMembers
+        : allMembers.filter(item => item.setor === selectedSector)
+
+    const filteredMetrics =
+      selectedSector === 'all'
+        ? allMetrics
+        : calculateFilteredMetrics(filteredMembers)
+
+    renderDashboardData(filteredMembers, filteredMetrics)
+  })
+}
     async function carregarDashboard() {
      const { data: org, error: orgError } = await supabase
   .from('organizations')
@@ -1281,56 +1424,14 @@ await supabase
 
       const lista = membros || []
       const m = metrics || {}
+      allMembers = lista
+allMetrics = m
+
+populateSectorFilter(allMembers)
 
       setText('org-name', org.nome)
-      setText('base-analisada', m.total_avaliados ?? lista.length)
-
-      animateCounter(document.getElementById('total-avaliados'), m.total_avaliados ?? lista.length)
-      animateCounter(document.getElementById('risco-medio'), parseInt(m.risco_medio || 0), '%')
-      animateCounter(document.getElementById('potencial-medio'), parseInt(m.potencial_medio || 0), '%')
-      animateCounter(document.getElementById('compatibilidade-media'), parseInt(m.compatibilidade_media || 0), '%')
-
-      setText('perfil-dominante', m.perfil_dominante || '-')
-      setText('perfil-risco', m.perfil_de_risco || '-')
-
-      setBar('bar-risco', 'bar-risco-text', m.risco_medio)
-      setBar('bar-potencial', 'bar-potencial-text', m.potencial_medio)
-      setBar('bar-pressao', 'bar-pressao-text', m.pressao_media)
-      setBar('bar-compatibilidade', 'bar-compatibilidade-text', m.compatibilidade_media)
-      setBar('bar-maturidade', 'bar-maturidade-text', m.maturidade_media)
-
-      const perfil = m.perfil_dominante || 'não identificado'
-      const risco = Number(m.risco_medio || 0)
-      const potencial = Number(m.potencial_medio || 0)
-
-      setText('sintese-institucional', `A organização apresenta predominância do perfil ${perfil}, com risco médio de ${pct(risco)} e potencial executivo médio de ${pct(potencial)}. A leitura sugere uma base relevante para decisões de desenvolvimento, sucessão, governança e alocação estratégica.`)
-
-      setText('recomendacao-gestao', risco >= 55
-        ? 'Recomenda-se priorizar ações de mitigação de risco comportamental, revisão de alocação de lideranças e fortalecimento de rituais de decisão sob pressão.'
-        : 'Recomenda-se estruturar trilhas de desenvolvimento para ampliar maturidade decisória, compatibilidade institucional e preparação sucessória.'
-      )
-
-      const tbody = document.getElementById('membros-table')
-      tbody.innerHTML = ''
-
-      if (!lista.length) {
-        tbody.innerHTML = `<tr><td colspan="8">Nenhum membro encontrado.</td></tr>`
-      } else {
-        lista.forEach(item => {
-          tbody.innerHTML += `
-            <tr>
-              <td><strong>${item.nome || '-'}</strong></td>
-              <td>${item.cargo || '-'}</td>
-              <td>${item.setor || '-'}</td>
-              <td>${item.perfil_predominante || '-'}</td>
-              <td>${pct(item.risco_executivo)}</td>
-              <td>${pct(item.potencial_lideranca)}</td>
-              <td>${pct(item.compatibilidade_institucional)}</td>
-              <td><span class="status">${statusLabel(item.risco_executivo, item.potencial_lideranca)}</span></td>
-            </tr>
-          `
-        })
-      }
+      
+      renderDashboardData(lista, m)
 
       const grid = document.getElementById('ai-insights-grid')
       grid.innerHTML = ''
