@@ -1134,18 +1134,11 @@
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
     
-    const loggedUserRaw = localStorage.getItem('leaderk_org_user')
-
-if (!loggedUserRaw) {
-  window.location.href = 'login-institucional.html'
-}
-
-const loggedUser = JSON.parse(loggedUserRaw)
-
     const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY'
 
-    const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(supabaseUrl, supabaseKey)
+
 const SESSION_DURATION_HOURS = 8
 
 const loggedUserRaw = localStorage.getItem('leaderk_org_user')
@@ -1157,8 +1150,9 @@ if (!loggedUserRaw) {
 
 const loggedUser = JSON.parse(loggedUserRaw)
 
-if (!loggedUser.login_at) {
-  localStorage.removeItem('leaderk_org_user')
+if (!loggedUser.login_at || !loggedUser.organization_id) {
+    
+        localStorage.removeItem('leaderk_org_user')
   window.location.href = 'login-institucional.html'
   throw new Error('Sessão inválida.')
 }
