@@ -1220,7 +1220,27 @@ const loggedUser = JSON.parse(loggedUserRaw)
       }
 
       const orgId = org.id
-
+      
+await supabase
+  .from('ai_audit_logs')
+  .insert({
+    organization_id: orgId,
+    event_type: 'INSTITUTIONAL_DASHBOARD_ACCESS',
+    action_description: 'Institutional dashboard accessed by authorized user.',
+    actor_type: 'institutional_user',
+    actor_identifier: loggedUser.email,
+    ai_model: 'LeaderK Executive Intelligence Center',
+    ai_version: '1.0 Enterprise',
+    source_module: 'dashboard-institucional.html',
+    metadata: {
+      user_id: loggedUser.user_id,
+      user_name: loggedUser.nome,
+      user_role: loggedUser.role,
+      organization_name: loggedUser.organization_name,
+      accessed_at: new Date().toISOString()
+    }
+  })
+      
       const { data: metrics } = await supabase.from('organization_metrics').select('*').eq('organization_id', orgId).order('created_at', { ascending: false }).limit(1).single()
       const { data: membros } = await supabase.from('organization_members').select('*').eq('organization_id', orgId).order('potencial_lideranca', { ascending: false })
       const { data: insights } = await supabase.from('ai_interpretations').select('*').eq('organization_id', orgId).order('confidence_score', { ascending: false })
