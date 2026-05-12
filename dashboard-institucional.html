@@ -1132,6 +1132,14 @@
 
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+    
+    const loggedUserRaw = localStorage.getItem('leaderk_org_user')
+
+if (!loggedUserRaw) {
+  window.location.href = 'login-institucional.html'
+}
+
+const loggedUser = JSON.parse(loggedUserRaw)
 
     const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY'
@@ -1199,11 +1207,11 @@
     }
 
     async function carregarDashboard() {
-      const { data: org, error: orgError } = await supabase
-        .from('organizations')
-        .select('*')
-        .limit(1)
-        .single()
+     const { data: org, error: orgError } = await supabase
+  .from('organizations')
+  .select('*')
+  .eq('id', loggedUser.organization_id)
+  .single()
 
       if (orgError || !org) {
         alert('Não foi possível carregar a organização.')
