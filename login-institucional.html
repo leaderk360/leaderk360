@@ -325,7 +325,7 @@
     </section>
   </main>
 
-<script type="module">
+  <script type="module">
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
   const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
@@ -361,11 +361,12 @@
       return
     }
 
-    const { data: org, error: orgError } = await supabase
-  .from('organizations')
-  .select('*')
-  .eq('id', loggedUser.organization_id)
-  .single()
+    const { data, error } = await supabase
+      .from('organization_users')
+      .select('*, organizations(*)')
+      .eq('email', email)
+      .eq('status', 'active')
+      .single()
 
     if (error || !data) {
       await supabase.auth.signOut()
@@ -380,7 +381,7 @@
       nome: data.nome,
       email: data.email,
       role: data.role,
-      organization_name: data.organizations?.nome || '',
+      organization_name: data.organizations?.nome || data.organizations?.tipo || 'Organização',
       login_at: new Date().toISOString()
     }))
 
@@ -388,9 +389,10 @@
 
     setTimeout(() => {
       window.location.href = 'dashboard-institucional.html'
-    }, 900)
+    }, 700)
   })
 </script>
+
   
 </body>
 </html>
