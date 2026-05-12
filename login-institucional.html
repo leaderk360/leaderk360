@@ -362,6 +362,7 @@
       localStorage.setItem('leaderk_org_user', JSON.stringify({
         user_id: data.id,
         organization_id: data.organization_id,
+        login_at: new Date().toISOString(),
         nome: data.nome,
         email: data.email,
         role: data.role,
