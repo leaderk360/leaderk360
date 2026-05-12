@@ -311,6 +311,8 @@
       <form id="login-form">
         <label for="email">E-mail institucional</label>
         <input id="email" type="email" placeholder="seunome@organizacao.com.br" required />
+        <label for="password">Senha institucional</label>
+<input id="password" type="password" placeholder="Digite sua senha" required />
 
         <button type="submit">Acessar Executive Intelligence Center</button>
 
@@ -323,58 +325,73 @@
     </section>
   </main>
 
-  <script type="module">
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-    const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY'
+  const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY'
 
-    const supabase = createClient(supabaseUrl, supabaseKey)
+  const supabase = createClient(supabaseUrl, supabaseKey)
 
-    const form = document.getElementById('login-form')
-    const emailInput = document.getElementById('email')
-    const message = document.getElementById('message')
+  const form = document.getElementById('login-form')
+  const emailInput = document.getElementById('email')
+  const passwordInput = document.getElementById('password')
+  const message = document.getElementById('message')
 
-    function setMessage(text, type = '') {
-      message.className = 'message ' + type
-      message.innerText = text
+  function setMessage(text, type = '') {
+    message.className = 'message ' + type
+    message.innerText = text
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    const email = emailInput.value.trim().toLowerCase()
+    const password = passwordInput.value
+
+    setMessage('Validando credenciais institucionais...')
+
+    const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (authError || !authData.user) {
+      setMessage('E-mail ou senha inválidos.', 'error')
+      return
     }
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault()
+    const { data, error } = await supabase
+      .from('organization_users')
+      .select('*, organizations(*)')
+      .eq('email', email)
+      .eq('status', 'active')
+      .single()
 
-      const email = emailInput.value.trim().toLowerCase()
+    if (error || !data) {
+      await supabase.auth.signOut()
+      setMessage('Usuário autenticado, mas sem vínculo institucional ativo.', 'error')
+      return
+    }
 
-      setMessage('Validando acesso institucional...')
+    localStorage.setItem('leaderk_org_user', JSON.stringify({
+      user_id: data.id,
+      auth_user_id: authData.user.id,
+      organization_id: data.organization_id,
+      nome: data.nome,
+      email: data.email,
+      role: data.role,
+      organization_name: data.organizations?.nome || '',
+      login_at: new Date().toISOString()
+    }))
 
-      const { data, error } = await supabase
-        .from('organization_users')
-        .select('*, organizations(*)')
-        .eq('email', email)
-        .eq('status', 'active')
-        .single()
+    setMessage('Acesso autorizado. Redirecionando...', 'success')
 
-      if (error || !data) {
-        setMessage('Acesso não autorizado. Verifique o e-mail ou solicite liberação institucional.', 'error')
-        return
-      }
-
-      localStorage.setItem('leaderk_org_user', JSON.stringify({
-        user_id: data.id,
-        organization_id: data.organization_id,
-        login_at: new Date().toISOString(),
-        nome: data.nome,
-        email: data.email,
-        role: data.role,
-        organization_name: data.organizations?.nome || ''
-      }))
-
-      setMessage('Acesso autorizado. Redirecionando...', 'success')
-
-      setTimeout(() => {
-        window.location.href = 'dashboard-institucional.html'
-      }, 900)
-    })
-  </script>
+    setTimeout(() => {
+      window.location.href = 'dashboard-institucional.html'
+    }, 900)
+  })
+</script>
+  
 </body>
 </html>
