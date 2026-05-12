@@ -1463,29 +1463,28 @@ await supabase
       setText('human-validation-note', validation?.validation_notes || 'Nenhuma validação humana registrada.')
       setText('audit-events-count', `${auditLogs?.length || 0} eventos`)
     }
+async function logoutDashboard() {
+  const loggedUserRaw = localStorage.getItem('leaderk_org_user')
+  const sessionUser = loggedUserRaw ? JSON.parse(loggedUserRaw) : null
 
-    async function logoutDashboard() {
   try {
-    const loggedUserRaw = localStorage.getItem('leaderk_org_user')
-    const loggedUser = loggedUserRaw ? JSON.parse(loggedUserRaw) : null
-
-    if (loggedUser?.organization_id) {
+    if (sessionUser?.organization_id) {
       await supabase
         .from('ai_audit_logs')
         .insert({
-          organization_id: loggedUser.organization_id,
+          organization_id: sessionUser.organization_id,
           event_type: 'INSTITUTIONAL_DASHBOARD_LOGOUT',
           action_description: 'Institutional dashboard logout performed by authorized user.',
           actor_type: 'institutional_user',
-          actor_identifier: loggedUser.email,
+          actor_identifier: sessionUser.email,
           ai_model: 'LeaderK Executive Intelligence Center',
           ai_version: '1.0 Enterprise',
           source_module: 'dashboard-institucional.html',
           metadata: {
-            user_id: loggedUser.user_id,
-            user_name: loggedUser.nome,
-            user_role: loggedUser.role,
-            organization_name: loggedUser.organization_name,
+            user_id: sessionUser.user_id,
+            user_name: sessionUser.nome,
+            user_role: sessionUser.role,
+            organization_name: sessionUser.organization_name,
             logout_at: new Date().toISOString()
           }
         })
@@ -1494,10 +1493,18 @@ await supabase
     console.warn('Não foi possível registrar o logout:', error)
   }
 
-  localStorage.removeItem('leaderk_org_user')
-  window.location.href = 'login-institucional.html'
-}
+  try {
+    await supabase.auth.signOut()
+  } catch (error) {
+    console.warn('Não foi possível encerrar a sessão Supabase Auth:', error)
+  }
 
+  localStorage.removeItem('leaderk_org_user')
+  sessionStorage.clear()
+
+  window.location.replace('login-institucional.html')
+}
+   
 document.getElementById('logout-btn')?.addEventListener('click', function(event) {
   event.preventDefault()
   logoutDashboard()
