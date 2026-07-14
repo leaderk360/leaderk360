@@ -259,6 +259,30 @@
       .trust-grid {
         grid-template-columns: 1fr;
       }
+      .password-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: -5px 0 18px;
+}
+
+.password-actions button {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--gold2);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.password-actions button:hover {
+  text-decoration: underline;
+  color: #fff0a8;
+}
     }
   </style>
 </head>
@@ -312,7 +336,20 @@
         <label for="email">E-mail institucional</label>
         <input id="email" type="email" placeholder="seunome@organizacao.com.br" required />
         <label for="password">Senha institucional</label>
-<input id="password" type="password" placeholder="Digite sua senha" required />
+
+<input
+  id="password"
+  type="password"
+  placeholder="Digite sua senha"
+  autocomplete="current-password"
+  required
+/>
+
+<div class="password-actions">
+  <button type="button" id="forgot-password-btn">
+    Esqueci minha senha
+  </button>
+</div>
 
         <button type="submit">Acessar Executive Intelligence Center</button>
 
@@ -337,12 +374,54 @@
   const emailInput = document.getElementById('email')
   const passwordInput = document.getElementById('password')
   const message = document.getElementById('message')
-
+  const forgotPasswordButton = document.getElementById('forgot-password-btn')
+    
   function setMessage(text, type = '') {
     message.className = 'message ' + type
     message.innerText = text
   }
+forgotPasswordButton.addEventListener('click', async () => {
+  const email = emailInput.value.trim().toLowerCase()
 
+  if (!email) {
+    setMessage(
+      'Informe primeiro o e-mail institucional para receber o link de recuperação.',
+      'error'
+    )
+
+    emailInput.focus()
+    return
+  }
+
+  forgotPasswordButton.disabled = true
+  forgotPasswordButton.innerText = 'Enviando link...'
+
+  setMessage('Enviando instruções de recuperação de senha...')
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://leaderk360.com.br/recover.html'
+  })
+
+  forgotPasswordButton.disabled = false
+  forgotPasswordButton.innerText = 'Esqueci minha senha'
+
+  if (error) {
+    console.error('Erro ao solicitar recuperação:', error)
+
+    setMessage(
+      'Não foi possível enviar o link de recuperação. Verifique o e-mail e tente novamente.',
+      'error'
+    )
+
+    return
+  }
+
+  setMessage(
+    'Link de recuperação enviado. Verifique sua caixa de entrada e também a pasta de spam.',
+    'success'
+  )
+})
+    
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
 
