@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>LeaderK 360 | Ativação</title><style>
+body{margin:0;font-family:Arial;background:#06101e;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.card{width:min(500px,95%);background:#111c2e;padding:32px;border-radius:18px}
+input{width:100%;padding:12px;margin:8px 0 16px;background:#1d2b42;color:#fff;border:1px solid #555;border-radius:10px}
+button{width:100%;padding:14px;border:0;border-radius:999px;background:#d6b45a;font-weight:bold}
+#msg{margin:14px 0}
+a{color:#d6b45a}
+</style></head><body><div class='card'><h2>LeaderK 360</h2><p>Ative sua conta criando uma senha.</p><form id='f' hidden><label>Senha</label><input id='p1' type='password' minlength='10' required><label>Confirmar senha</label><input id='p2' type='password' minlength='10' required><button>Ativar conta</button></form><div id='msg'>Validando convite...</div><p><a href='login-institucional.html'>Voltar ao login</a></p></div>
+<script type='module'>
+import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+const supabase=createClient('https://qdgljsbntpsjulfwxolf.supabase.co','COLE_AQUI_SUA_ANON_KEY',{auth:{detectSessionInUrl:true,persistSession:true}});
+const form=document.getElementById('f'),msg=document.getElementById('msg');
+const p1=document.getElementById('p1'),p2=document.getElementById('p2');
+function m(t,c=''){msg.className=c;msg.textContent=t;}
+async function init(){
+const params=new URLSearchParams(location.search);
+const code=params.get('code');
+if(code){const r=await supabase.auth.exchangeCodeForSession(code);if(r.error){m(r.error.message,'err');return;}}
+const s=await supabase.auth.getSession();
+if(!s.data.session){m('Convite inválido ou expirado.','err');return;}
+form.hidden=false;m('Convite validado. Defina sua senha.','ok');
+}
+supabase.auth.onAuthStateChange((e,s)=>{if(e==='SIGNED_IN'&&s){form.hidden=false;m('Convite validado. Defina sua senha.','ok');}});
+form.addEventListener('submit',async(ev)=>{
+ev.preventDefault();
+if(p1.value!==p2.value){m('As senhas não coincidem.','err');return;}
+const r=await supabase.auth.updateUser({password:p1.value});
+if(r.error){m(r.error.message,'err');return;}
+try{
+const u=await supabase.auth.getUser();
+const email=u.data.user?.email;
+if(email){
+const q=await supabase.from('organization_users').select('organization_id,id,nome,role,email').eq('email',email).maybeSingle();
+if(q.data){
+await supabase.from('ai_audit_logs').insert({organization_id:q.data.organization_id,event_type:'INSTITUTIONAL_ACCOUNT_ACTIVATED',action_description:'Institutional account activated.',actor_type:'institutional_user',actor_identifier:q.data.email,ai_model:'LeaderK Executive Intelligence Center',ai_version:'1.0 Enterprise',source_module:'activate-account.html',metadata:{user_id:q.data.id,user_name:q.data.nome,user_role:q.data.role,activated_at:new Date().toISOString()}});
+}}
+}catch(e){}
+await supabase.auth.signOut({scope:'local'});
+m('Conta ativada. Redirecionando...','ok');
+setTimeout(()=>location.href='login-institucional.html',1800);
+});
+init();
+</script></body></html>
