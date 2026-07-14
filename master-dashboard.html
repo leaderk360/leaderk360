@@ -408,10 +408,11 @@
                   <th>Organização</th>
                   <th>Perfil</th>
                   <th>Status</th>
+                  <th>Ação</th>
                 </tr>
               </thead>
               <tbody id="users-table-body">
-                <tr><td colspan="4">Carregando usuários...</td></tr>
+                <tr><td colspan="5">Carregando usuários...</td></tr>
               </tbody>
             </table>
           </div>
@@ -905,32 +906,125 @@
 
       if (!state.users.length) {
         tbody.innerHTML =
-          '<tr><td colspan="4">Nenhum usuário cadastrado.</td></tr>'
+          '<tr><td colspan="5">Nenhum usuário cadastrado.</td></tr>'
         return
       }
 
       tbody.innerHTML = state.users
-        .slice(0, 12)
-        .map(user => `
-          <tr>
-            <td>
-              <strong>${escapeHtml(user.nome || '-')}</strong><br>
-              <small>${escapeHtml(user.email || '')}</small>
-            </td>
-            <td>${escapeHtml(organizationNameById(user.organization_id))}</td>
-            <td>${escapeHtml(user.role || '-')}</td>
-            <td>
-              <span class="lk-badge ${
-                user.status === 'active'
-                  ? 'lk-badge-green'
-                  : 'lk-badge-red'
-              }">
-                ${escapeHtml(user.status || '-')}
-              </span>
-            </td>
-          </tr>
-        `)
+        .slice(0, 20)
+        .map(user => {
+          const status = String(user.status || '').toLowerCase()
+          const hasAuthUser = Boolean(user.auth_user_id)
+
+          let actionHtml = ''
+
+          if (status === 'active') {
+            actionHtml = `
+              <button class="lk-btn lk-btn-secondary" type="button" disabled>
+                Conta ativa
+              </button>
+            `
+          } else if (status === 'invited' && hasAuthUser) {
+            actionHtml = `
+              <button class="lk-btn lk-btn-secondary" type="button" disabled>
+                Convite enviado
+              </button>
+            `
+          } else {
+            actionHtml = `
+              <button
+                class="lk-btn lk-btn-primary invite-manager-button"
+                type="button"
+                data-user-id="${escapeHtml(user.id)}"
+              >
+                Enviar convite
+              </button>
+            `
+          }
+
+          return `
+            <tr>
+              <td>
+                <strong>${escapeHtml(user.nome || '-')}</strong><br>
+                <small>${escapeHtml(user.email || '')}</small>
+              </td>
+              <td>${escapeHtml(organizationNameById(user.organization_id))}</td>
+              <td>${escapeHtml(user.role || '-')}</td>
+              <td>
+                <span class="lk-badge ${
+                  status === 'active'
+                    ? 'lk-badge-green'
+                    : status === 'invited'
+                      ? 'lk-badge-gold'
+                      : 'lk-badge-red'
+                }">
+                  ${escapeHtml(user.status || '-')}
+                </span>
+              </td>
+              <td>${actionHtml}</td>
+            </tr>
+          `
+        })
         .join('')
+    }
+
+    async function sendManagerInvite(button, organizationUserId) {
+      if (!organizationUserId) return
+
+      const confirmed = window.confirm(
+        'Enviar o convite de ativação para este gestor?'
+      )
+
+      if (!confirmed) return
+
+      const originalText = button.textContent
+      button.disabled = true
+      button.textContent = 'Enviando...'
+
+      const { data, error } = await supabase.functions.invoke(
+        'invite-institutional-manager',
+        {
+          body: {
+            organization_user_id: organizationUserId
+          }
+        }
+      )
+
+      if (error || !data?.success) {
+        console.error('Erro ao enviar convite:', error || data)
+
+        const code = String(
+          data?.error ||
+          error?.message ||
+          ''
+        ).toUpperCase()
+
+        let readable =
+          'Não foi possível enviar o convite neste momento.'
+
+        if (code.includes('MASTER_ACCESS_REQUIRED')) {
+          readable = 'Sua sessão não possui autorização para enviar convites.'
+        } else if (code.includes('ACCOUNT_ALREADY_ACTIVE')) {
+          readable = 'A conta deste gestor já está ativa.'
+        } else if (code.includes('INSTITUTIONAL_USER_NOT_FOUND')) {
+          readable = 'O gestor institucional não foi localizado.'
+        } else if (code.includes('INVITATION_FAILED')) {
+          readable =
+            data?.detail ||
+            'O Supabase não conseguiu enviar o convite. Verifique o usuário e o SMTP.'
+        }
+
+        window.alert(readable)
+        button.disabled = false
+        button.textContent = originalText
+        return
+      }
+
+      window.alert(
+        `Convite enviado para ${data.email || 'o gestor responsável'}.`
+      )
+
+      await loadPlatformData()
     }
 
     function renderExperiences() {
@@ -1051,6 +1145,19 @@
       renderSectors()
       renderAudit()
     }
+
+    document
+      .getElementById('users-table-body')
+      .addEventListener('click', event => {
+        const button = event.target.closest('.invite-manager-button')
+
+        if (!button) return
+
+        sendManagerInvite(
+          button,
+          button.dataset.userId
+        )
+      })
 
     document
       .getElementById('organization-search')
