@@ -113,6 +113,42 @@
       forgotPasswordButton.disabled = true; forgotPasswordButton.textContent = 'Enviando...'; setMessage('Processando a recuperação de acesso...')
       const { error } = await supabase.auth.resetPasswordForEmail(email,{ redirectTo: PASSWORD_RECOVERY_URL })
       forgotPasswordButton.disabled = false; forgotPasswordButton.textContent = 'Esqueci minha senha'
+      if (error) {
+  console.error('Erro completo da recuperação:', {
+    message: error.message,
+    code: error.code,
+    status: error.status,
+    name: error.name
+  })
+
+  const errorText = String(error.message || '').toLowerCase()
+
+  if (
+    error.status === 429 ||
+    errorText.includes('rate limit') ||
+    errorText.includes('email rate limit')
+  ) {
+    setMessage(
+      'O limite temporário de envio de e-mails foi atingido. Aguarde e tente novamente mais tarde.',
+      'error'
+    )
+  } else if (
+    errorText.includes('redirect') ||
+    errorText.includes('not allowed')
+  ) {
+    setMessage(
+      'A página de recuperação ainda não está autorizada nas configurações do Supabase.',
+      'error'
+    )
+  } else {
+    setMessage(
+      'Não foi possível processar a recuperação. Verifique o console para identificar o erro técnico.',
+      'error'
+    )
+  }
+
+  return
+}
       if (error) { console.error(error); setMessage('Não foi possível processar a solicitação neste momento.','error'); return }
       setMessage('Se o e-mail estiver vinculado a uma conta válida, as instruções serão enviadas.','success')
     })
