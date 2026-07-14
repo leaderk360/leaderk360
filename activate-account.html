@@ -26,26 +26,34 @@ ev.preventDefault();
 if(p1.value!==p2.value){m('As senhas não coincidem.','err');return;}
 const r=await supabase.auth.updateUser({password:p1.value});
 if(r.error){m(r.error.message,'err');return;}
-  const { data: activationData, error: activationError } =
-  await supabase.rpc('activate_current_institutional_account')
 
-if (activationError) {
-  console.error(
-    'Erro ao ativar vínculo institucional:',
-    activationError
-  )
+const {data:activationData,error:activationError}=await supabase.rpc(
+  'activate_current_institutional_account'
+);
 
+if(activationError){
+  console.error('Erro ao ativar vínculo institucional:',activationError);
   m(
     'A senha foi criada, mas o vínculo institucional não pôde ser ativado.',
     'err'
-  )
-
-  return
+  );
+  return;
 }
-await supabase.auth.signOut({ scope: 'local' })
 
-m('Conta ativada. Redirecionando...', 'ok')
+console.log('Conta institucional ativada:',activationData);
 
-setTimeout(() => {
-  location.href = 'login-institucional.html'
-}, 1800)
+try{
+const u=await supabase.auth.getUser();
+const email=u.data.user?.email;
+if(email){
+const q=await supabase.from('organization_users').select('organization_id,id,nome,role,email').eq('email',email).maybeSingle();
+if(q.data){
+await supabase.from('ai_audit_logs').insert({organization_id:q.data.organization_id,event_type:'INSTITUTIONAL_ACCOUNT_ACTIVATED',action_description:'Institutional account activated.',actor_type:'institutional_user',actor_identifier:q.data.email,ai_model:'LeaderK Executive Intelligence Center',ai_version:'1.0 Enterprise',source_module:'activate-account.html',metadata:{user_id:q.data.id,user_name:q.data.nome,user_role:q.data.role,activated_at:new Date().toISOString()}});
+}}
+}catch(e){}
+await supabase.auth.signOut({scope:'local'});
+m('Conta ativada. Redirecionando...','ok');
+setTimeout(()=>location.href='login-institucional.html',1800);
+});
+init();
+</script></body></html>
