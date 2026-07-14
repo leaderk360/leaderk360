@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>LeaderK 360 | Redefinir senha</title>
+  <style>
+    :root{--bg:#020611;--panel:rgba(7,17,31,.86);--panel-soft:rgba(255,255,255,.035);--gold:#d6b45a;--gold-2:#f1d27a;--green:#55d6a5;--red:#ff8f8f;--text:#fff;--muted:rgba(255,255,255,.68);--line:rgba(214,180,90,.22)}
+    *{box-sizing:border-box;margin:0;padding:0}html{color-scheme:dark}body{min-height:100vh;padding:24px;display:grid;place-items:center;overflow-x:hidden;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at 12% 8%,rgba(214,180,90,.15),transparent 30%),radial-gradient(circle at 88% 88%,rgba(29,78,216,.16),transparent 35%),linear-gradient(180deg,#020611 0%,#020814 100%)}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:radial-gradient(#d6b45a 1px,transparent 1px),radial-gradient(#1d4ed8 1px,transparent 1px);background-size:120px 120px;background-position:0 0,60px 60px}
+    .shell{position:relative;z-index:1;width:min(1080px,100%);display:grid;grid-template-columns:1.05fr .95fr;gap:28px}.intro,.card{border:1px solid var(--line);border-radius:34px;background:var(--panel);backdrop-filter:blur(18px);box-shadow:0 30px 90px rgba(0,0,0,.42);overflow:hidden}.intro{position:relative;padding:48px}.intro::after{content:"";position:absolute;width:380px;height:380px;top:-170px;right:-180px;pointer-events:none;background:radial-gradient(circle,rgba(214,180,90,.18),transparent 70%)}
+    .brand{position:relative;z-index:1;display:flex;align-items:center;gap:14px;margin-bottom:48px}.brand img{width:60px;height:60px;object-fit:contain}.brand h1{font-size:25px;line-height:1}.brand h1 span{color:var(--gold)}.brand p{margin-top:7px;color:var(--muted);font-size:11px;letter-spacing:1.4px;text-transform:uppercase}.eyebrow,.tag{display:inline-flex;align-items:center;width:max-content;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:1.25px;text-transform:uppercase}.eyebrow{position:relative;z-index:1;margin-bottom:16px;color:var(--gold-2)}.intro h2{position:relative;z-index:1;max-width:620px;margin-bottom:24px;font-size:clamp(42px,5.5vw,72px);line-height:.98;letter-spacing:-2.4px}.intro>p{position:relative;z-index:1;max-width:620px;color:var(--muted);font-size:17px;line-height:1.8}.security-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px}.security-item{padding:18px;border:1px solid rgba(255,255,255,.07);border-radius:20px;background:var(--panel-soft)}.security-item strong{display:block;margin-bottom:8px;color:var(--gold-2);font-size:16px}.security-item small{color:var(--muted);line-height:1.5}
+    .card{padding:42px}.tag{margin-bottom:22px;padding:8px 13px;color:var(--green);background:rgba(85,214,165,.1)}.card h3{margin-bottom:12px;font-size:34px;line-height:1.1}.description{margin-bottom:28px;color:var(--muted);font-size:14px;line-height:1.75}.state-box{display:none;margin-bottom:22px;padding:16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:18px;color:var(--muted);background:rgba(255,255,255,.035);font-size:13px;line-height:1.6}.state-box.visible{display:block}.state-box.error{border-color:rgba(255,143,143,.28);color:var(--red);background:rgba(255,143,143,.06)}.state-box.success{border-color:rgba(85,214,165,.25);color:var(--green);background:rgba(85,214,165,.06)}form[hidden]{display:none}label{display:block;margin-bottom:8px;color:rgba(255,255,255,.8);font-size:13px;font-weight:800}.field{position:relative;margin-bottom:17px}input{width:100%;padding:15px 48px 15px 16px;border:1px solid rgba(214,180,90,.22);border-radius:16px;outline:none;color:white;background:rgba(255,255,255,.04);font-size:15px}input:focus{border-color:rgba(214,180,90,.58);box-shadow:0 0 0 4px rgba(214,180,90,.08)}.toggle-password{position:absolute;top:50%;right:10px;width:36px;height:36px;padding:0;transform:translateY(-50%);border:0;border-radius:50%;color:var(--muted);background:transparent;box-shadow:none;cursor:pointer;font-size:16px}.requirements{display:grid;gap:7px;margin:4px 0 22px;color:var(--muted);font-size:12px}.requirement{display:flex;align-items:center;gap:8px}.requirement::before{content:"•";color:rgba(255,255,255,.35);font-size:18px;line-height:1}.requirement.ok{color:var(--green)}.requirement.ok::before{content:"✓";color:var(--green);font-size:12px;font-weight:900}.primary-button,.secondary-link{width:100%;border-radius:999px;font-weight:900;text-align:center}.primary-button{border:0;padding:15px 20px;color:#06101e;background:linear-gradient(135deg,var(--gold-2),var(--gold));box-shadow:0 18px 38px rgba(214,180,90,.22);cursor:pointer;font-size:15px}.primary-button:disabled{opacity:.58;cursor:not-allowed}.secondary-link{display:inline-block;margin-top:13px;padding:14px 20px;border:1px solid rgba(214,180,90,.22);color:var(--gold-2);text-decoration:none;background:rgba(255,255,255,.025)}.footer-note{margin-top:28px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-size:12px;line-height:1.65}
+    @media(max-width:900px){.shell{grid-template-columns:1fr}.security-grid{grid-template-columns:1fr}}@media(max-width:560px){body{padding:14px}.intro,.card{padding:28px;border-radius:26px}.intro h2{font-size:44px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="intro">
+      <div class="brand">
+        <img src="logo-leaderk360.png" alt="LeaderK 360" />
+        <div><h1>LeaderK <span>360</span></h1><p>Executive Intelligence Center</p></div>
+      </div>
+      <span class="eyebrow">Secure Credential Recovery</span>
+      <h2>Redefinição segura de acesso institucional.</h2>
+      <p>Crie uma nova senha para retomar o acesso ao ambiente reservado de inteligência executiva. A atualização é processada pelo Supabase Auth e a senha não é armazenada pelo LeaderK 360.</p>
+      <div class="security-grid">
+        <div class="security-item"><strong>Secure Auth</strong><small>Atualização protegida da credencial institucional.</small></div>
+        <div class="security-item"><strong>Session Control</strong><small>Retorno ao login após a redefinição da senha.</small></div>
+        <div class="security-item"><strong>Audit Ready</strong><small>Estrutura compatível com governança e rastreabilidade.</small></div>
+      </div>
+    </section>
+    <section class="card">
+      <span class="tag">Link seguro de recuperação</span>
+      <h3>Defina sua nova senha</h3>
+      <p class="description">Para sua segurança, utilize uma senha exclusiva, com letras maiúsculas e minúsculas, número e caractere especial.</p>
+      <div id="state-box" class="state-box visible">Validando o link de recuperação...</div>
+      <form id="recover-form" hidden novalidate>
+        <label for="new-password">Nova senha</label>
+        <div class="field"><input id="new-password" type="password" placeholder="Digite a nova senha" minlength="10" autocomplete="new-password" required /><button class="toggle-password" type="button" data-target="new-password" aria-label="Mostrar ou ocultar senha">◉</button></div>
+        <label for="confirm-password">Confirmar nova senha</label>
+        <div class="field"><input id="confirm-password" type="password" placeholder="Repita a nova senha" minlength="10" autocomplete="new-password" required /><button class="toggle-password" type="button" data-target="confirm-password" aria-label="Mostrar ou ocultar senha">◉</button></div>
+        <div class="requirements" aria-live="polite">
+          <div id="req-length" class="requirement">Pelo menos 10 caracteres</div><div id="req-upper" class="requirement">Uma letra maiúscula</div><div id="req-lower" class="requirement">Uma letra minúscula</div><div id="req-number" class="requirement">Um número</div><div id="req-special" class="requirement">Um caractere especial</div><div id="req-match" class="requirement">As senhas devem coincidir</div>
+        </div>
+        <button id="submit-button" class="primary-button" type="submit">Atualizar senha institucional</button>
+      </form>
+      <a id="login-link" class="secondary-link" href="login-institucional.html" hidden>Voltar ao login institucional</a>
+      <div class="footer-note">Links de recuperação têm validade limitada e só podem ser usados uma vez. Caso o link tenha expirado, solicite um novo e-mail na página de acesso institucional.</div>
+    </section>
+  </main>
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+    const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
+    const supabaseKey = 'sb_publishable_zc4oXLuv6CpXpxDRvR7MYg_dsHjB6VJ'
+    const supabase = createClient(supabaseUrl, supabaseKey, {auth:{detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}})
+    const form=document.getElementById('recover-form'),stateBox=document.getElementById('state-box'),loginLink=document.getElementById('login-link'),submitButton=document.getElementById('submit-button'),newPasswordInput=document.getElementById('new-password'),confirmPasswordInput=document.getElementById('confirm-password')
+    const requirements={length:document.getElementById('req-length'),upper:document.getElementById('req-upper'),lower:document.getElementById('req-lower'),number:document.getElementById('req-number'),special:document.getElementById('req-special'),match:document.getElementById('req-match')}
+    function setState(message,type=''){stateBox.className=`state-box visible ${type}`.trim();stateBox.textContent=message}
+    function showForm(){form.hidden=false;loginLink.hidden=true;setState('Link validado. Informe e confirme a nova senha para concluir.','success')}
+    function showInvalidLink(message){form.hidden=true;loginLink.hidden=false;setState(message||'O link é inválido, já foi utilizado ou expirou. Solicite uma nova recuperação de senha.','error')}
+    function passwordChecks(){const password=newPasswordInput.value,confirmation=confirmPasswordInput.value;const checks={length:password.length>=10,upper:/[A-Z]/.test(password),lower:/[a-z]/.test(password),number:/\d/.test(password),special:/[^A-Za-z0-9]/.test(password),match:password.length>0&&password===confirmation};Object.entries(checks).forEach(([key,valid])=>requirements[key].classList.toggle('ok',valid));return Object.values(checks).every(Boolean)}
+    newPasswordInput.addEventListener('input',passwordChecks);confirmPasswordInput.addEventListener('input',passwordChecks)
+    document.querySelectorAll('.toggle-password').forEach(button=>button.addEventListener('click',()=>{const input=document.getElementById(button.dataset.target);input.type=input.type==='password'?'text':'password'}))
+    async function validateRecoverySession(){const params=new URLSearchParams(window.location.search),hashParams=new URLSearchParams(window.location.hash.replace(/^#/,''));const errorDescription=params.get('error_description')||hashParams.get('error_description');if(errorDescription){showInvalidLink(decodeURIComponent(errorDescription.replace(/\+/g,' ')));return}const code=params.get('code');if(code){const{data:current}=await supabase.auth.getSession();if(!current.session){const{error:exchangeError}=await supabase.auth.exchangeCodeForSession(code);if(exchangeError){showInvalidLink(exchangeError.message);return}}}let{data,error}=await supabase.auth.getSession();if(error||!data.session){await new Promise(resolve=>setTimeout(resolve,700));const retry=await supabase.auth.getSession();if(retry.error||!retry.data.session){showInvalidLink();return}}showForm()}
+    supabase.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'&&session)showForm()})
+    form.addEventListener('submit',async event=>{event.preventDefault();if(!passwordChecks()){setState('A senha ainda não atende a todos os requisitos ou as confirmações não coincidem.','error');return}submitButton.disabled=true;submitButton.textContent='Atualizando senha...';setState('Processando a nova credencial institucional...');const{data:userData}=await supabase.auth.getUser();const userEmail=userData?.user?.email||null;const{error}=await supabase.auth.updateUser({password:newPasswordInput.value});if(error){submitButton.disabled=false;submitButton.textContent='Atualizar senha institucional';setState(`Não foi possível atualizar a senha: ${error.message}`,'error');return}try{if(userEmail){const{data:institutionalUser}=await supabase.from('organization_users').select('id, organization_id, nome, email, role').eq('email',userEmail.toLowerCase()).maybeSingle();if(institutionalUser?.organization_id){await supabase.from('ai_audit_logs').insert({organization_id:institutionalUser.organization_id,event_type:'INSTITUTIONAL_PASSWORD_CHANGED',action_description:'Institutional user password changed through the recovery flow.',actor_type:'institutional_user',actor_identifier:institutionalUser.email,ai_model:'LeaderK Executive Intelligence Center',ai_version:'1.0 Enterprise',source_module:'recover.html',metadata:{user_id:institutionalUser.id,user_name:institutionalUser.nome,user_role:institutionalUser.role,changed_at:new Date().toISOString()}})}}}catch(auditError){console.warn('Não foi possível registrar a auditoria:',auditError)}localStorage.removeItem('leaderk_org_user');try{await supabase.auth.signOut({scope:'local'})}catch(signOutError){console.warn('Não foi possível encerrar a sessão local:',signOutError)}form.hidden=true;loginLink.hidden=false;setState('Senha atualizada com sucesso. Retorne ao login e utilize a nova credencial.','success')})
+    validateRecoverySession()
+  </script>
+</body>
+</html>
