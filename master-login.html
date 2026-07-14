@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>LeaderK Control Center | Acesso Master</title>
+  <link rel="stylesheet" href="leaderk-design-system.css" />
+  <style>
+    .master-login-page{min-height:100vh;display:grid;place-items:center;padding:24px}
+    .master-login-shell{width:min(1120px,100%);display:grid;grid-template-columns:1.08fr .92fr;gap:28px}
+    .master-intro,.master-login-card{min-height:650px}
+    .master-intro{display:flex;flex-direction:column;justify-content:space-between}
+    .master-trust-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:36px}
+    .master-trust-card{min-height:128px}.master-trust-card strong{display:block;margin-bottom:8px;color:var(--lk-gold-light);font-size:17px}.master-trust-card span{color:var(--lk-muted);font-size:12px;line-height:1.55}
+    .master-login-card{display:flex;flex-direction:column;justify-content:center}.master-form{margin-top:30px}.password-row{position:relative}.password-row .lk-input{padding-right:52px}.password-toggle{position:absolute;top:50%;right:10px;width:36px;height:36px;transform:translateY(-50%);border:0;border-radius:50%;color:var(--lk-muted);background:transparent;cursor:pointer}.master-actions{display:flex;justify-content:flex-end;margin:-4px 0 20px}.master-actions button{padding:0;border:0;color:var(--lk-gold-light);background:transparent;cursor:pointer;font-size:13px;font-weight:800}.master-actions button:hover{text-decoration:underline}.master-submit{width:100%}.master-security-note{margin-top:28px;padding-top:22px;border-top:1px solid var(--lk-line-soft);color:var(--lk-faint);font-size:12px;line-height:1.7}.master-status{min-height:22px;margin-top:18px}
+    @media(max-width:920px){.master-login-shell{grid-template-columns:1fr}.master-intro,.master-login-card{min-height:auto}}@media(max-width:620px){.master-login-page{padding:14px}.master-trust-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="lk-body">
+  <div class="lk-bg-grid"></div>
+  <main class="master-login-page lk-page">
+    <div class="master-login-shell">
+      <section class="lk-panel master-intro lk-fade-up">
+        <div>
+          <div class="lk-brand">
+            <img src="logo-leaderk360.png" alt="LeaderK 360" />
+            <div><h1 class="lk-brand-title">LeaderK <span>360</span></h1><div class="lk-brand-subtitle">Executive Control Center</div></div>
+          </div>
+          <span class="lk-eyebrow">Platform Administration</span>
+          <h2 class="lk-title-xl">Controle integral da operação LeaderK.</h2>
+          <p class="lk-copy">Ambiente reservado para administração de organizações, usuários institucionais, Executive Experiences, governança de IA, auditoria e operação da plataforma.</p>
+          <div class="master-trust-grid">
+            <article class="lk-card master-trust-card"><strong>Multi-Organization</strong><span>Administração centralizada de empresas, órgãos e instituições.</span></article>
+            <article class="lk-card master-trust-card"><strong>AI Governance</strong><span>Rastreabilidade, supervisão humana e evidências operacionais.</span></article>
+            <article class="lk-card master-trust-card"><strong>Audit Control</strong><span>Histórico de acessos, ativações, alterações e operações críticas.</span></article>
+          </div>
+        </div>
+        <div class="lk-alert lk-alert-warning">Área administrativa restrita. Toda autenticação e tentativa de acesso podem ser registradas para segurança e auditoria.</div>
+      </section>
+
+      <section class="lk-panel master-login-card lk-fade-up">
+        <div>
+          <span class="lk-badge lk-badge-green">Acesso administrativo protegido</span>
+          <h2 class="lk-title-lg">Entrar no Control Center</h2>
+          <p class="lk-copy">Utilize as credenciais de administrador da plataforma. Contas institucionais comuns não possuem acesso a esta área.</p>
+
+          <form id="master-login-form" class="master-form" novalidate>
+            <div class="lk-field"><label class="lk-label" for="master-email">E-mail administrativo</label><input id="master-email" class="lk-input" type="email" placeholder="administrador@leaderk360.com.br" autocomplete="username" required /></div>
+            <div class="lk-field"><label class="lk-label" for="master-password">Senha</label><div class="password-row"><input id="master-password" class="lk-input" type="password" placeholder="Digite sua senha" autocomplete="current-password" required /><button id="password-toggle" class="password-toggle" type="button" aria-label="Mostrar ou ocultar senha">◉</button></div></div>
+            <div class="master-actions"><button id="forgot-password-button" type="button">Esqueci minha senha</button></div>
+            <button id="master-submit-button" class="lk-btn lk-btn-primary master-submit" type="submit">Acessar LeaderK Control Center</button>
+            <div id="master-message" class="master-status" aria-live="polite"></div>
+          </form>
+
+          <div class="master-security-note">O acesso exige autenticação válida no Supabase Auth e vínculo ativo na tabela de administradores da plataforma. A chave administrativa do Supabase não é utilizada no navegador.</div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+    const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
+    const supabaseKey = 'sb_publishable_zc4oXLuv6CpXpxDRvR7MYg_dsHjB6VJ'
+    const MASTER_DASHBOARD_URL = 'master-dashboard.html'
+    const PASSWORD_RECOVERY_URL = 'https://leaderk360.com.br/recover.html'
+
+    const supabase = createClient(supabaseUrl, supabaseKey, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } })
+
+    const form = document.getElementById('master-login-form')
+    const emailInput = document.getElementById('master-email')
+    const passwordInput = document.getElementById('master-password')
+    const passwordToggle = document.getElementById('password-toggle')
+    const forgotPasswordButton = document.getElementById('forgot-password-button')
+    const submitButton = document.getElementById('master-submit-button')
+    const message = document.getElementById('master-message')
+
+    function setMessage(text, type = '') {
+      message.className = 'master-status'
+      if (type === 'error') { message.innerHTML = `<div class="lk-alert lk-alert-error">${text}</div>`; return }
+      if (type === 'success') { message.innerHTML = `<div class="lk-alert lk-alert-success">${text}</div>`; return }
+      message.innerHTML = text ? `<div class="lk-alert">${text}</div>` : ''
+    }
+
+    function validEmail(email){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) }
+
+    async function getPlatformAdmin(authUserId){
+      const { data, error } = await supabase.from('platform_admins').select('id, auth_user_id, nome, email, role, status').eq('auth_user_id', authUserId).eq('status','active').maybeSingle()
+      if (error) { console.error('Erro ao verificar administrador:', error); return null }
+      return data
+    }
+
+    function saveMasterSession(authUser, admin){
+      localStorage.setItem('leaderk_master_session', JSON.stringify({ admin_id: admin.id, auth_user_id: authUser.id, nome: admin.nome, email: admin.email, role: admin.role, login_at: new Date().toISOString() }))
+    }
+
+    async function redirectIfAlreadyAuthorized(){
+      const { data: userData, error: userError } = await supabase.auth.getUser()
+      if (userError || !userData.user) { localStorage.removeItem('leaderk_master_session'); return }
+      const admin = await getPlatformAdmin(userData.user.id)
+      if (!admin) { localStorage.removeItem('leaderk_master_session'); return }
+      saveMasterSession(userData.user, admin)
+      window.location.replace(MASTER_DASHBOARD_URL)
+    }
+
+    passwordToggle.addEventListener('click',()=>{ passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password' })
+
+    forgotPasswordButton.addEventListener('click', async ()=>{
+      const email = emailInput.value.trim().toLowerCase()
+      if (!email || !validEmail(email)) { setMessage('Informe um endereço de e-mail administrativo válido.','error'); emailInput.focus(); return }
+      forgotPasswordButton.disabled = true; forgotPasswordButton.textContent = 'Enviando...'; setMessage('Processando a recuperação de acesso...')
+      const { error } = await supabase.auth.resetPasswordForEmail(email,{ redirectTo: PASSWORD_RECOVERY_URL })
+      forgotPasswordButton.disabled = false; forgotPasswordButton.textContent = 'Esqueci minha senha'
+      if (error) { console.error(error); setMessage('Não foi possível processar a solicitação neste momento.','error'); return }
+      setMessage('Se o e-mail estiver vinculado a uma conta válida, as instruções serão enviadas.','success')
+    })
+
+    form.addEventListener('submit', async event=>{
+      event.preventDefault()
+      const email = emailInput.value.trim().toLowerCase(); const password = passwordInput.value
+      if (!validEmail(email) || !password) { setMessage('Informe e-mail e senha válidos.','error'); return }
+      submitButton.disabled = true; submitButton.textContent = 'Validando credenciais...'; setMessage('Autenticando administrador da plataforma...')
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({ email, password })
+      if (authError || !authData.user) { submitButton.disabled=false; submitButton.textContent='Acessar LeaderK Control Center'; setMessage('E-mail ou senha inválidos.','error'); return }
+      const { data: verifiedData, error: verifiedError } = await supabase.auth.getUser()
+      if (verifiedError || !verifiedData.user) { await supabase.auth.signOut(); submitButton.disabled=false; submitButton.textContent='Acessar LeaderK Control Center'; setMessage('Não foi possível validar a sessão administrativa.','error'); return }
+      const admin = await getPlatformAdmin(verifiedData.user.id)
+      if (!admin) { await supabase.auth.signOut(); localStorage.removeItem('leaderk_master_session'); submitButton.disabled=false; submitButton.textContent='Acessar LeaderK Control Center'; setMessage('Acesso negado. Esta conta não possui autorização administrativa.','error'); return }
+      saveMasterSession(verifiedData.user, admin)
+      setMessage('Acesso autorizado. Abrindo o Control Center...','success')
+      setTimeout(()=>window.location.replace(MASTER_DASHBOARD_URL),700)
+    })
+
+    redirectIfAlreadyAuthorized()
+  </script>
+</body>
+</html>
