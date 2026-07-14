@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>LeaderK 360 | Voucher Corporativo</title>
+
+  <style>
+    :root {
+      --bg: #020611;
+      --panel: rgba(7, 17, 31, 0.88);
+      --panel-soft: rgba(255,255,255,0.035);
+      --gold: #d6b45a;
+      --gold-2: #f1d27a;
+      --green: #55d6a5;
+      --red: #ff8f8f;
+      --text: #fff;
+      --muted: rgba(255,255,255,.68);
+      --line: rgba(214,180,90,.22);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { color-scheme: dark; }
+
+    body {
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(214,180,90,.15), transparent 30%),
+        radial-gradient(circle at 90% 88%, rgba(29,78,216,.16), transparent 35%),
+        linear-gradient(180deg, #020611 0%, #020814 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .12;
+      background-image:
+        radial-gradient(#d6b45a 1px, transparent 1px),
+        radial-gradient(#1d4ed8 1px, transparent 1px);
+      background-size: 120px 120px;
+      background-position: 0 0, 60px 60px;
+    }
+
+    .shell {
+      width: min(1160px, 100%);
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .intro,
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: var(--panel);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 30px 90px rgba(0,0,0,.42);
+      overflow: hidden;
+    }
+
+    .intro {
+      position: relative;
+      padding: 48px;
+    }
+
+    .intro::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      top: -190px;
+      right: -190px;
+      background: radial-gradient(circle, rgba(214,180,90,.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .brand {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 46px;
+    }
+
+    .brand img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    .brand h1 {
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .brand h1 span { color: var(--gold); }
+
+    .brand p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1.35px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.25px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 16px;
+      color: var(--gold-2);
+    }
+
+    .intro h2 {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin-bottom: 24px;
+      font-size: clamp(42px, 5.2vw, 72px);
+      line-height: .98;
+      letter-spacing: -2.4px;
+    }
+
+    .intro > p {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .benefits {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .benefit {
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px;
+      background: var(--panel-soft);
+    }
+
+    .benefit strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold-2);
+      font-size: 16px;
+    }
+
+    .benefit small {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card { padding: 42px; }
+
+    .tag {
+      margin-bottom: 22px;
+      padding: 8px 13px;
+      color: var(--green);
+      background: rgba(85,214,165,.10);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+      font-size: 34px;
+      line-height: 1.1;
+    }
+
+    .description {
+      margin-bottom: 26px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .company-panel {
+      display: none;
+      margin-bottom: 24px;
+      padding: 20px;
+      border: 1px solid rgba(214,180,90,.18);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(214,180,90,.12), transparent 45%),
+        rgba(255,255,255,.035);
+    }
+
+    .company-panel.visible { display: block; }
+
+    .company-panel span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .company-panel h4 {
+      margin-bottom: 9px;
+      font-size: 22px;
+    }
+
+    .company-panel p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .quota {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 7px 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.78);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,.80);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input,
+    select {
+      width: 100%;
+      margin-bottom: 16px;
+      padding: 15px 16px;
+      border: 1px solid rgba(214,180,90,.22);
+      border-radius: 16px;
+      outline: none;
+      color: #fff;
+      background: rgba(255,255,255,.04);
+      font-size: 15px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgba(214,180,90,.58);
+      box-shadow: 0 0 0 4px rgba(214,180,90,.08);
+    }
+
+    .code-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .validate-button {
+      padding: 15px 20px;
+      color: #06101e;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 18px 38px rgba(214,180,90,.18);
+      white-space: nowrap;
+    }
+
+    .start-button {
+      width: 100%;
+      padding: 15px 20px;
+      color: #06101e;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 18px 38px rgba(214,180,90,.22);
+      font-size: 15px;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .participant-form[hidden] { display: none; }
+
+    .message {
+      min-height: 22px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .message.error { color: var(--red); }
+    .message.success { color: var(--green); }
+
+    .footer-note {
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.5);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 920px) {
+      .shell { grid-template-columns: 1fr; }
+      .benefits { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 14px; }
+
+      .intro,
+      .card {
+        padding: 28px;
+        border-radius: 26px;
+      }
+
+      .intro h2 { font-size: 44px; }
+
+      .code-row { grid-template-columns: 1fr; }
+      .validate-button { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <section class="intro">
+      <div class="brand">
+        <img src="logo-leaderk360.png" alt="LeaderK 360" />
+        <div>
+          <h1>LeaderK <span>360</span></h1>
+          <p>Executive Intelligence Experience</p>
+        </div>
+      </div>
+
+      <span class="eyebrow">Corporate Experience Voucher</span>
+      <h2>Uma degustação estratégica para conhecer o potencial da sua equipe.</h2>
+
+      <p>
+        Sua organização recebeu acesso a uma experiência institucional
+        exclusiva do LeaderK 360. O voucher permite realizar um número
+        limitado de avaliações executivas e visualizar indicadores
+        consolidados de liderança, risco, potencial e aderência.
+      </p>
+
+      <div class="benefits">
+        <div class="benefit">
+          <strong>15 análises</strong>
+          <small>Limite controlado por voucher corporativo.</small>
+        </div>
+
+        <div class="benefit">
+          <strong>Uso individual</strong>
+          <small>Cada e-mail pode participar uma única vez.</small>
+        </div>
+
+        <div class="benefit">
+          <strong>Executive Preview</strong>
+          <small>Visão demonstrativa do potencial da plataforma.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <span class="tag">Acesso corporativo limitado</span>
+      <h3>Validar voucher</h3>
+
+      <p class="description">
+        Digite o código recebido ou utilize o link direto enviado pela
+        sua organização. Após a validação, informe seus dados para
+        iniciar a avaliação.
+      </p>
+
+      <div id="code-area">
+        <label for="voucher-code">Código do voucher</label>
+
+        <div class="code-row">
+          <input
+            id="voucher-code"
+            type="text"
+            placeholder="Ex.: LEADERK-METAMAT-2026-DEMO"
+            autocomplete="off"
+            spellcheck="false"
+          />
+
+          <button id="validate-button" class="validate-button" type="button">
+            Validar voucher
+          </button>
+        </div>
+      </div>
+
+      <div id="company-panel" class="company-panel">
+        <span>Voucher validado</span>
+        <h4 id="company-name">Organização</h4>
+        <p id="campaign-message">Experiência corporativa LeaderK 360.</p>
+
+        <div class="quota">
+          <div id="remaining-pill" class="pill">Disponíveis: -</div>
+          <div id="expires-pill" class="pill">Validade: -</div>
+        </div>
+      </div>
+
+      <form id="participant-form" class="participant-form" hidden>
+        <label for="participant-name">Nome completo</label>
+        <input id="participant-name" type="text" placeholder="Digite seu nome completo" autocomplete="name" required />
+
+        <label for="participant-email">E-mail profissional</label>
+        <input id="participant-email" type="email" placeholder="nome@organizacao.com.br" autocomplete="email" required />
+
+        <label for="job-title">Cargo ou função</label>
+        <input id="job-title" type="text" placeholder="Ex.: Gerente Administrativo" autocomplete="organization-title" required />
+
+        <label for="sector">Setor</label>
+        <select id="sector" required>
+          <option value="">Selecione o setor</option>
+          <option>Administração</option>
+          <option>Comercial</option>
+          <option>Compliance</option>
+          <option>Comunicação</option>
+          <option>Financeiro</option>
+          <option>Gabinete</option>
+          <option>Governança</option>
+          <option>Inovação</option>
+          <option>Jurídico</option>
+          <option>Operações</option>
+          <option>Planejamento</option>
+          <option>Projetos</option>
+          <option>Recursos Humanos</option>
+          <option>Relações Institucionais</option>
+          <option>Tecnologia</option>
+          <option>Outro</option>
+        </select>
+
+        <button id="start-button" class="start-button" type="submit">
+          Iniciar Assessment
+        </button>
+      </form>
+
+      <div id="message" class="message"></div>
+
+      <div class="footer-note">
+        O voucher é pessoal e limitado. A participação será contabilizada
+        somente após a conclusão da avaliação. Os dados serão tratados
+        conforme a política de privacidade e as regras institucionais da
+        campanha.
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+    const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
+    const supabaseKey = 'COLE_AQUI_SUA_ANON_KEY'
+
+    const ASSESSMENT_URL = 'assessment.html'
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    const codeInput = document.getElementById('voucher-code')
+    const validateButton = document.getElementById('validate-button')
+    const companyPanel = document.getElementById('company-panel')
+    const companyName = document.getElementById('company-name')
+    const campaignMessage = document.getElementById('campaign-message')
+    const remainingPill = document.getElementById('remaining-pill')
+    const expiresPill = document.getElementById('expires-pill')
+    const participantForm = document.getElementById('participant-form')
+    const participantName = document.getElementById('participant-name')
+    const participantEmail = document.getElementById('participant-email')
+    const jobTitle = document.getElementById('job-title')
+    const sector = document.getElementById('sector')
+    const startButton = document.getElementById('start-button')
+    const message = document.getElementById('message')
+
+    let validatedVoucher = null
+
+    function setMessage(text, type = '') {
+      message.className = `message ${type}`.trim()
+      message.textContent = text
+    }
+
+    function normalizeCode(value) {
+      return String(value || '').trim().toUpperCase()
+    }
+
+    function formatDate(value) {
+      if (!value) return 'Sem prazo definido'
+
+      return new Intl.DateTimeFormat('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }).format(new Date(value))
+    }
+
+    function errorMessage(rawMessage) {
+      const value = String(rawMessage || '').toUpperCase()
+
+      if (value.includes('VOUCHER_NOT_FOUND')) return 'Voucher não localizado. Confira o código informado.'
+      if (value.includes('VOUCHER_NOT_ACTIVE')) return 'Este voucher não está ativo.'
+      if (value.includes('VOUCHER_EXPIRED')) return 'Este voucher expirou. Solicite um novo acesso à organização responsável.'
+      if (value.includes('VOUCHER_EXHAUSTED')) return 'O limite de análises deste voucher já foi atingido.'
+      if (value.includes('EMAIL_ALREADY_REGISTERED')) return 'Este e-mail já está vinculado ao voucher.'
+      if (value.includes('EMAIL_DOMAIN_NOT_ALLOWED')) return 'Utilize um e-mail autorizado para esta campanha.'
+
+      return 'Não foi possível processar a solicitação. Tente novamente.'
+    }
+
+    async function validateVoucher() {
+      const code = normalizeCode(codeInput.value)
+
+      if (!code) {
+        setMessage('Informe o código do voucher.', 'error')
+        codeInput.focus()
+        return
+      }
+
+      validateButton.disabled = true
+      validateButton.textContent = 'Validando...'
+      setMessage('Validando o voucher corporativo...')
+
+      const { data, error } = await supabase.rpc(
+        'validate_corporate_voucher',
+        { p_code: code }
+      )
+
+      validateButton.disabled = false
+      validateButton.textContent = 'Validar voucher'
+
+      if (error || !data?.length) {
+        validatedVoucher = null
+        companyPanel.classList.remove('visible')
+        participantForm.hidden = true
+        setMessage(errorMessage(error?.message), 'error')
+        return
+      }
+
+      validatedVoucher = data[0]
+
+      companyName.textContent =
+        validatedVoucher.company_name || 'Organização participante'
+
+      campaignMessage.textContent =
+        validatedVoucher.invitation_message ||
+        validatedVoucher.campaign_name ||
+        'Sua organização recebeu acesso a uma experiência exclusiva do LeaderK 360.'
+
+      remainingPill.textContent =
+        `Disponíveis: ${validatedVoucher.remaining_uses} de ${validatedVoucher.max_uses}`
+
+      expiresPill.textContent =
+        `Validade: ${formatDate(validatedVoucher.expires_at)}`
+
+      companyPanel.classList.add('visible')
+      participantForm.hidden = false
+      setMessage('Voucher validado. Preencha seus dados para iniciar.', 'success')
+    }
+
+    validateButton.addEventListener('click', validateVoucher)
+
+    codeInput.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault()
+        validateVoucher()
+      }
+    })
+
+    participantForm.addEventListener('submit', async event => {
+      event.preventDefault()
+
+      if (!validatedVoucher) {
+        setMessage('Valide o voucher antes de continuar.', 'error')
+        return
+      }
+
+      const name = participantName.value.trim()
+      const email = participantEmail.value.trim().toLowerCase()
+      const title = jobTitle.value.trim()
+      const selectedSector = sector.value
+      const code = normalizeCode(codeInput.value)
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+      if (!name || !email || !title || !selectedSector) {
+        setMessage('Preencha todos os campos obrigatórios.', 'error')
+        return
+      }
+
+      if (!emailPattern.test(email)) {
+        setMessage('Informe um endereço de e-mail válido.', 'error')
+        participantEmail.focus()
+        return
+      }
+
+      startButton.disabled = true
+      startButton.textContent = 'Preparando assessment...'
+      setMessage('Registrando a participação...')
+
+      const { data, error } = await supabase.rpc(
+        'consume_corporate_voucher',
+        {
+          p_code: code,
+          p_participant_name: name,
+          p_participant_email: email,
+          p_job_title: title,
+          p_sector: selectedSector
+        }
+      )
+
+      if (error || !data?.length) {
+        startButton.disabled = false
+        startButton.textContent = 'Iniciar Assessment'
+        setMessage(errorMessage(error?.message), 'error')
+        return
+      }
+
+      const registration = data[0]
+
+      localStorage.setItem(
+        'leaderk_voucher_participant',
+        JSON.stringify({
+          participant_id: registration.participant_id,
+          voucher_id: registration.voucher_id,
+          voucher_code: code,
+          company_name:
+            registration.company_name ||
+            validatedVoucher.company_name ||
+            '',
+          participant_name: name,
+          participant_email: email,
+          job_title: title,
+          sector: selectedSector,
+          started_at: new Date().toISOString()
+        })
+      )
+
+      const target = new URL(ASSESSMENT_URL, window.location.href)
+      target.searchParams.set('participant_id', registration.participant_id)
+      target.searchParams.set('voucher_code', code)
+
+      window.location.href = target.toString()
+    })
+
+    const params = new URLSearchParams(window.location.search)
+    const codeFromUrl = normalizeCode(params.get('code'))
+
+    if (codeFromUrl) {
+      codeInput.value = codeFromUrl
+      validateVoucher()
+    }
+  </script>
+</body>
+</html>
