@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>LeaderK Control Center | Executive Overview</title>
+
+  <link rel="stylesheet" href="leaderk-design-system.css" />
+
+  <style>
+    .control-topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .control-user {
+      min-width: 300px;
+    }
+
+    .control-user strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .control-user span {
+      color: var(--lk-muted);
+      font-size: 12px;
+    }
+
+    .overview-grid {
+      margin-bottom: 24px;
+    }
+
+    .overview-kpi {
+      min-height: 158px;
+    }
+
+    .overview-kpi .lk-kpi-value {
+      font-size: 44px;
+    }
+
+    .section-anchor {
+      scroll-margin-top: 24px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .toolbar .lk-input,
+    .toolbar .lk-select {
+      width: auto;
+      min-width: 210px;
+      margin: 0;
+    }
+
+    .organization-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .organization-card {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.5fr) repeat(4, minmax(100px, .65fr)) auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .organization-card h4 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .organization-card p {
+      margin: 0;
+      color: var(--lk-muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .organization-metric {
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--lk-line-soft);
+      text-align: center;
+    }
+
+    .organization-metric strong {
+      display: block;
+      color: var(--lk-gold-light);
+      font-size: 21px;
+      margin-bottom: 4px;
+    }
+
+    .organization-metric span {
+      color: var(--lk-muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .action-menu {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .action-menu .lk-btn {
+      min-height: 38px;
+      padding: 9px 13px;
+      font-size: 12px;
+    }
+
+    .experience-progress {
+      display: grid;
+      gap: 8px;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--lk-gold-light), var(--lk-gold));
+      transition: width .8s ease;
+    }
+
+    .activity-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .activity-item {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--lk-line-soft);
+      background: rgba(255,255,255,.025);
+    }
+
+    .activity-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #06101e;
+      background: var(--lk-gold);
+      font-weight: 900;
+    }
+
+    .activity-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .activity-item p {
+      margin: 0;
+      color: var(--lk-muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .activity-time {
+      color: var(--lk-faint);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.68);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(720px, 100%);
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+    }
+
+    .modal-close {
+      margin-left: auto;
+    }
+
+    .empty-state {
+      padding: 28px;
+      text-align: center;
+      color: var(--lk-muted);
+      border: 1px dashed var(--lk-line);
+      border-radius: 20px;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-right: 7px;
+      background: var(--lk-green);
+      box-shadow: 0 0 12px rgba(85,214,165,.55);
+    }
+
+    @media (max-width: 1280px) {
+      .organization-card {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .organization-card > div:first-child,
+      .organization-card .action-menu {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .control-topbar {
+        flex-direction: column;
+      }
+
+      .control-user {
+        min-width: 0;
+        width: 100%;
+      }
+
+      .organization-card {
+        grid-template-columns: 1fr;
+      }
+
+      .organization-card > div:first-child,
+      .organization-card .action-menu {
+        grid-column: auto;
+      }
+
+      .toolbar .lk-input,
+      .toolbar .lk-select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="lk-body">
+  <div class="lk-bg-grid"></div>
+
+  <div class="lk-app">
+    <aside class="lk-sidebar">
+      <div class="lk-brand">
+        <img src="logo-leaderk360.png" alt="LeaderK 360" />
+        <div>
+          <h1 class="lk-brand-title">LeaderK <span>360</span></h1>
+          <div class="lk-brand-subtitle">Executive Control Center</div>
+        </div>
+      </div>
+
+      <nav>
+        <div class="lk-nav-label">Control Center</div>
+        <a class="lk-nav-link active" href="#overview">Executive Overview <small>01</small></a>
+        <a class="lk-nav-link" href="#organizations">Organizations <small>02</small></a>
+        <a class="lk-nav-link" href="#users">Users <small>03</small></a>
+        <a class="lk-nav-link" href="#experiences">Executive Experiences <small>04</small></a>
+        <a class="lk-nav-link" href="#sectors">Sectors <small>05</small></a>
+        <a class="lk-nav-link" href="#audit">Audit Center <small>06</small></a>
+
+        <div class="lk-nav-label">Operação</div>
+        <a class="lk-nav-link" href="index.html">Voltar ao site <small>↗</small></a>
+        <a class="lk-nav-link" href="#" id="master-logout-button">Sair <small>⎋</small></a>
+      </nav>
+
+      <div class="lk-sidebar-footer">
+        <strong><span class="status-dot"></span>Control Center online</strong>
+        <p>
+          Administração centralizada da operação LeaderK com autenticação,
+          RLS e auditoria.
+        </p>
+      </div>
+    </aside>
+
+    <main class="lk-main">
+      <section id="overview" class="section-anchor control-topbar lk-fade-up">
+        <div>
+          <span class="lk-eyebrow">LeaderK Executive Control Center</span>
+          <h2 class="lk-title-xl">Executive Overview</h2>
+          <p class="lk-copy">
+            Visão centralizada de organizações, usuários, assessments,
+            Executive Experiences e eventos críticos da plataforma.
+          </p>
+        </div>
+
+        <div class="lk-card control-user">
+          <span class="lk-badge lk-badge-green">Master Session Active</span>
+          <strong id="master-user-name">Carregando administrador...</strong>
+          <span id="master-user-role">-</span>
+        </div>
+      </section>
+
+      <section class="lk-grid lk-grid-4 overview-grid lk-fade-up">
+        <article class="lk-card lk-kpi overview-kpi">
+          <span class="lk-kpi-label">Organizações</span>
+          <strong id="kpi-organizations" class="lk-kpi-value">-</strong>
+          <p class="lk-kpi-help">Empresas, órgãos públicos e instituições cadastradas.</p>
+        </article>
+
+        <article class="lk-card lk-kpi overview-kpi">
+          <span class="lk-kpi-label">Usuários institucionais</span>
+          <strong id="kpi-users" class="lk-kpi-value">-</strong>
+          <p class="lk-kpi-help">Gestores e usuários vinculados às organizações.</p>
+        </article>
+
+        <article class="lk-card lk-kpi overview-kpi">
+          <span class="lk-kpi-label">Assessments concluídos</span>
+          <strong id="kpi-assessments" class="lk-kpi-value">-</strong>
+          <p class="lk-kpi-help">Resultados institucionais disponíveis na plataforma.</p>
+        </article>
+
+        <article class="lk-card lk-kpi overview-kpi">
+          <span class="lk-kpi-label">Executive Experiences</span>
+          <strong id="kpi-experiences" class="lk-kpi-value">-</strong>
+          <p class="lk-kpi-help">Campanhas ativas ou já utilizadas.</p>
+        </article>
+      </section>
+
+      <section id="organizations" class="lk-panel section-anchor lk-fade-up">
+        <div class="lk-panel-header">
+          <div>
+            <span class="lk-eyebrow">Organizations</span>
+            <h3 class="lk-title-md">Organizações cadastradas</h3>
+            <p class="lk-copy">
+              Acompanhe usuários, avaliações, setores e experiências por organização.
+            </p>
+          </div>
+
+          <button id="open-organization-modal" class="lk-btn lk-btn-primary" type="button">
+            Nova organização
+          </button>
+        </div>
+
+        <div class="toolbar">
+          <div class="toolbar-group">
+            <input id="organization-search" class="lk-input" type="search" placeholder="Buscar organização..." />
+            <select id="organization-status-filter" class="lk-select">
+              <option value="all">Todos os status</option>
+              <option value="active">Ativas</option>
+              <option value="suspended">Suspensas</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="organization-list" class="organization-list">
+          <div class="empty-state">Carregando organizações...</div>
+        </div>
+      </section>
+
+      <section class="lk-grid lk-grid-2">
+        <section id="users" class="lk-panel section-anchor lk-fade-up">
+          <div class="lk-panel-header">
+            <div>
+              <span class="lk-eyebrow">Users</span>
+              <h3 class="lk-title-md">Usuários institucionais</h3>
+              <p class="lk-copy">Visão geral dos gestores e perfis de acesso.</p>
+            </div>
+            <span id="users-badge" class="lk-badge lk-badge-blue">- usuários</span>
+          </div>
+
+          <div class="lk-table-wrap">
+            <table class="lk-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Organização</th>
+                  <th>Perfil</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+                <tr><td colspan="4">Carregando usuários...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="experiences" class="lk-panel section-anchor lk-fade-up">
+          <div class="lk-panel-header">
+            <div>
+              <span class="lk-eyebrow">Executive Experiences</span>
+              <h3 class="lk-title-md">Campanhas em andamento</h3>
+              <p class="lk-copy">Consumo, limite e validade dos acessos demonstrativos.</p>
+            </div>
+            <span id="experiences-badge" class="lk-badge lk-badge-gold">- experiências</span>
+          </div>
+
+          <div id="experience-list" class="activity-list">
+            <div class="empty-state">Carregando experiências...</div>
+          </div>
+        </section>
+      </section>
+
+      <section class="lk-grid lk-grid-2">
+        <section id="sectors" class="lk-panel section-anchor lk-fade-up">
+          <div class="lk-panel-header">
+            <div>
+              <span class="lk-eyebrow">Sectors</span>
+              <h3 class="lk-title-md">Estruturas organizacionais</h3>
+              <p class="lk-copy">Quantidade de setores cadastrados em cada organização.</p>
+            </div>
+          </div>
+
+          <div id="sector-summary" class="activity-list">
+            <div class="empty-state">Carregando setores...</div>
+          </div>
+        </section>
+
+        <section id="audit" class="lk-panel section-anchor lk-fade-up">
+          <div class="lk-panel-header">
+            <div>
+              <span class="lk-eyebrow">Audit Center</span>
+              <h3 class="lk-title-md">Atividade recente</h3>
+              <p class="lk-copy">Últimos eventos relevantes registrados na plataforma.</p>
+            </div>
+            <span id="audit-badge" class="lk-badge lk-badge-green">- eventos</span>
+          </div>
+
+          <div id="audit-list" class="activity-list">
+            <div class="empty-state">Carregando auditoria...</div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div id="organization-modal" class="modal-backdrop" aria-hidden="true">
+    <section class="lk-panel modal-card">
+      <div class="lk-panel-header">
+        <div>
+          <span class="lk-eyebrow">New Organization</span>
+          <h3 class="lk-title-md">Cadastrar organização</h3>
+          <p class="lk-copy">
+            Esta primeira versão registra a organização diretamente no banco.
+          </p>
+        </div>
+
+        <button id="close-organization-modal" class="lk-btn lk-btn-secondary modal-close" type="button">
+          Fechar
+        </button>
+      </div>
+
+      <form id="organization-form">
+        <div class="lk-form-grid">
+          <div class="lk-field">
+            <label class="lk-label" for="organization-name">Nome da organização</label>
+            <input id="organization-name" class="lk-input" type="text" required />
+          </div>
+
+          <div class="lk-field">
+            <label class="lk-label" for="organization-type">Tipo</label>
+            <select id="organization-type" class="lk-select" required>
+              <option value="">Selecione</option>
+              <option value="private_company">Empresa privada</option>
+              <option value="public_body">Órgão público</option>
+              <option value="state_company">Empresa estatal</option>
+              <option value="nonprofit">Entidade sem fins lucrativos</option>
+              <option value="education">Instituição de ensino</option>
+              <option value="other">Outro</option>
+            </select>
+          </div>
+
+          <div class="lk-field">
+            <label class="lk-label" for="organization-segment">Segmento</label>
+            <input id="organization-segment" class="lk-input" type="text" placeholder="Ex.: Mineração, Governo, Tecnologia" />
+          </div>
+
+          <div class="lk-field">
+            <label class="lk-label" for="organization-status">Status</label>
+            <select id="organization-status" class="lk-select">
+              <option value="active">Ativa</option>
+              <option value="suspended">Suspensa</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="lk-field">
+          <label class="lk-label" for="organization-notes">Observações</label>
+          <textarea id="organization-notes" class="lk-textarea"></textarea>
+        </div>
+
+        <button id="organization-submit" class="lk-btn lk-btn-primary" type="submit">
+          Salvar organização
+        </button>
+
+        <div id="organization-form-message" class="lk-mt-4"></div>
+      </form>
+    </section>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+    const supabaseUrl = 'https://qdgljsbntpsjulfwxolf.supabase.co'
+    const supabaseKey = 'sb_publishable_zc4oXLuv6CpXpxDRvR7MYg_dsHjB6VJ'
+
+    const MASTER_LOGIN_URL = 'master-login.html'
+    const SESSION_DURATION_HOURS = 8
+
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    })
+
+    const sessionRaw = localStorage.getItem('leaderk_master_session')
+
+    if (!sessionRaw) {
+      window.location.replace(MASTER_LOGIN_URL)
+      throw new Error('Sessão master inexistente.')
+    }
+
+    let masterSession
+
+    try {
+      masterSession = JSON.parse(sessionRaw)
+    } catch {
+      localStorage.removeItem('leaderk_master_session')
+      window.location.replace(MASTER_LOGIN_URL)
+      throw new Error('Sessão master inválida.')
+    }
+
+    const sessionAgeHours =
+      (Date.now() - new Date(masterSession.login_at).getTime()) /
+      (1000 * 60 * 60)
+
+    if (
+      !masterSession.auth_user_id ||
+      !masterSession.login_at ||
+      sessionAgeHours > SESSION_DURATION_HOURS
+    ) {
+      localStorage.removeItem('leaderk_master_session')
+      window.location.replace(MASTER_LOGIN_URL)
+      throw new Error('Sessão master expirada ou inválida.')
+    }
+
+    const state = {
+      organizations: [],
+      users: [],
+      vouchers: [],
+      sectors: [],
+      audits: [],
+      members: []
+    }
+
+    function setText(id, value) {
+      const element = document.getElementById(id)
+      if (element) element.textContent = value
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;')
+    }
+
+    function formatDate(value) {
+      if (!value) return '-'
+
+      return new Intl.DateTimeFormat('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }).format(new Date(value))
+    }
+
+    function formatDateTime(value) {
+      if (!value) return '-'
+
+      return new Intl.DateTimeFormat('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).format(new Date(value))
+    }
+
+    function organizationNameById(id) {
+      return state.organizations.find(item => item.id === id)?.nome || '-'
+    }
+
+    function countByOrganization(collection, organizationId, field = 'organization_id') {
+      return collection.filter(item => item[field] === organizationId).length
+    }
+
+    async function verifyMasterAccess() {
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser()
+
+      if (userError || !userData.user) {
+        return false
+      }
+
+      const { data: admin, error: adminError } = await supabase
+        .from('platform_admins')
+        .select('id, auth_user_id, nome, email, role, status')
+        .eq('auth_user_id', userData.user.id)
+        .eq('status', 'active')
+        .maybeSingle()
+
+      if (adminError || !admin) {
+        return false
+      }
+
+      masterSession = {
+        ...masterSession,
+        admin_id: admin.id,
+        auth_user_id: admin.auth_user_id,
+        nome: admin.nome,
+        email: admin.email,
+        role: admin.role
+      }
+
+      localStorage.setItem(
+        'leaderk_master_session',
+        JSON.stringify(masterSession)
+      )
+
+      setText('master-user-name', admin.nome)
+      setText(
+        'master-user-role',
+        `${admin.role} · ${admin.email}`
+      )
+
+      return true
+    }
+
+    async function safeQuery(queryPromise, label) {
+      const { data, error } = await queryPromise
+
+      if (error) {
+        console.warn(`Falha ao carregar ${label}:`, error)
+        return []
+      }
+
+      return data || []
+    }
+
+    async function loadPlatformData() {
+      const authorized = await verifyMasterAccess()
+
+      if (!authorized) {
+        await supabase.auth.signOut()
+        localStorage.removeItem('leaderk_master_session')
+        window.location.replace(MASTER_LOGIN_URL)
+        return
+      }
+
+      const [
+        organizations,
+        users,
+        vouchers,
+        sectors,
+        audits,
+        members
+      ] = await Promise.all([
+        safeQuery(
+          supabase
+            .from('organizations')
+            .select('*')
+            .order('created_at', { ascending: false }),
+          'organizações'
+        ),
+        safeQuery(
+          supabase
+            .from('organization_users')
+            .select('*')
+            .order('created_at', { ascending: false }),
+          'usuários'
+        ),
+        safeQuery(
+          supabase
+            .from('corporate_vouchers')
+            .select('*')
+            .order('created_at', { ascending: false }),
+          'Executive Experiences'
+        ),
+        safeQuery(
+          supabase
+            .from('organization_sectors')
+            .select('*')
+            .order('name', { ascending: true }),
+          'setores'
+        ),
+        safeQuery(
+          supabase
+            .from('ai_audit_logs')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(20),
+          'auditoria'
+        ),
+        safeQuery(
+          supabase
+            .from('organization_members')
+            .select('*'),
+          'assessments'
+        )
+      ])
+
+      state.organizations = organizations
+      state.users = users
+      state.vouchers = vouchers
+      state.sectors = sectors
+      state.audits = audits
+      state.members = members
+
+      renderAll()
+    }
+
+    function renderOverview() {
+      const completedAssessments = state.members.filter(item => {
+        const value = String(
+          item.status_assessment ||
+          item.status ||
+          ''
+        ).toLowerCase()
+
+        return value === 'concluido' ||
+          value === 'concluído' ||
+          value === 'completed' ||
+          value === ''
+      }).length
+
+      setText('kpi-organizations', state.organizations.length)
+      setText('kpi-users', state.users.length)
+      setText('kpi-assessments', completedAssessments)
+      setText('kpi-experiences', state.vouchers.length)
+      setText('users-badge', `${state.users.length} usuários`)
+      setText(
+        'experiences-badge',
+        `${state.vouchers.length} experiências`
+      )
+      setText('audit-badge', `${state.audits.length} eventos`)
+    }
+
+    function renderOrganizations() {
+      const list = document.getElementById('organization-list')
+      const search = document
+        .getElementById('organization-search')
+        .value
+        .trim()
+        .toLowerCase()
+
+      const statusFilter =
+        document.getElementById('organization-status-filter').value
+
+      const filtered = state.organizations.filter(org => {
+        const searchable = `${org.nome || ''} ${org.tipo || ''} ${org.segmento || ''}`
+          .toLowerCase()
+
+        const matchesSearch =
+          !search || searchable.includes(search)
+
+        const currentStatus =
+          org.status ||
+          (org.ativo === false ? 'suspended' : 'active')
+
+        const matchesStatus =
+          statusFilter === 'all' ||
+          currentStatus === statusFilter
+
+        return matchesSearch && matchesStatus
+      })
+
+      if (!filtered.length) {
+        list.innerHTML =
+          '<div class="empty-state">Nenhuma organização encontrada.</div>'
+        return
+      }
+
+      list.innerHTML = filtered.map(org => {
+        const userCount =
+          countByOrganization(state.users, org.id)
+
+        const assessmentCount =
+          countByOrganization(state.members, org.id)
+
+        const sectorCount =
+          countByOrganization(state.sectors, org.id)
+
+        const voucherCount =
+          countByOrganization(state.vouchers, org.id)
+
+        return `
+          <article class="lk-card organization-card">
+            <div>
+              <span class="lk-badge lk-badge-green">
+                ${escapeHtml(org.status || 'active')}
+              </span>
+              <h4>${escapeHtml(org.nome || org.tipo || 'Organização')}</h4>
+              <p>${escapeHtml(org.segmento || org.tipo || 'Sem segmento informado')}</p>
+            </div>
+
+            <div class="organization-metric">
+              <strong>${userCount}</strong>
+              <span>Usuários</span>
+            </div>
+
+            <div class="organization-metric">
+              <strong>${assessmentCount}</strong>
+              <span>Assessments</span>
+            </div>
+
+            <div class="organization-metric">
+              <strong>${sectorCount}</strong>
+              <span>Setores</span>
+            </div>
+
+            <div class="organization-metric">
+              <strong>${voucherCount}</strong>
+              <span>Experiências</span>
+            </div>
+
+            <div class="action-menu">
+              <a
+                class="lk-btn lk-btn-secondary"
+                href="dashboard-institucional.html?organization_id=${encodeURIComponent(org.id)}"
+              >
+                Abrir dashboard
+              </a>
+            </div>
+          </article>
+        `
+      }).join('')
+    }
+
+    function renderUsers() {
+      const tbody = document.getElementById('users-table-body')
+
+      if (!state.users.length) {
+        tbody.innerHTML =
+          '<tr><td colspan="4">Nenhum usuário cadastrado.</td></tr>'
+        return
+      }
+
+      tbody.innerHTML = state.users
+        .slice(0, 12)
+        .map(user => `
+          <tr>
+            <td>
+              <strong>${escapeHtml(user.nome || '-')}</strong><br>
+              <small>${escapeHtml(user.email || '')}</small>
+            </td>
+            <td>${escapeHtml(organizationNameById(user.organization_id))}</td>
+            <td>${escapeHtml(user.role || '-')}</td>
+            <td>
+              <span class="lk-badge ${
+                user.status === 'active'
+                  ? 'lk-badge-green'
+                  : 'lk-badge-red'
+              }">
+                ${escapeHtml(user.status || '-')}
+              </span>
+            </td>
+          </tr>
+        `)
+        .join('')
+    }
+
+    function renderExperiences() {
+      const list = document.getElementById('experience-list')
+
+      if (!state.vouchers.length) {
+        list.innerHTML =
+          '<div class="empty-state">Nenhuma Executive Experience cadastrada.</div>'
+        return
+      }
+
+      list.innerHTML = state.vouchers
+        .slice(0, 8)
+        .map(voucher => {
+          const max = Number(voucher.max_uses || 0)
+          const used = Number(voucher.used_count || 0)
+          const percent = max > 0
+            ? Math.min(100, Math.round((used / max) * 100))
+            : 0
+
+          return `
+            <article class="lk-card">
+              <div class="lk-flex lk-between lk-center lk-gap-3">
+                <div>
+                  <span class="lk-badge lk-badge-gold">
+                    ${escapeHtml(voucher.status || '-')}
+                  </span>
+                  <h4 style="margin:12px 0 6px">
+                    ${escapeHtml(voucher.company_name || organizationNameById(voucher.organization_id))}
+                  </h4>
+                  <p style="margin:0;color:var(--lk-muted);font-size:12px">
+                    ${escapeHtml(voucher.code || '-')}
+                  </p>
+                </div>
+
+                <strong style="color:var(--lk-gold-light)">
+                  ${used}/${max}
+                </strong>
+              </div>
+
+              <div class="experience-progress lk-mt-4">
+                <div class="progress-track">
+                  <div class="progress-fill" style="width:${percent}%"></div>
+                </div>
+                <div class="lk-flex lk-between">
+                  <small>${percent}% utilizado</small>
+                  <small>Expira: ${formatDate(voucher.expires_at)}</small>
+                </div>
+              </div>
+            </article>
+          `
+        })
+        .join('')
+    }
+
+    function renderSectors() {
+      const summary = document.getElementById('sector-summary')
+
+      if (!state.organizations.length) {
+        summary.innerHTML =
+          '<div class="empty-state">Nenhuma organização cadastrada.</div>'
+        return
+      }
+
+      const items = state.organizations
+        .map(org => ({
+          organization: org,
+          count: countByOrganization(state.sectors, org.id)
+        }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 8)
+
+      summary.innerHTML = items
+        .map(item => `
+          <article class="activity-item">
+            <div class="activity-icon">S</div>
+            <div>
+              <strong>${escapeHtml(item.organization.nome || 'Organização')}</strong>
+              <p>${item.count} setor(es) cadastrado(s)</p>
+            </div>
+            <span class="activity-time">${item.count}</span>
+          </article>
+        `)
+        .join('')
+    }
+
+    function renderAudit() {
+      const list = document.getElementById('audit-list')
+
+      if (!state.audits.length) {
+        list.innerHTML =
+          '<div class="empty-state">Nenhum evento de auditoria encontrado.</div>'
+        return
+      }
+
+      list.innerHTML = state.audits
+        .slice(0, 10)
+        .map(event => `
+          <article class="activity-item">
+            <div class="activity-icon">A</div>
+            <div>
+              <strong>${escapeHtml(event.event_type || 'EVENT')}</strong>
+              <p>
+                ${escapeHtml(event.actor_identifier || event.action_description || '-')}
+              </p>
+            </div>
+            <span class="activity-time">${formatDateTime(event.created_at)}</span>
+          </article>
+        `)
+        .join('')
+    }
+
+    function renderAll() {
+      renderOverview()
+      renderOrganizations()
+      renderUsers()
+      renderExperiences()
+      renderSectors()
+      renderAudit()
+    }
+
+    document
+      .getElementById('organization-search')
+      .addEventListener('input', renderOrganizations)
+
+    document
+      .getElementById('organization-status-filter')
+      .addEventListener('change', renderOrganizations)
+
+    const modal = document.getElementById('organization-modal')
+
+    document
+      .getElementById('open-organization-modal')
+      .addEventListener('click', () => {
+        modal.classList.add('open')
+        modal.setAttribute('aria-hidden', 'false')
+      })
+
+    document
+      .getElementById('close-organization-modal')
+      .addEventListener('click', () => {
+        modal.classList.remove('open')
+        modal.setAttribute('aria-hidden', 'true')
+      })
+
+    modal.addEventListener('click', event => {
+      if (event.target === modal) {
+        modal.classList.remove('open')
+        modal.setAttribute('aria-hidden', 'true')
+      }
+    })
+
+    document
+      .getElementById('organization-form')
+      .addEventListener('submit', async event => {
+        event.preventDefault()
+
+        const submitButton =
+          document.getElementById('organization-submit')
+
+        const message =
+          document.getElementById('organization-form-message')
+
+        const payload = {
+          nome: document
+            .getElementById('organization-name')
+            .value
+            .trim(),
+          tipo: document
+            .getElementById('organization-type')
+            .value,
+          segmento: document
+            .getElementById('organization-segment')
+            .value
+            .trim(),
+          status: document
+            .getElementById('organization-status')
+            .value,
+          observacoes: document
+            .getElementById('organization-notes')
+            .value
+            .trim()
+        }
+
+        submitButton.disabled = true
+        submitButton.textContent = 'Salvando...'
+        message.innerHTML =
+          '<div class="lk-alert">Registrando organização...</div>'
+
+        const { data, error } = await supabase
+          .from('organizations')
+          .insert(payload)
+          .select()
+          .single()
+
+        submitButton.disabled = false
+        submitButton.textContent = 'Salvar organização'
+
+        if (error) {
+          console.error('Erro ao criar organização:', error)
+          message.innerHTML =
+            `<div class="lk-alert lk-alert-error">${escapeHtml(error.message)}</div>`
+          return
+        }
+
+        state.organizations.unshift(data)
+        renderAll()
+
+        event.target.reset()
+        message.innerHTML =
+          '<div class="lk-alert lk-alert-success">Organização cadastrada com sucesso.</div>'
+      })
+
+    document
+      .getElementById('master-logout-button')
+      .addEventListener('click', async event => {
+        event.preventDefault()
+
+        try {
+          await supabase.auth.signOut()
+        } catch (error) {
+          console.warn('Falha ao encerrar sessão:', error)
+        }
+
+        localStorage.removeItem('leaderk_master_session')
+        window.location.replace(MASTER_LOGIN_URL)
+      })
+
+    loadPlatformData()
+  </script>
+</body>
+</html>
