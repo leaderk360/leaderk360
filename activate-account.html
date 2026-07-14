@@ -8,7 +8,7 @@ a{color:#d6b45a}
 </style></head><body><div class='card'><h2>LeaderK 360</h2><p>Ative sua conta criando uma senha.</p><form id='f' hidden><label>Senha</label><input id='p1' type='password' minlength='10' required><label>Confirmar senha</label><input id='p2' type='password' minlength='10' required><button>Ativar conta</button></form><div id='msg'>Validando convite...</div><p><a href='login-institucional.html'>Voltar ao login</a></p></div>
 <script type='module'>
 import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
-const supabase=createClient('https://qdgljsbntpsjulfwxolf.supabase.co','COLE_AQUI_SUA_ANON_KEY',{auth:{detectSessionInUrl:true,persistSession:true}});
+const supabase=createClient('https://qdgljsbntpsjulfwxolf.supabase.co','sb_publishable_zc4oXLuv6CpXpxDRvR7MYg_dsHjB6VJ',{auth:{detectSessionInUrl:true,persistSession:true}});
 const form=document.getElementById('f'),msg=document.getElementById('msg');
 const p1=document.getElementById('p1'),p2=document.getElementById('p2');
 function m(t,c=''){msg.className=c;msg.textContent=t;}
