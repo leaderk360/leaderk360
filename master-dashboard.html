@@ -508,12 +508,39 @@
           </div>
 
           <div class="lk-field">
-            <label class="lk-label" for="organization-status">Status</label>
+            <label class="lk-label" for="organization-plan">Plano</label>
+            <select id="organization-plan" class="lk-select">
+              <option value="executive-intelligence-center">Executive Intelligence Center</option>
+              <option value="government">Government</option>
+              <option value="business">Business</option>
+              <option value="enterprise">Enterprise</option>
+              <option value="executive-experience">Executive Experience</option>
+            </select>
+          </div>
+
+          <div class="lk-field">
+            <label class="lk-label" for="manager-name">Nome do gestor responsável</label>
+            <input id="manager-name" class="lk-input" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="lk-field">
+            <label class="lk-label" for="manager-email">E-mail do gestor responsável</label>
+            <input id="manager-email" class="lk-input" type="email" autocomplete="email" required />
+          </div>
+
+          <div class="lk-field">
+            <label class="lk-label" for="organization-status">Status da organização</label>
             <select id="organization-status" class="lk-select">
               <option value="active">Ativa</option>
               <option value="suspended">Suspensa</option>
             </select>
           </div>
+        </div>
+
+        <div class="lk-alert lk-alert-warning lk-mb-5">
+          O gestor será registrado como <strong>owner</strong>, com status
+          <strong>invited</strong>. O envio efetivo do convite será conectado
+          à Edge Function administrativa na próxima etapa.
         </div>
 
         <div class="lk-field">
@@ -1068,53 +1095,86 @@
           document.getElementById('organization-form-message')
 
         const payload = {
-          nome: document
+          p_nome: document
             .getElementById('organization-name')
             .value
             .trim(),
-          tipo: document
+          p_tipo: document
             .getElementById('organization-type')
             .value,
-          segmento: document
+          p_segmento: document
             .getElementById('organization-segment')
             .value
             .trim(),
-          status: document
+          p_plano: document
+            .getElementById('organization-plan')
+            .value,
+          p_status: document
             .getElementById('organization-status')
             .value,
-          observacoes: document
+          p_observacoes: document
             .getElementById('organization-notes')
             .value
+            .trim(),
+          p_responsavel_nome: document
+            .getElementById('manager-name')
+            .value
+            .trim(),
+          p_responsavel_email: document
+            .getElementById('manager-email')
+            .value
             .trim()
+            .toLowerCase()
+        }
+
+        if (
+          !payload.p_nome ||
+          !payload.p_tipo ||
+          !payload.p_responsavel_nome ||
+          !payload.p_responsavel_email
+        ) {
+          message.innerHTML =
+            '<div class="lk-alert lk-alert-error">Preencha os dados da organização e do gestor responsável.</div>'
+          return
         }
 
         submitButton.disabled = true
         submitButton.textContent = 'Salvando...'
         message.innerHTML =
-          '<div class="lk-alert">Registrando organização...</div>'
+          '<div class="lk-alert">Registrando organização e gestor responsável...</div>'
 
-        const { data, error } = await supabase
-          .from('organizations')
-          .insert(payload)
-          .select()
-          .single()
+        const { data, error } = await supabase.rpc(
+          'create_organization_with_manager',
+          payload
+        )
 
         submitButton.disabled = false
         submitButton.textContent = 'Salvar organização'
 
         if (error) {
-          console.error('Erro ao criar organização:', error)
+          console.error('Erro ao criar organização e gestor:', error)
+
+          const raw = String(error.message || '').toUpperCase()
+          let readable = error.message
+
+          if (raw.includes('MANAGER_EMAIL_ALREADY_REGISTERED')) {
+            readable = 'O e-mail do gestor já está vinculado a uma conta institucional.'
+          } else if (raw.includes('MANAGER_EMAIL_INVALID')) {
+            readable = 'Informe um e-mail válido para o gestor.'
+          } else if (raw.includes('MASTER_ACCESS_REQUIRED')) {
+            readable = 'A sessão não possui autorização administrativa.'
+          }
+
           message.innerHTML =
-            `<div class="lk-alert lk-alert-error">${escapeHtml(error.message)}</div>`
+            `<div class="lk-alert lk-alert-error">${escapeHtml(readable)}</div>`
           return
         }
 
-        state.organizations.unshift(data)
-        renderAll()
-
         event.target.reset()
         message.innerHTML =
-          '<div class="lk-alert lk-alert-success">Organização cadastrada com sucesso.</div>'
+          '<div class="lk-alert lk-alert-success">Organização e gestor cadastrados. O gestor está aguardando convite.</div>'
+
+        await loadPlatformData()
       })
 
     document
