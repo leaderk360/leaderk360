@@ -383,28 +383,54 @@
         showStep("email");
       });
 
-      startBtn.addEventListener("click", () => {
+      startBtn.addEventListener("click", async () => {
         const status = document.getElementById("start-status");
         const token = sessionStorage.getItem("leaderk_assessment_session");
+
         if (!token) {
           setStatus(status, "Sua sessão não está disponível. Solicite um novo código.", "error");
           return;
         }
 
-        /*
-          A navegação para o questionário será conectada após a versão institucional
-          do Assessment LeaderK ser validada. Não apontamos para questoes.html aqui
-          para evitar abrir uma versão metodológica antiga.
-        */
-        setStatus(
-          status,
-          "Acesso validado. O módulo institucional do Assessment será conectado a esta sessão na próxima etapa.",
-          "success"
-        );
+        setBusy(startBtn, true, "Validando acesso...");
+
+        try {
+          const response = await fetch(
+            `${SUPABASE_FUNCTIONS_BASE}/assessment-session`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                session_token: token,
+                action: "start"
+              })
+            }
+          );
+
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok || !data?.ok) {
+            throw new Error(data?.error || "SESSION_VALIDATION_FAILED");
+          }
+
+          window.location.href = "assessment-institucional.html";
+        } catch (error) {
+          console.error(error);
+          setStatus(
+            status,
+            "Não foi possível iniciar a avaliação. Verifique se a campanha está ativa e tente novamente.",
+            "error"
+          );
+          setBusy(startBtn, false, "Iniciar Assessment");
+        }
       });
 
-      clearPortalSession();
-      showStep("email");
+      if (!sessionStorage.getItem("leaderk_assessment_session")) {
+        showStep("email");
+      } else {
+        clearPortalSession();
+        showStep("email");
+      }
     })();
   </script>
 </body>
