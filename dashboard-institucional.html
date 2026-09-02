@@ -810,7 +810,16 @@
     .modal-backdrop.open { display:flex; }
     .modal-card { width:min(1050px,96vw); max-height:90vh; overflow:auto; background:#07111f; border:1px solid var(--line); border-radius:30px; padding:28px; box-shadow:0 30px 90px rgba(0,0,0,.65); }
     .modal-top { display:flex; justify-content:space-between; gap:20px; align-items:flex-start; margin-bottom:22px; }
+    .modal-actions { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
     .modal-close { padding:10px 14px; }
+    .secondary-btn { background:rgba(214,180,90,.09); color:var(--gold2); border:1px solid rgba(214,180,90,.28); box-shadow:none; }
+    .secondary-btn:hover { background:rgba(214,180,90,.15); }
+    .brand-seal { display:inline-flex; align-items:center; gap:10px; padding:7px 12px; border-radius:999px; background:rgba(214,180,90,.09); border:1px solid rgba(214,180,90,.22); color:var(--gold2); font-size:12px; font-weight:900; letter-spacing:.4px; }
+    .brand-seal img { width:26px; height:26px; object-fit:contain; }
+    .modal-interpretation { margin-top:24px; padding:20px; border-radius:20px; background:rgba(255,255,255,.035); border:1px solid rgba(214,180,90,.18); }
+    .modal-interpretation h4 { color:var(--gold2); font-size:15px; margin-bottom:9px; }
+    .modal-interpretation p { color:var(--muted); font-size:13px; line-height:1.7; }
+    .report-actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .result-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
     .result-list { display:grid; gap:12px; }
     .result-row { display:grid; grid-template-columns:1fr 1fr 60px; gap:12px; align-items:center; }
@@ -832,9 +841,9 @@
         <a href="#dimensoes">Dimensões Executivas <small>02</small></a>
         <a href="#padroes">Padrões Executivos <small>03</small></a>
         <a href="#ranking">Resultados Individuais <small>04</small></a>
-        <div class="nav-label">Operação</div><a href="index.html">Voltar ao Site <small>↗</small></a><a href="#" id="logout-btn">Sair <small>⎋</small></a>
+        <div class="nav-label">Operação</div><a href="#" id="sector-report-nav">Relatório por Setor <small>PDF</small></a><a href="index.html">Voltar ao Site <small>↗</small></a><a href="#" id="logout-btn">Sair <small>⎋</small></a>
       </div>
-      <div class="sidebar-footer"><strong>LeaderK 56 · v2.0</strong><p>Resultados exibidos a partir das avaliações efetivamente concluídas.</p></div>
+      <div class="sidebar-footer"><div class="brand-seal"><img src="logo-leaderk360.png" alt="LeaderK 360"><span>LeaderK 360</span></div><p>Resultados exibidos a partir das avaliações efetivamente concluídas.</p></div>
     </aside>
     <main>
       <section id="visao-geral" class="topbar fade-up">
@@ -842,7 +851,7 @@
         <div class="profile-box"><div class="tag">Ambiente Institucional</div><h3 id="org-name">Carregando organização...</h3><p>Base elegível: <span id="base-elegivel">-</span> colaboradores<br>Avaliações concluídas: <span id="base-analisada">-</span><br>Campanha: <span id="campaign-name">-</span></p></div>
       </section>
       <div class="ai-engine fade-up fade-delay-1"><div class="ai-pulse"></div><div class="ai-engine-info"><strong>LeaderK Assessment Engine — ACTIVE</strong><span id="engine-status">leaderk56-v2.0 · dados reais do assessment</span></div></div>
-      <div class="toolbar fade-up fade-delay-1"><div class="filters"><select id="campaign-filter"><option>Carregando campanhas...</option></select><select id="sector-filter"><option value="all">Todos os setores</option></select><select id="cycle-filter"><option value="2026">Ciclo 2026</option></select></div><button id="refresh-btn">Atualizar dados</button></div>
+      <div class="toolbar fade-up fade-delay-1"><div class="filters"><select id="campaign-filter"><option>Carregando campanhas...</option></select><select id="sector-filter"><option value="all">Todos os setores</option></select><select id="cycle-filter"><option value="2026">Ciclo 2026</option></select></div><div class="report-actions"><button id="sector-report-btn" class="secondary-btn">Relatório por Setor (PDF)</button><button id="sector-print-btn" class="secondary-btn">Imprimir Setor</button><button id="refresh-btn">Atualizar dados</button></div></div>
       <section class="grid-kpis fade-up fade-delay-2">
         <div class="kpi"><span>Avaliações concluídas</span><strong id="total-avaliados">0</strong><p>Respostas efetivamente finalizadas na campanha selecionada.</p></div>
         <div class="kpi"><span>Padrão predominante</span><strong id="perfil-dominante" style="font-size:30px">-</strong><p>Padrão Executivo mais recorrente na seleção.</p></div>
@@ -859,15 +868,17 @@
       <div class="footer-space"></div>
     </main>
   </div>
-  <div class="modal-backdrop" id="result-modal"><div class="modal-card"><div class="modal-top"><div><span class="test-badge" id="modal-engine">LeaderK 56</span><h2 id="modal-name" style="margin-top:12px">Resultado</h2><p id="modal-meta" style="color:var(--muted);margin-top:8px"></p></div><button class="modal-close" id="modal-close">Fechar</button></div><div class="result-grid"><div><div class="panel-header"><div><span>Dimensões</span><h3>D1 a D8</h3></div></div><div id="modal-dimensions" class="result-list"></div></div><div><div class="panel-header"><div><span>Padrões Executivos</span><h3>PE01 a PE07</h3></div></div><div id="modal-patterns" class="result-list"></div></div></div></div></div>
+  <div class="modal-backdrop" id="result-modal"><div class="modal-card"><div class="modal-top"><div><div class="brand-seal"><img src="logo-leaderk360.png" alt="LeaderK 360"><span>LeaderK 360</span></div><h2 id="modal-name" style="margin-top:14px">Resultado</h2><p id="modal-meta" style="color:var(--muted);margin-top:8px"></p></div><div class="modal-actions"><button class="secondary-btn" id="modal-export-pdf">Exportar PDF</button><button class="secondary-btn" id="modal-print">Imprimir</button><button class="modal-close" id="modal-close">Fechar</button></div></div><div class="result-grid"><div><div class="panel-header"><div><span>Dimensões</span><h3>D1 a D8</h3></div></div><div id="modal-dimensions" class="result-list"></div></div><div><div class="panel-header"><div><span>Padrões Executivos</span><h3>PE01 a PE07</h3></div></div><div id="modal-patterns" class="result-list"></div></div></div><div class="modal-interpretation"><h4>Interpretação Executiva Individual</h4><p id="modal-interpretation-text">-</p></div><p id="modal-engine-note" style="color:var(--muted);font-size:11px;margin-top:16px"></p></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
 <script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2' 
 const supabase=createClient('https://qdgljsbntpsjulfwxolf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFkZ2xqc2JudHBzanVsZnd4b2xmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgyMTM4NTUsImV4cCI6MjA5Mzc4OTg1NX0.5JiYfuxmj38pK69ZCcVi0DP9ZCrVYg6USSPcXUcRBMY')
 const raw=localStorage.getItem('leaderk_org_user'); if(!raw){location.href='login-institucional.html';throw new Error('Sessão inexistente')}
 const loggedUser=JSON.parse(raw); if(!loggedUser.login_at||!loggedUser.organization_id||(Date.now()-new Date(loggedUser.login_at).getTime())>8*3600000){localStorage.removeItem('leaderk_org_user');location.href='login-institucional.html';throw new Error('Sessão inválida ou expirada')}
 const D={D1:'Autonomia e Dominância',D2:'Velocidade Decisória',D3:'Estabilidade sob Pressão',D4:'Influência e Comunicação',D5:'Orientação a Pessoas',D6:'Execução e Disciplina',D7:'Pensamento Estratégico',D8:'Maturidade Decisória'}
 const P={PE01:'Diretivo',PE02:'Relacional',PE03:'Executor',PE04:'Prudencial',PE05:'Integrador',PE06:'Estratégico',PE07:'Adaptativo'}
-let campaigns=[], responses=[], members=[], sectors=[]
+let campaigns=[], responses=[], members=[], sectors=[], currentModalResult=null, currentOrganizationName=''
 const esc=s=>String(s??'-').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); const num=v=>Number(v??0); const pct=v=>`${num(v).toFixed(1).replace('.',',')}%`; const txt=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v}
 function createParticles(){const box=document.getElementById('particles');for(let i=0;i<35;i++){const p=document.createElement('span');p.style.left=Math.random()*100+'vw';p.style.top=Math.random()*100+'vh';p.style.animationDuration=(12+Math.random()*18)+'s';p.style.animationDelay=Math.random()*8+'s';box.appendChild(p)}}
 function objectValue(obj,key){if(!obj)return 0;if(typeof obj==='string'){try{obj=JSON.parse(obj)}catch{return 0}}return num(obj[key]??obj[key.toLowerCase()]??0)}
@@ -876,18 +887,102 @@ function dominant(rows,field){const c={};rows.forEach(r=>{const v=r[field];if(v)
 function profileLabel(code){return P[code]?`${code} — ${P[code]}`:(code||'-')}
 function barRow(label,value){return `<div class="bar-row"><label>${esc(label)}</label><div class="track"><div class="fill" style="width:${Math.max(0,Math.min(100,num(value)))}%"></div></div><strong>${pct(value)}</strong></div>`}
 function resultRow(label,value){return `<div class="result-row"><label>${esc(label)}</label><div class="track"><div class="fill" style="width:${Math.max(0,Math.min(100,num(value)))}%"></div></div><strong>${pct(value)}</strong></div>`}
-function sectorName(id){return sectors.find(s=>s.id===id)?.name||'-'}
+function sectorName(id){return sectors.find(s=>s.id===id)?.name||''}
 function memberFor(r){return members.find(m=>m.id===r.member_id)||null}
+function sectorForResponse(r){const m=memberFor(r);return sectorName(r.sector_id)||sectorName(m?.sector_id)||''}
+function sectorDisplay(r){return sectorForResponse(r)||'Não informado'}
 function currentRows(){const camp=document.getElementById('campaign-filter').value;const sec=document.getElementById('sector-filter').value;return responses.filter(r=>(camp==='all'||r.campaign_id===camp)&&(sec==='all'||r.sector_id===sec))}
 function render(){const rows=currentRows();const pred=dominant(rows,'perfil_predominante'), intensity=dominant(rows,'intensidade');txt('base-analisada',rows.length);txt('total-avaliados',rows.length);txt('perfil-dominante',profileLabel(pred));txt('perfil-dominante-2',profileLabel(pred));txt('intensidade-dominante',intensity);txt('maturidade-media',rows.length?pct(average(rows,'D8','dimensoes')):'-');txt('estabilidade-media',rows.length?pct(average(rows,'D3','dimensoes')):'-');txt('results-badge',`${rows.length} resultado${rows.length===1?'':'s'}`)
  document.getElementById('dimension-bars').innerHTML=Object.entries(D).map(([k,n])=>barRow(`${k} · ${n}`,average(rows,k,'dimensoes'))).join('')
  document.getElementById('pattern-bars').innerHTML=Object.entries(P).map(([k,n])=>barRow(`${k} · ${n}`,average(rows,k,'perfis'))).join('')
  if(rows.length){const d8=average(rows,'D8','dimensoes'),d3=average(rows,'D3','dimensoes');txt('sintese-title',profileLabel(pred));txt('sintese-institucional',`A seleção contém ${rows.length} avaliação(ões) concluída(s). O padrão mais recorrente é ${profileLabel(pred)}, com Maturidade Decisória média de ${pct(d8)} e Estabilidade sob Pressão média de ${pct(d3)}. Estes indicadores descrevem os resultados do LeaderK 56 e não representam, por si sós, diagnóstico clínico ou juízo de desempenho.`)}else{txt('sintese-title','Sem avaliações concluídas');txt('sintese-institucional','Não há resultados concluídos para os filtros selecionados.')}
- const tb=document.getElementById('membros-table');if(!rows.length){tb.innerHTML='<tr><td colspan="9">Nenhuma avaliação concluída nesta seleção.</td></tr>';return}tb.innerHTML=rows.map(r=>{const m=memberFor(r);return `<tr><td><strong>${esc(r.nome||m?.nome)}</strong></td><td>${esc(r.cargo_funcao||m?.cargo)}</td><td>${esc(sectorName(r.sector_id))}</td><td>${esc(profileLabel(r.perfil_predominante))}</td><td>${esc(profileLabel(r.perfil_complementar))}</td><td>${esc(r.intensidade)}</td><td>${pct(objectValue(r.dimensoes,'D8'))}</td><td>${pct(objectValue(r.dimensoes,'D3'))}</td><td><button class="view-result" data-id="${r.id}">Ver resultado</button></td></tr>`}).join('');document.querySelectorAll('.view-result').forEach(b=>b.onclick=()=>openResult(b.dataset.id))}
-function openResult(id){const r=responses.find(x=>x.id===id);if(!r)return;const m=memberFor(r);txt('modal-name',r.nome||m?.nome||'Resultado');txt('modal-meta',`${r.cargo_funcao||m?.cargo||'-'} · ${sectorName(r.sector_id)} · ${profileLabel(r.perfil_predominante)} · Complementar: ${profileLabel(r.perfil_complementar)} · Intensidade: ${r.intensidade||'-'}`);txt('modal-engine',r.engine_version||'leaderk56-v2.0');document.getElementById('modal-dimensions').innerHTML=Object.entries(D).map(([k,n])=>resultRow(`${k} · ${n}`,objectValue(r.dimensoes,k))).join('');document.getElementById('modal-patterns').innerHTML=Object.entries(P).map(([k,n])=>resultRow(`${k} · ${n}`,objectValue(r.perfis,k))).join('');document.getElementById('result-modal').classList.add('open')}
-async function load(){const orgId=loggedUser.organization_id;const [{data:org,error:oe},{data:cs,error:ce},{data:rs,error:re},{data:ms,error:me},{data:ss,error:se}]=await Promise.all([supabase.from('organizations').select('id,nome').eq('id',orgId).single(),supabase.from('assessment_campaigns').select('id,name,slug,status,assessment_key,created_at').eq('organization_id',orgId).order('created_at',{ascending:false}),supabase.from('assessment_responses').select('id,campaign_id,member_id,sector_id,nome,email,cargo_funcao,dimensoes,perfis,perfil_predominante,perfil_complementar,intensidade,assessment_mode,engine_version,completed_at').eq('organization_id',orgId).not('completed_at','is',null).order('completed_at',{ascending:false}),supabase.from('organization_members').select('id,nome,cargo,sector_id,assessment_eligible,status_assessment').eq('organization_id',orgId),supabase.from('organization_sectors').select('id,name').eq('organization_id',orgId)]);if(oe)throw oe;if(ce)throw ce;if(re)throw re;if(me)console.warn(me);if(se)console.warn(se);campaigns=cs||[];responses=rs||[];members=ms||[];sectors=ss||[];txt('org-name',org.nome);txt('base-elegivel',members.filter(m=>m.assessment_eligible!==false).length)
+ const tb=document.getElementById('membros-table');if(!rows.length){tb.innerHTML='<tr><td colspan="9">Nenhuma avaliação concluída nesta seleção.</td></tr>';return}tb.innerHTML=rows.map(r=>{const m=memberFor(r);return `<tr><td><strong>${esc(r.nome||m?.nome)}</strong></td><td>${esc(r.cargo_funcao||m?.cargo)}</td><td>${esc(sectorDisplay(r))}</td><td>${esc(profileLabel(r.perfil_predominante))}</td><td>${esc(profileLabel(r.perfil_complementar))}</td><td>${esc(r.intensidade)}</td><td>${pct(objectValue(r.dimensoes,'D8'))}</td><td>${pct(objectValue(r.dimensoes,'D3'))}</td><td><button class="view-result" data-id="${r.id}">Ver resultado</button></td></tr>`}).join('');document.querySelectorAll('.view-result').forEach(b=>b.onclick=()=>openResult(b.dataset.id))}
+function individualInterpretation(r){
+ const dims=Object.entries(D).map(([k,n])=>({k,n,v:objectValue(r.dimensoes,k)})).sort((a,b)=>b.v-a.v)
+ const top1=dims[0], top2=dims[1]
+ const pred=profileLabel(r.perfil_predominante), comp=profileLabel(r.perfil_complementar), intensity=r.intensidade||'Não informada'
+ const intensityText=String(intensity).toLowerCase().includes('equilibr')
+   ? 'A classificação Equilibrada indica pequena distância entre os padrões mais elevados e, portanto, uma distribuição relativamente homogênea dos escores calculados.'
+   : `A intensidade ${intensity} representa o grau de diferenciação observado entre os padrões executivos calculados.`
+ return `O resultado apresenta ${pred} como Padrão Executivo Predominante e ${comp} como complementar. Entre as dimensões, destacam-se ${top1.k} - ${top1.n} (${pct(top1.v)}) e ${top2.k} - ${top2.n} (${pct(top2.v)}). ${intensityText} A leitura é descritiva e deve ser interpretada em conjunto com o contexto profissional e institucional.`
+}
+function openResult(id){
+ const r=responses.find(x=>x.id===id);if(!r)return;currentModalResult=r
+ const m=memberFor(r), parts=[]
+ const cargo=r.cargo_funcao||m?.cargo||''; const setor=sectorForResponse(r)
+ if(cargo)parts.push(cargo); if(setor)parts.push(setor); parts.push(profileLabel(r.perfil_predominante)); parts.push(`Complementar: ${profileLabel(r.perfil_complementar)}`); parts.push(`Intensidade: ${r.intensidade||'-'}`)
+ txt('modal-name',r.nome||m?.nome||'Resultado');txt('modal-meta',parts.join(' · '));txt('modal-engine-note',`Motor interno: ${r.engine_version||'leaderk56-v2.0'} · Avaliação concluída: ${formatDateTime(r.completed_at)}`)
+ document.getElementById('modal-dimensions').innerHTML=Object.entries(D).map(([k,n])=>resultRow(`${k} · ${n}`,objectValue(r.dimensoes,k))).join('')
+ document.getElementById('modal-patterns').innerHTML=Object.entries(P).map(([k,n])=>resultRow(`${k} · ${n}`,objectValue(r.perfis,k))).join('')
+ txt('modal-interpretation-text',individualInterpretation(r));document.getElementById('result-modal').classList.add('open')
+}
+function formatDateTime(value){if(!value)return '-';try{return new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short'}).format(new Date(value))}catch{return '-'}}
+async function logoDataUrl(){
+ const img=document.querySelector('.brand img'); if(!img)return null
+ try{const canvas=document.createElement('canvas'); const image=new Image(); image.crossOrigin='anonymous'; image.src=img.src; await image.decode(); canvas.width=image.naturalWidth; canvas.height=image.naturalHeight; canvas.getContext('2d').drawImage(image,0,0); return canvas.toDataURL('image/png')}catch(e){console.warn('Logo PDF:',e);return null}
+}
+function pdfHeader(doc,title,subtitle,logo){
+ if(logo)doc.addImage(logo,'PNG',14,10,16,16)
+ doc.setTextColor(30,30,30);doc.setFont('helvetica','bold');doc.setFontSize(17);doc.text('LeaderK 360',34,17)
+ doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90,90,90);doc.text('Executive Intelligence Center',34,22)
+ doc.setDrawColor(214,180,90);doc.line(14,30,196,30)
+ doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(20,20,20);doc.text(title,14,40)
+ doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(90,90,90); if(subtitle)doc.text(subtitle,14,46,{maxWidth:182})
+ return 54
+}
+async function exportIndividualPdf(){
+ const r=currentModalResult;if(!r)return
+ if(!window.jspdf?.jsPDF){alert('Biblioteca de PDF não foi carregada. Atualize a página e tente novamente.');return}
+ const {jsPDF}=window.jspdf, doc=new jsPDF({unit:'mm',format:'a4'}), logo=await logoDataUrl(), m=memberFor(r), setor=sectorDisplay(r), nome=r.nome||m?.nome||'Resultado'
+ let y=pdfHeader(doc,'Resultado Individual - LeaderK 360',`${currentOrganizationName} · ${formatDateTime(r.completed_at)}`,logo)
+ doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(25,25,25);doc.text(nome,14,y);y+=6
+ doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(80,80,80);doc.text(`${r.cargo_funcao||m?.cargo||'Cargo não informado'} · ${setor}`,14,y);y+=7
+ doc.setFont('helvetica','bold');doc.setTextColor(40,40,40);doc.text(`Predominante: ${profileLabel(r.perfil_predominante)}`,14,y);doc.text(`Complementar: ${profileLabel(r.perfil_complementar)}`,105,y);y+=6
+ doc.setFont('helvetica','normal');doc.text(`Intensidade: ${r.intensidade||'-'}`,14,y);doc.text(`Motor: ${r.engine_version||'leaderk56-v2.0'}`,105,y);y+=8
+ doc.autoTable({startY:y,head:[['Dimensão','Resultado']],body:Object.entries(D).map(([k,n])=>[`${k} - ${n}`,pct(objectValue(r.dimensoes,k))]),theme:'grid',styles:{fontSize:8},headStyles:{fillColor:[35,43,56],textColor:[241,210,122]},margin:{left:14,right:105}})
+ doc.autoTable({startY:y,head:[['Padrão Executivo','Resultado']],body:Object.entries(P).map(([k,n])=>[`${k} - ${n}`,pct(objectValue(r.perfis,k))]),theme:'grid',styles:{fontSize:8},headStyles:{fillColor:[35,43,56],textColor:[241,210,122]},margin:{left:105,right:14}})
+ y=Math.max(doc.lastAutoTable?.finalY||y,doc.previousAutoTable?.finalY||y)+8
+ if(y>235){doc.addPage();y=20}
+ doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(40,40,40);doc.text('Interpretação Executiva Individual',14,y);y+=6
+ doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(70,70,70);const lines=doc.splitTextToSize(individualInterpretation(r),182);doc.text(lines,14,y)
+ const safe=nome.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toLowerCase()
+ doc.save(`leaderk360-resultado-${safe||'individual'}.pdf`)
+}
+async function exportSectorPdf(){
+ if(!window.jspdf?.jsPDF){alert('Biblioteca de PDF não foi carregada. Atualize a página e tente novamente.');return}
+ const rows=currentRows();if(!rows.length){alert('Não há avaliações concluídas para gerar o relatório.');return}
+ const {jsPDF}=window.jspdf, doc=new jsPDF({unit:'mm',format:'a4'}), logo=await logoDataUrl(), campaign=campaigns.find(c=>c.id===document.getElementById('campaign-filter').value), selectedSector=document.getElementById('sector-filter').value
+ const groups={};rows.forEach(r=>{const key=selectedSector==='all'?sectorDisplay(r):sectorDisplay(r);(groups[key]||(groups[key]=[])).push(r)})
+ let first=true
+ for(const [sector,group] of Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0]))){
+  if(!first)doc.addPage();first=false
+  let y=pdfHeader(doc,`Relatório por Setor - ${sector}`,`${currentOrganizationName} · ${campaign?.name||'Campanha selecionada'} · ${group.length} avaliação(ões) concluída(s)`,logo)
+  const pred=dominant(group,'perfil_predominante'), intensity=dominant(group,'intensidade'), d8=average(group,'D8','dimensoes'), d3=average(group,'D3','dimensoes')
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(55,55,55);doc.text(`Padrão predominante: ${profileLabel(pred)}   |   Intensidade mais frequente: ${intensity}   |   D8 médio: ${pct(d8)}   |   D3 médio: ${pct(d3)}`,14,y,{maxWidth:182});y+=12
+  doc.autoTable({startY:y,head:[['Profissional','Cargo','Predominante','Complementar','Intensidade','D8','D3']],body:group.map(r=>{const m=memberFor(r);return[r.nome||m?.nome||'-',r.cargo_funcao||m?.cargo||'-',profileLabel(r.perfil_predominante),profileLabel(r.perfil_complementar),r.intensidade||'-',pct(objectValue(r.dimensoes,'D8')),pct(objectValue(r.dimensoes,'D3'))]}),theme:'grid',styles:{fontSize:7},headStyles:{fillColor:[35,43,56],textColor:[241,210,122]},margin:{left:14,right:14}})
+  y=doc.lastAutoTable.finalY+8
+  if(y>215){doc.addPage();y=20}
+  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(40,40,40);doc.text('Médias das Dimensões',14,y);y+=5
+  doc.autoTable({startY:y,head:[['Dimensão','Média']],body:Object.entries(D).map(([k,n])=>[`${k} - ${n}`,pct(average(group,k,'dimensoes'))]),theme:'plain',styles:{fontSize:7},margin:{left:14,right:108},columnStyles:{1:{halign:'right'}}})
+  doc.autoTable({startY:y,head:[['Padrão Executivo','Média']],body:Object.entries(P).map(([k,n])=>[`${k} - ${n}`,pct(average(group,k,'perfis'))]),theme:'plain',styles:{fontSize:7},margin:{left:108,right:14},columnStyles:{1:{halign:'right'}}})
+ }
+ const label=selectedSector==='all'?'todos-os-setores':(sectorName(selectedSector)||'setor').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').toLowerCase()
+ doc.save(`leaderk360-relatorio-${label}.pdf`)
+}
+function printWindowHtml(title,body){
+ const w=window.open('','_blank','width=1100,height=800');if(!w){alert('O navegador bloqueou a janela de impressão. Autorize pop-ups para o LeaderK 360.');return}
+ const logo=new URL('logo-leaderk360.png',location.href).href
+ w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(title)}</title><style>
+ body{font-family:Arial,Helvetica,sans-serif;color:#18202b;margin:28px}header{display:flex;align-items:center;gap:14px;border-bottom:2px solid #d6b45a;padding-bottom:14px;margin-bottom:22px}header img{width:48px;height:48px;object-fit:contain}h1{margin:0;font-size:22px}h2{margin:22px 0 10px;font-size:17px;color:#263241}p{line-height:1.55}.muted{color:#667085}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{border:1px solid #d8dde6;border-radius:12px;padding:16px;margin:14px 0}table{width:100%;border-collapse:collapse;margin:12px 0 20px}th,td{border-bottom:1px solid #d8dde6;padding:8px;text-align:left;font-size:12px}th{color:#8b6b1f;text-transform:uppercase;font-size:10px}.score{font-weight:700;text-align:right}@media print{body{margin:12mm}.no-print{display:none}.card{break-inside:avoid}section{break-inside:auto}}
+ </style></head><body><header><img src="${logo}" alt="LeaderK 360"><div><h1>LeaderK 360</h1><div class="muted">Executive Intelligence Center</div></div></header>${body}<script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script></body></html>`);w.document.close()
+}
+function individualPrintBody(r){const m=memberFor(r), setor=sectorDisplay(r), nome=r.nome||m?.nome||'Resultado';return `<h1>Resultado Individual</h1><p class="muted">${esc(currentOrganizationName)} · ${esc(formatDateTime(r.completed_at))}</p><div class="card"><h2>${esc(nome)}</h2><p>${esc(r.cargo_funcao||m?.cargo||'Cargo não informado')} · ${esc(setor)}</p><p><strong>Predominante:</strong> ${esc(profileLabel(r.perfil_predominante))}<br><strong>Complementar:</strong> ${esc(profileLabel(r.perfil_complementar))}<br><strong>Intensidade:</strong> ${esc(r.intensidade||'-')}</p></div><div class="grid"><section><h2>Dimensões D1 a D8</h2><table>${Object.entries(D).map(([k,n])=>`<tr><td>${esc(`${k} - ${n}`)}</td><td class="score">${esc(pct(objectValue(r.dimensoes,k)))}</td></tr>`).join('')}</table></section><section><h2>Padrões Executivos PE01 a PE07</h2><table>${Object.entries(P).map(([k,n])=>`<tr><td>${esc(`${k} - ${n}`)}</td><td class="score">${esc(pct(objectValue(r.perfis,k)))}</td></tr>`).join('')}</table></section></div><section class="card"><h2>Interpretação Executiva Individual</h2><p>${esc(individualInterpretation(r))}</p></section><p class="muted">Motor interno: ${esc(r.engine_version||'leaderk56-v2.0')}</p>`}
+function printIndividual(){if(!currentModalResult)return;printWindowHtml('Resultado Individual - LeaderK 360',individualPrintBody(currentModalResult))}
+function sectorPrintBody(){const rows=currentRows();if(!rows.length)return '';const campaign=campaigns.find(c=>c.id===document.getElementById('campaign-filter').value), groups={};rows.forEach(r=>{const k=sectorDisplay(r);(groups[k]||(groups[k]=[])).push(r)});return `<h1>Relatório por Setor</h1><p class="muted">${esc(currentOrganizationName)} · ${esc(campaign?.name||'Campanha selecionada')}</p>`+Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0])).map(([sector,group])=>{const pred=dominant(group,'perfil_predominante'),intensity=dominant(group,'intensidade');return `<section><h2>${esc(sector)}</h2><div class="card"><p><strong>Avaliações concluídas:</strong> ${group.length}<br><strong>Padrão predominante:</strong> ${esc(profileLabel(pred))}<br><strong>Intensidade mais frequente:</strong> ${esc(intensity)}<br><strong>D8 médio:</strong> ${esc(pct(average(group,'D8','dimensoes')))} · <strong>D3 médio:</strong> ${esc(pct(average(group,'D3','dimensoes')))}</p></div><table><thead><tr><th>Profissional</th><th>Cargo</th><th>Predominante</th><th>Complementar</th><th>Intensidade</th><th>D8</th><th>D3</th></tr></thead><tbody>${group.map(r=>{const m=memberFor(r);return `<tr><td>${esc(r.nome||m?.nome||'-')}</td><td>${esc(r.cargo_funcao||m?.cargo||'-')}</td><td>${esc(profileLabel(r.perfil_predominante))}</td><td>${esc(profileLabel(r.perfil_complementar))}</td><td>${esc(r.intensidade||'-')}</td><td>${esc(pct(objectValue(r.dimensoes,'D8')))}</td><td>${esc(pct(objectValue(r.dimensoes,'D3')))}</td></tr>`}).join('')}</tbody></table></section>`}).join('')}
+function printSectorReport(){const body=sectorPrintBody();if(!body){alert('Não há avaliações concluídas para imprimir.');return}printWindowHtml('Relatório por Setor - LeaderK 360',body)}
+async function load(){const orgId=loggedUser.organization_id;const [{data:org,error:oe},{data:cs,error:ce},{data:rs,error:re},{data:ms,error:me},{data:ss,error:se}]=await Promise.all([supabase.from('organizations').select('id,nome').eq('id',orgId).single(),supabase.from('assessment_campaigns').select('id,name,slug,status,assessment_key,created_at').eq('organization_id',orgId).order('created_at',{ascending:false}),supabase.from('assessment_responses').select('id,campaign_id,member_id,sector_id,nome,email,cargo_funcao,dimensoes,perfis,perfil_predominante,perfil_complementar,intensidade,assessment_mode,engine_version,completed_at').eq('organization_id',orgId).not('completed_at','is',null).order('completed_at',{ascending:false}),supabase.from('organization_members').select('id,nome,cargo,sector_id,assessment_eligible,status_assessment').eq('organization_id',orgId),supabase.from('organization_sectors').select('id,name').eq('organization_id',orgId)]);if(oe)throw oe;if(ce)throw ce;if(re)throw re;if(me)console.warn(me);if(se)console.warn(se);campaigns=cs||[];responses=rs||[];members=ms||[];sectors=ss||[];currentOrganizationName=org.nome||'';txt('org-name',org.nome);txt('base-elegivel',members.filter(m=>m.assessment_eligible!==false).length)
  const cf=document.getElementById('campaign-filter');cf.innerHTML=campaigns.map(c=>`<option value="${c.id}">${esc(c.name)} · ${esc(c.status)}</option>`).join('');const test=campaigns.find(c=>c.slug==='teste-tecnico-rodrigo-2026');const official=campaigns.find(c=>c.slug==='diagnostico-organizacional-2026');if(test&&responses.some(r=>r.campaign_id===test.id))cf.value=test.id;else if(official)cf.value=official.id;else if(!campaigns.length)cf.innerHTML='<option value="all">Todas as campanhas</option>';const selected=campaigns.find(c=>c.id===cf.value);txt('campaign-name',selected?.name||'Todas as campanhas');
  const sf=document.getElementById('sector-filter');sf.innerHTML='<option value="all">Todos os setores</option>'+sectors.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');cf.onchange=()=>{txt('campaign-name',campaigns.find(c=>c.id===cf.value)?.name||'Todas as campanhas');render()};sf.onchange=render;render()}
 async function logout(){try{await supabase.auth.signOut()}catch{}localStorage.removeItem('leaderk_org_user');sessionStorage.clear();location.replace('login-institucional.html')}
-document.getElementById('logout-btn').onclick=e=>{e.preventDefault();logout()};document.getElementById('refresh-btn').onclick=()=>load().catch(showError);document.getElementById('modal-close').onclick=()=>document.getElementById('result-modal').classList.remove('open');document.getElementById('result-modal').onclick=e=>{if(e.target.id==='result-modal')e.currentTarget.classList.remove('open')};function showError(e){console.error(e);alert('Não foi possível carregar os dados do Dashboard. Verifique o Console do navegador para o detalhe técnico.')};createParticles();load().catch(showError)
+document.getElementById('logout-btn').onclick=e=>{e.preventDefault();logout()};document.getElementById('refresh-btn').onclick=()=>load().catch(showError);document.getElementById('sector-report-btn').onclick=()=>exportSectorPdf().catch(showError);document.getElementById('sector-print-btn').onclick=()=>printSectorReport();document.getElementById('sector-report-nav').onclick=e=>{e.preventDefault();exportSectorPdf().catch(showError)};document.getElementById('modal-export-pdf').onclick=()=>exportIndividualPdf().catch(showError);document.getElementById('modal-print').onclick=()=>printIndividual();document.getElementById('modal-close').onclick=()=>document.getElementById('result-modal').classList.remove('open');document.getElementById('result-modal').onclick=e=>{if(e.target.id==='result-modal')e.currentTarget.classList.remove('open')};function showError(e){console.error(e);alert('Não foi possível concluir a operação. Verifique o Console do navegador para o detalhe técnico.')};createParticles();load().catch(showError)
 </script></body></html>
