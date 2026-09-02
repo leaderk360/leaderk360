@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>LeaderK 360 | Portal de Avaliação</title>
+  <style>
+    :root{
+      --bg:#07101c;
+      --bg2:#0b1727;
+      --panel:rgba(11,23,39,.94);
+      --panel2:rgba(15,30,49,.88);
+      --line:rgba(211,175,95,.20);
+      --gold:#d5b46b;
+      --gold2:#f0d99d;
+      --text:#f7f3e9;
+      --muted:#aeb8c5;
+      --success:#39c68a;
+      --danger:#ef6b72;
+      --shadow:0 28px 80px rgba(0,0,0,.42);
+    }
+    *{box-sizing:border-box}
+    html,body{min-height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 18% 18%,rgba(213,180,107,.10),transparent 28%),
+        radial-gradient(circle at 80% 75%,rgba(28,72,110,.26),transparent 34%),
+        linear-gradient(135deg,var(--bg),#03070d 72%);
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:28px 16px;
+    }
+    body:before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none;
+      background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+      background-size:34px 34px;
+      mask-image:linear-gradient(to bottom,rgba(0,0,0,.7),transparent 90%);
+    }
+    .shell{width:min(1120px,100%);display:grid;grid-template-columns:1.08fr .92fr;border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:var(--shadow);background:rgba(5,12,21,.74);backdrop-filter:blur(18px)}
+    .brand{padding:54px;min-height:650px;display:flex;flex-direction:column;justify-content:space-between;background:
+      linear-gradient(180deg,rgba(213,180,107,.08),transparent 35%),
+      linear-gradient(145deg,#0d1c2e,#07111d)}
+    .logo-wrap{display:flex;align-items:center;gap:14px}
+    .logo-wrap img{width:58px;height:58px;object-fit:contain}
+    .logo-fallback{width:58px;height:58px;border:1px solid var(--gold);border-radius:16px;display:grid;place-items:center;color:var(--gold2);font-weight:800;letter-spacing:.08em}
+    .brand-name{font-weight:800;letter-spacing:.04em;font-size:1.08rem}
+    .brand-sub{font-size:.78rem;color:var(--gold);letter-spacing:.18em;text-transform:uppercase;margin-top:4px}
+    .hero h1{font-size:clamp(2.3rem,5vw,4.65rem);line-height:.96;margin:0 0 24px;letter-spacing:-.045em}
+    .hero h1 span{color:var(--gold2)}
+    .hero p{color:#c3ccd7;line-height:1.8;font-size:1.02rem;max-width:560px;margin:0}
+    .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}
+    .trust-item{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;background:rgba(255,255,255,.025)}
+    .trust-item strong{display:block;color:var(--gold2);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+    .trust-item span{font-size:.82rem;color:#aeb9c6;line-height:1.45}
+    .footnote{color:#7f8a98;font-size:.78rem;line-height:1.55}
+    .portal{padding:44px;background:linear-gradient(180deg,rgba(11,23,39,.98),rgba(7,15,26,.98));display:flex;align-items:center}
+    .card{width:100%;max-width:430px;margin:auto}
+    .eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.2em;color:var(--gold);margin-bottom:12px}
+    h2{font-size:2rem;margin:0 0 10px;letter-spacing:-.03em}
+    .subtitle{margin:0 0 28px;color:var(--muted);line-height:1.65}
+    .field{margin-bottom:18px}
+    label{display:block;margin-bottom:8px;font-size:.84rem;font-weight:650;color:#dce3ea}
+    input{
+      width:100%;height:54px;border-radius:13px;border:1px solid rgba(255,255,255,.11);
+      background:#081423;color:white;padding:0 16px;font-size:1rem;outline:none;transition:.2s
+    }
+    input:focus{border-color:rgba(213,180,107,.70);box-shadow:0 0 0 4px rgba(213,180,107,.09)}
+    input::placeholder{color:#667483}
+    .code-input{text-align:center;font-size:1.65rem;letter-spacing:.42em;font-weight:800;padding-left:calc(16px + .42em)}
+    .btn{
+      width:100%;height:54px;border:0;border-radius:13px;background:linear-gradient(135deg,var(--gold2),#b58a37);
+      color:#111317;font-weight:800;font-size:.98rem;cursor:pointer;transition:.2s;box-shadow:0 12px 32px rgba(181,138,55,.18)
+    }
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.04)}
+    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    .secondary{
+      margin-top:11px;background:transparent;color:#d7dde5;border:1px solid rgba(255,255,255,.11);box-shadow:none
+    }
+    .status{margin-top:16px;border-radius:12px;padding:12px 14px;font-size:.86rem;line-height:1.5;display:none}
+    .status.show{display:block}
+    .status.info{background:rgba(213,180,107,.08);border:1px solid rgba(213,180,107,.17);color:#ead9b0}
+    .status.error{background:rgba(239,107,114,.09);border:1px solid rgba(239,107,114,.22);color:#ffb8bd}
+    .status.success{background:rgba(57,198,138,.09);border:1px solid rgba(57,198,138,.20);color:#9fe3c4}
+    .hidden{display:none!important}
+    .identity{border:1px solid rgba(213,180,107,.18);border-radius:18px;padding:20px;background:rgba(213,180,107,.045);margin:22px 0}
+    .identity .name{font-size:1.25rem;font-weight:800;margin-bottom:4px}
+    .identity .role{color:var(--muted);font-size:.9rem}
+    .org-chip{display:inline-flex;margin-top:12px;padding:7px 10px;border-radius:999px;border:1px solid rgba(213,180,107,.20);color:var(--gold2);font-size:.74rem;letter-spacing:.04em}
+    .security{display:flex;gap:10px;margin-top:20px;color:#8492a2;font-size:.76rem;line-height:1.55}
+    .security svg{flex:0 0 18px;margin-top:1px}
+    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(17,19,23,.28);border-top-color:#111317;border-radius:50%;animation:spin .75s linear infinite;vertical-align:-3px;margin-right:7px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:860px){
+      .shell{grid-template-columns:1fr}
+      .brand{min-height:auto;padding:34px}
+      .hero{margin:70px 0 30px}
+      .trust{grid-template-columns:1fr}
+      .portal{padding:34px 24px}
+    }
+    @media(max-width:480px){
+      body{padding:0}
+      .shell{border-radius:0;min-height:100vh;border-left:0;border-right:0}
+      .brand{padding:28px 22px}
+      .hero{margin:52px 0 18px}
+      .portal{padding:30px 22px}
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="brand">
+      <div class="logo-wrap">
+        <img src="logo-leaderk360.png" alt="LeaderK 360" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+        <div class="logo-fallback" style="display:none">LK</div>
+        <div>
+          <div class="brand-name">LeaderK 360</div>
+          <div class="brand-sub">Executive Intelligence</div>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="eyebrow">Portal de Avaliação</div>
+        <h1>Inteligência para <span>liderar melhor.</span></h1>
+        <p>Ambiente individual e confidencial para participação em diagnósticos organizacionais LeaderK 360. O acesso é restrito aos participantes previamente autorizados pela organização.</p>
+
+        <div class="trust">
+          <div class="trust-item"><strong>Acesso individual</strong><span>Validação pelo e-mail previamente cadastrado.</span></div>
+          <div class="trust-item"><strong>Código temporário</strong><span>Autenticação por código de uso único e validade limitada.</span></div>
+          <div class="trust-item"><strong>Ambiente seguro</strong><span>Sessão temporária vinculada à campanha autorizada.</span></div>
+        </div>
+      </div>
+
+      <div class="footnote">LeaderK 360 · Assessment Estratégico de Liderança · Ambiente de uso institucional.</div>
+    </section>
+
+    <section class="portal">
+      <div class="card">
+        <div id="step-email">
+          <div class="eyebrow" id="campaign-kicker">Acesso institucional</div>
+          <h2 id="screen-title">Acessar avaliação</h2>
+          <p class="subtitle" id="screen-subtitle">Informe o e-mail cadastrado pela sua organização para receber o código de acesso.</p>
+
+          <form id="email-form">
+            <div class="field">
+              <label for="email">E-mail cadastrado</label>
+              <input id="email" type="email" autocomplete="email" placeholder="seuemail@empresa.com.br" required />
+            </div>
+            <button class="btn" id="request-btn" type="submit">Receber código de acesso</button>
+          </form>
+
+          <div id="email-status" class="status" aria-live="polite"></div>
+
+          <div class="security">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-width="1.7" d="M12 3 5 6v5c0 4.7 2.7 8 7 10 4.3-2 7-5.3 7-10V6l-7-3Z"/><path stroke-width="1.7" d="m9.5 12 1.6 1.6 3.7-4"/></svg>
+            <span>Por segurança, a mensagem de solicitação não confirma se determinado e-mail pertence à base de participantes.</span>
+          </div>
+        </div>
+
+        <div id="step-code" class="hidden">
+          <div class="eyebrow">Verificação</div>
+          <h2>Digite o código</h2>
+          <p class="subtitle">Enviamos um código de 6 dígitos para o e-mail informado. O código possui validade limitada.</p>
+
+          <form id="code-form">
+            <div class="field">
+              <label for="code">Código de acesso</label>
+              <input id="code" class="code-input" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required />
+            </div>
+            <button class="btn" id="verify-btn" type="submit">Validar e acessar</button>
+            <button class="btn secondary" id="back-btn" type="button">Usar outro e-mail</button>
+          </form>
+
+          <div id="code-status" class="status" aria-live="polite"></div>
+        </div>
+
+        <div id="step-authorized" class="hidden">
+          <div class="eyebrow">Acesso autorizado</div>
+          <h2>Identidade validada</h2>
+          <p class="subtitle">Sua sessão temporária foi criada com sucesso para esta campanha.</p>
+
+          <div class="identity">
+            <div class="name" id="participant-name">Participante</div>
+            <div class="role" id="participant-role"></div>
+            <div class="org-chip" id="organization-name">Organização</div>
+          </div>
+
+          <div id="authorized-campaign" class="status success show"></div>
+
+          <button class="btn" id="start-assessment-btn" type="button">Iniciar Assessment</button>
+          <button class="btn secondary" id="exit-btn" type="button">Encerrar acesso</button>
+
+          <div id="start-status" class="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const SUPABASE_FUNCTIONS_BASE = "https://qdgljsbntpsjulfwxolf.supabase.co/functions/v1";
+      const REQUEST_CODE_URL = `${SUPABASE_FUNCTIONS_BASE}/request-assessment-code`;
+      const VERIFY_CODE_URL = `${SUPABASE_FUNCTIONS_BASE}/verify-assessment-code`;
+
+      const qs = new URLSearchParams(location.search);
+      const organizationSlug = (qs.get("org") || "desenvolve-mt").trim().toLowerCase();
+      const campaignSlug = (qs.get("campaign") || "diagnostico-organizacional-2026").trim().toLowerCase();
+
+      const stepEmail = document.getElementById("step-email");
+      const stepCode = document.getElementById("step-code");
+      const stepAuthorized = document.getElementById("step-authorized");
+
+      const emailForm = document.getElementById("email-form");
+      const codeForm = document.getElementById("code-form");
+      const emailInput = document.getElementById("email");
+      const codeInput = document.getElementById("code");
+      const requestBtn = document.getElementById("request-btn");
+      const verifyBtn = document.getElementById("verify-btn");
+      const backBtn = document.getElementById("back-btn");
+      const exitBtn = document.getElementById("exit-btn");
+      const startBtn = document.getElementById("start-assessment-btn");
+
+      let activeEmail = "";
+
+      function setStatus(el, text = "", type = "info") {
+        el.className = "status";
+        el.textContent = "";
+        if (!text) return;
+        el.classList.add("show", type);
+        el.textContent = text;
+      }
+
+      function setBusy(button, busy, label) {
+        button.disabled = busy;
+        button.innerHTML = busy ? `<span class="spinner"></span>${label}` : label;
+      }
+
+      function showStep(step) {
+        stepEmail.classList.toggle("hidden", step !== "email");
+        stepCode.classList.toggle("hidden", step !== "code");
+        stepAuthorized.classList.toggle("hidden", step !== "authorized");
+      }
+
+      function validEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      }
+
+      function clearPortalSession() {
+        sessionStorage.removeItem("leaderk_assessment_session");
+        sessionStorage.removeItem("leaderk_assessment_session_expires_at");
+        sessionStorage.removeItem("leaderk_assessment_context");
+      }
+
+      emailForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const status = document.getElementById("email-status");
+        const email = emailInput.value.trim().toLowerCase();
+
+        if (!validEmail(email)) {
+          setStatus(status, "Informe um e-mail válido.", "error");
+          return;
+        }
+
+        activeEmail = email;
+        setStatus(status, "");
+        setBusy(requestBtn, true, "Enviando código...");
+
+        try {
+          const response = await fetch(REQUEST_CODE_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              organization_slug: organizationSlug,
+              campaign_slug: campaignSlug,
+              email
+            })
+          });
+
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            throw new Error(data?.error || "Não foi possível processar a solicitação.");
+          }
+
+          setStatus(status,
+            data?.message || "Se o e-mail estiver autorizado, um código de acesso será enviado.",
+            "success"
+          );
+
+          setTimeout(() => {
+            showStep("code");
+            codeInput.focus();
+          }, 650);
+        } catch (error) {
+          console.error(error);
+          setStatus(status, "Não foi possível solicitar o código neste momento. Tente novamente.", "error");
+        } finally {
+          setBusy(requestBtn, false, "Receber código de acesso");
+        }
+      });
+
+      codeInput.addEventListener("input", () => {
+        codeInput.value = codeInput.value.replace(/\D/g, "").slice(0, 6);
+      });
+
+      codeForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const status = document.getElementById("code-status");
+        const code = codeInput.value.replace(/\D/g, "").slice(0, 6);
+
+        if (!activeEmail || code.length !== 6) {
+          setStatus(status, "Informe o código de 6 dígitos.", "error");
+          return;
+        }
+
+        setStatus(status, "");
+        setBusy(verifyBtn, true, "Validando...");
+
+        try {
+          const response = await fetch(VERIFY_CODE_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              organization_slug: organizationSlug,
+              campaign_slug: campaignSlug,
+              email: activeEmail,
+              code
+            })
+          });
+
+          const data = await response.json().catch(() => ({}));
+
+          if (!response.ok || !data?.ok || !data?.session_token) {
+            throw new Error(data?.message || "Código inválido ou expirado.");
+          }
+
+          sessionStorage.setItem("leaderk_assessment_session", data.session_token);
+          sessionStorage.setItem("leaderk_assessment_session_expires_at", data.session_expires_at || "");
+          sessionStorage.setItem("leaderk_assessment_context", JSON.stringify({
+            organization_slug: data.organization?.slug || organizationSlug,
+            organization_name: data.organization?.name || "",
+            campaign_slug: campaignSlug,
+            campaign_name: data.campaign?.name || "",
+            assessment_key: data.campaign?.assessment_key || "",
+            participant_name: data.participant?.name || "",
+            participant_role: data.participant?.role || ""
+          }));
+
+          document.getElementById("participant-name").textContent = data.participant?.name || "Participante";
+          document.getElementById("participant-role").textContent = data.participant?.role || "";
+          document.getElementById("organization-name").textContent = data.organization?.name || "Organização";
+          document.getElementById("authorized-campaign").textContent =
+            data.campaign?.title || data.campaign?.name || "Campanha institucional autorizada";
+
+          showStep("authorized");
+        } catch (error) {
+          console.error(error);
+          setStatus(status, error.message || "Código inválido ou expirado.", "error");
+        } finally {
+          setBusy(verifyBtn, false, "Validar e acessar");
+        }
+      });
+
+      backBtn.addEventListener("click", () => {
+        codeInput.value = "";
+        activeEmail = "";
+        setStatus(document.getElementById("code-status"), "");
+        showStep("email");
+        emailInput.focus();
+      });
+
+      exitBtn.addEventListener("click", () => {
+        clearPortalSession();
+        activeEmail = "";
+        emailInput.value = "";
+        codeInput.value = "";
+        showStep("email");
+      });
+
+      startBtn.addEventListener("click", () => {
+        const status = document.getElementById("start-status");
+        const token = sessionStorage.getItem("leaderk_assessment_session");
+        if (!token) {
+          setStatus(status, "Sua sessão não está disponível. Solicite um novo código.", "error");
+          return;
+        }
+
+        /*
+          A navegação para o questionário será conectada após a versão institucional
+          do Assessment LeaderK ser validada. Não apontamos para questoes.html aqui
+          para evitar abrir uma versão metodológica antiga.
+        */
+        setStatus(
+          status,
+          "Acesso validado. O módulo institucional do Assessment será conectado a esta sessão na próxima etapa.",
+          "success"
+        );
+      });
+
+      clearPortalSession();
+      showStep("email");
+    })();
+  </script>
+</body>
+</html>
