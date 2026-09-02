@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>LeaderK 360 | Assessment Institucional</title>
+<style>
+:root{--bg:#06101b;--panel:#0b1929;--panel2:#081522;--gold:#d5b46b;--gold2:#f0d89e;--text:#f7f4ed;--muted:#a8b5c5;--line:rgba(213,180,107,.22);--err:#ff9298}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 0,rgba(213,180,107,.09),transparent 27%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+.shell{max-width:930px;margin:0 auto;padding:30px 18px 70px}.head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px}.brand{font-weight:900;letter-spacing:.04em;font-size:1.05rem}.brand span{color:var(--gold)}.identity{font-size:.78rem;color:var(--muted);text-align:right}
+.card{background:linear-gradient(180deg,rgba(13,28,45,.98),rgba(7,18,30,.98));border:1px solid var(--line);border-radius:25px;padding:clamp(22px,5vw,46px);box-shadow:0 28px 80px rgba(0,0,0,.38)}
+.progress{height:7px;background:#132437;border-radius:100px;overflow:hidden;margin-bottom:29px}.progress span{height:100%;display:block;background:linear-gradient(90deg,#b68a38,var(--gold2));transition:.25s}
+.kicker{font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.17em;font-weight:800}.counter{font-size:.84rem;color:var(--muted);margin-top:8px}
+h1{font-size:clamp(1.6rem,4vw,2.45rem);line-height:1.22;letter-spacing:-.025em;margin:15px 0 29px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.choice{background:#091827;border:1px solid rgba(255,255,255,.1);border-radius:14px;color:#dce5ef;min-height:82px;padding:14px 7px;cursor:pointer;transition:.18s;text-align:center}.choice:hover,.choice.selected{border-color:var(--gold);background:rgba(213,180,107,.10);color:var(--gold2)}.choice strong{display:block;font-size:1.22rem}.choice small{display:block;font-size:.67rem;line-height:1.2;margin-top:6px}
+.actions{display:flex;justify-content:space-between;gap:12px;margin-top:30px}button.nav{height:50px;padding:0 23px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#0a1929;color:white;font-weight:800;cursor:pointer}button.primary{border:0;background:linear-gradient(135deg,var(--gold2),#b78936);color:#11151a}button:disabled{opacity:.38;cursor:not-allowed}
+.error{display:none;margin-top:17px;padding:12px 14px;border-radius:12px;color:var(--err);border:1px solid rgba(255,146,152,.2);background:rgba(255,146,152,.07);font-size:.86rem}.error.show{display:block}
+.done{text-align:center}.done p{color:var(--muted);line-height:1.7;max-width:620px;margin:0 auto}.hidden{display:none!important}
+.notice{font-size:.78rem;color:var(--muted);line-height:1.5;margin-top:21px}
+@media(max-width:640px){.head{align-items:flex-start}.identity{max-width:52%}.scale{grid-template-columns:1fr}.choice{min-height:auto;display:flex;align-items:center;gap:12px;text-align:left;padding:12px 16px}.choice strong{width:25px}.choice small{margin:0}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="head">
+    <div class="brand">LeaderK <span>360</span></div>
+    <div class="identity" id="identity">Validando sessão...</div>
+  </header>
+
+  <section class="card" id="assessment-card">
+    <div class="progress"><span id="progress" style="width:0"></span></div>
+    <div class="kicker">Assessment Institucional</div>
+    <div class="counter" id="counter"></div>
+    <h1 id="question"></h1>
+    <div class="scale" id="scale"></div>
+    <div class="actions">
+      <button class="nav" id="prev" type="button">Anterior</button>
+      <button class="nav primary" id="next" type="button" disabled>Próxima</button>
+    </div>
+    <div class="error" id="error"></div>
+    <div class="notice">Responda considerando seu comportamento profissional habitual. Não existem respostas certas ou erradas.</div>
+  </section>
+
+  <section class="card done hidden" id="done-card">
+    <div class="kicker">Concluído</div>
+    <h1>Avaliação registrada com sucesso.</h1>
+    <p>Suas respostas foram recebidas. O resultado será utilizado de forma estruturada no diagnóstico institucional da campanha.</p>
+  </section>
+</main>
+
+<script>
+const FUNCTIONS_BASE = "https://qdgljsbntpsjulfwxolf.supabase.co/functions/v1";
+const QUESTIONS = [{"n": 1, "d": "D1", "t": "Assumo a iniciativa quando percebo que uma decisão importante está sem responsável."}, {"n": 2, "d": "D2", "t": "Consigo decidir com agilidade quando o tempo disponível é limitado."}, {"n": 3, "d": "D3", "t": "Mantenho clareza de raciocínio mesmo quando sou pressionado por resultados."}, {"n": 4, "d": "D4", "t": "Consigo expor minhas ideias de forma clara para públicos com perfis diferentes."}, {"n": 5, "d": "D5", "t": "Procuro compreender como minhas decisões afetam as pessoas envolvidas."}, {"n": 6, "d": "D6", "t": "Transformo prioridades em tarefas, responsáveis e prazos definidos."}, {"n": 7, "d": "D7", "t": "Antes de agir, procuro compreender como o problema se conecta ao contexto mais amplo."}, {"n": 8, "d": "D8", "t": "Reavalio uma decisão quando surgem evidências relevantes que contradizem minha posição."}, {"n": 9, "d": "D1", "t": "Consigo sustentar uma posição profissional mesmo diante de resistência."}, {"n": 10, "d": "D2", "t": "Evito prolongar decisões quando as informações disponíveis já são suficientes."}, {"n": 11, "d": "D3", "t": "Em situações tensas, consigo separar pressão emocional do problema a ser resolvido."}, {"n": 12, "d": "D4", "t": "Adapto minha comunicação sem perder a objetividade da mensagem."}, {"n": 13, "d": "D5", "t": "Escuto perspectivas diferentes antes de concluir questões que afetam a equipe."}, {"n": 14, "d": "D6", "t": "Acompanho a execução até que as entregas relevantes estejam efetivamente concluídas."}, {"n": 15, "d": "D7", "t": "Considero consequências de médio e longo prazo nas decisões atuais."}, {"n": 16, "d": "D8", "t": "Consigo distinguir convicção pessoal de evidência objetiva ao decidir."}, {"n": 17, "d": "D1", "t": "Quando necessário, assumo responsabilidade por decisões difíceis."}, {"n": 18, "d": "D2", "t": "Tenho dificuldade em avançar sem dispor de praticamente todas as informações."}, {"n": 19, "d": "D3", "t": "Consigo manter comportamento funcional quando ocorrem imprevistos importantes."}, {"n": 20, "d": "D4", "t": "Tenho facilidade para organizar argumentos e gerar entendimento em situações complexas."}, {"n": 21, "d": "D5", "t": "Percebo sinais de desgaste ou desengajamento nas pessoas com quem trabalho."}, {"n": 22, "d": "D6", "t": "Costumo deixar o acompanhamento de tarefas importantes para quando surgem problemas."}, {"n": 23, "d": "D7", "t": "Identifico relações entre decisões de áreas diferentes da organização."}, {"n": 24, "d": "D8", "t": "Considero riscos, benefícios e efeitos colaterais antes de decisões relevantes."}, {"n": 25, "d": "D1", "t": "Expresso discordância quando considero que uma orientação pode produzir resultado inadequado."}, {"n": 26, "d": "D2", "t": "Consigo escolher um curso de ação mesmo quando existem alternativas igualmente plausíveis."}, {"n": 27, "d": "D3", "t": "Quando sou contrariado sob pressão, minha reação tende a prejudicar minha capacidade de análise."}, {"n": 28, "d": "D4", "t": "Consigo conduzir conversas difíceis preservando clareza e respeito."}, {"n": 29, "d": "D5", "t": "Busco criar condições para que outras pessoas desenvolvam autonomia."}, {"n": 30, "d": "D6", "t": "Mantenho padrões de organização mesmo em períodos de alta demanda."}, {"n": 31, "d": "D7", "t": "Tendo a concentrar minha atenção apenas no problema imediato, sem considerar efeitos sistêmicos."}, {"n": 32, "d": "D8", "t": "Assumo responsabilidade pelas consequências das decisões das quais participo."}, {"n": 33, "d": "D1", "t": "Consigo estabelecer limites profissionais mesmo quando isso gera desconforto."}, {"n": 34, "d": "D2", "t": "Diante de uma urgência real, consigo priorizar rapidamente o que precisa ser decidido."}, {"n": 35, "d": "D3", "t": "Recupero meu equilíbrio com rapidez depois de situações de forte tensão."}, {"n": 36, "d": "D4", "t": "Em discussões importantes, costumo insistir na mesma forma de comunicar mesmo quando não estou sendo compreendido."}, {"n": 37, "d": "D5", "t": "Ao cobrar desempenho, procuro considerar contexto e responsabilidade individual."}, {"n": 38, "d": "D6", "t": "Tenho facilidade para priorizar atividades que realmente impactam o resultado."}, {"n": 39, "d": "D7", "t": "Procuro antecipar cenários antes que seus efeitos se tornem problemas imediatos."}, {"n": 40, "d": "D8", "t": "Depois de tomar uma decisão, evito revisá-la para não demonstrar insegurança."}, {"n": 41, "d": "D1", "t": "Tenho segurança para agir dentro da minha esfera de responsabilidade sem depender de validação constante."}, {"n": 42, "d": "D2", "t": "Consigo diferenciar decisões que exigem rapidez daquelas que exigem maior análise."}, {"n": 43, "d": "D3", "t": "Sob pressão, preservo minha capacidade de ouvir informações contrárias ao que eu esperava."}, {"n": 44, "d": "D4", "t": "Consigo influenciar decisões sem depender exclusivamente de autoridade formal."}, {"n": 45, "d": "D5", "t": "Tenho pouca disposição para investir tempo no desenvolvimento profissional de outras pessoas."}, {"n": 46, "d": "D6", "t": "Defino critérios objetivos para acompanhar o andamento de entregas relevantes."}, {"n": 47, "d": "D7", "t": "Consigo identificar tendências e mudanças que podem afetar resultados futuros."}, {"n": 48, "d": "D8", "t": "Avalio se a qualidade da decisão foi adequada mesmo quando o resultado final não foi o esperado."}, {"n": 49, "d": "D1", "t": "Evito assumir a condução de situações ambíguas até que outra pessoa defina claramente o caminho."}, {"n": 50, "d": "D2", "t": "Quando uma decisão precisa ser tomada, consigo evitar ciclos improdutivos de análise."}, {"n": 51, "d": "D3", "t": "Consigo preservar consistência de comportamento mesmo quando recebo críticas."}, {"n": 52, "d": "D4", "t": "Verifico se minha mensagem foi compreendida, em vez de presumir que comunicar é apenas transmitir."}, {"n": 53, "d": "D5", "t": "Procuro integrar contribuições de pessoas com perspectivas diferentes."}, {"n": 54, "d": "D6", "t": "Tenho dificuldade em manter disciplina de execução quando surgem novas demandas concorrentes."}, {"n": 55, "d": "D7", "t": "Avalio como recursos, pessoas, processos e ambiente externo interagem antes de decisões estratégicas."}, {"n": 56, "d": "D8", "t": "Consigo reconhecer limites do meu próprio julgamento e buscar validação quando o risco justifica."}];
+const SCALE_LABELS = ["Discordo totalmente","Discordo","Neutro","Concordo","Concordo totalmente"];
+
+const sessionToken = sessionStorage.getItem("leaderk_assessment_session");
+let current = 0;
+let answers = Array(56).fill(null);
+let submitting = false;
+
+const el = id => document.getElementById(id);
+
+function showError(message) {
+  el("error").textContent = message;
+  el("error").classList.add("show");
+}
+function clearError() {
+  el("error").textContent = "";
+  el("error").classList.remove("show");
+}
+
+async function validateSession() {
+  if (!sessionToken) {
+    window.location.href = "avaliacao.html";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${FUNCTIONS_BASE}/assessment-session`, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({session_token:sessionToken, action:"start"})
+    });
+    const data = await res.json().catch(()=>({}));
+
+    if (!res.ok || !data?.ok) throw new Error(data?.error || "SESSION_ERROR");
+
+    const memberName = data?.member?.name || data?.participant?.name || "Participante";
+    const organizationName = data?.organization?.name || "Organização";
+    el("identity").textContent = `${memberName} · ${organizationName}`;
+    render();
+  } catch (error) {
+    console.error(error);
+    showError("Sua sessão não pôde ser validada. Retorne ao Portal de Avaliação e solicite um novo código.");
+    el("next").disabled = true;
+  }
+}
+
+function render() {
+  clearError();
+  const q = QUESTIONS[current];
+  el("counter").textContent = `Questão ${current+1} de 56`;
+  el("question").textContent = q.t;
+  el("progress").style.width = `${((current+1)/56)*100}%`;
+  el("prev").disabled = current === 0;
+  el("next").textContent = current === 55 ? "Concluir avaliação" : "Próxima";
+  el("next").disabled = answers[current] === null || submitting;
+
+  const container = el("scale");
+  container.innerHTML = "";
+  SCALE_LABELS.forEach((label,index) => {
+    const value = index + 1;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "choice" + (answers[current] === value ? " selected" : "");
+    button.innerHTML = `<strong>${value}</strong><small>${label}</small>`;
+    button.addEventListener("click", () => {
+      answers[current] = value;
+      render();
+    });
+    container.appendChild(button);
+  });
+}
+
+el("prev").addEventListener("click", () => {
+  if (current > 0) {
+    current--;
+    render();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+});
+
+el("next").addEventListener("click", async () => {
+  if (answers[current] === null || submitting) return;
+
+  if (current < 55) {
+    current++;
+    render();
+    window.scrollTo({top:0,behavior:"smooth"});
+    return;
+  }
+
+  submitting = true;
+  el("next").disabled = true;
+  el("next").textContent = "Registrando...";
+  clearError();
+
+  try {
+    const res = await fetch(`${FUNCTIONS_BASE}/submit-assessment`, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({session_token:sessionToken, answers})
+    });
+    const data = await res.json().catch(()=>({}));
+
+    if (!res.ok || !data?.ok) throw new Error(data?.error || "SAVE_FAILED");
+
+    sessionStorage.removeItem("leaderk_assessment_session");
+    sessionStorage.removeItem("leaderk_assessment_session_expires_at");
+    sessionStorage.removeItem("leaderk_assessment_context");
+
+    el("assessment-card").classList.add("hidden");
+    el("done-card").classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"smooth"});
+  } catch (error) {
+    console.error(error);
+    submitting = false;
+    el("next").disabled = false;
+    el("next").textContent = "Concluir avaliação";
+    showError("Não foi possível registrar a avaliação. Suas respostas permanecem nesta tela. Tente novamente.");
+  }
+});
+
+validateSession();
+</script>
+</body>
+</html>
