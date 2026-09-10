@@ -891,7 +891,16 @@ function sectorName(id){return sectors.find(s=>s.id===id)?.name||''}
 function memberFor(r){return members.find(m=>m.id===r.member_id)||null}
 function sectorForResponse(r){const m=memberFor(r);return sectorName(r.sector_id)||sectorName(m?.sector_id)||''}
 function sectorDisplay(r){return sectorForResponse(r)||'Não informado'}
-function currentRows(){const camp=document.getElementById('campaign-filter').value;const sec=document.getElementById('sector-filter').value;return responses.filter(r=>(camp==='all'||r.campaign_id===camp)&&(sec==='all'||r.sector_id===sec))}
+function currentRows(){
+  const camp=document.getElementById('campaign-filter').value;
+  const sec=document.getElementById('sector-filter').value;
+  return responses.filter(r=>{
+    const linkedMember=memberFor(r);
+    const effectiveSectorId=r.sector_id||linkedMember?.sector_id||null;
+    return (camp==='all'||r.campaign_id===camp) &&
+           (sec==='all'||effectiveSectorId===sec);
+  });
+}
 function render(){const rows=currentRows();const pred=dominant(rows,'perfil_predominante'), intensity=dominant(rows,'intensidade');txt('base-analisada',rows.length);txt('total-avaliados',rows.length);txt('perfil-dominante',profileLabel(pred));txt('perfil-dominante-2',profileLabel(pred));txt('intensidade-dominante',intensity);txt('maturidade-media',rows.length?pct(average(rows,'D8','dimensoes')):'-');txt('estabilidade-media',rows.length?pct(average(rows,'D3','dimensoes')):'-');txt('results-badge',`${rows.length} resultado${rows.length===1?'':'s'}`)
  document.getElementById('dimension-bars').innerHTML=Object.entries(D).map(([k,n])=>barRow(`${k} · ${n}`,average(rows,k,'dimensoes'))).join('')
  document.getElementById('pattern-bars').innerHTML=Object.entries(P).map(([k,n])=>barRow(`${k} · ${n}`,average(rows,k,'perfis'))).join('')
@@ -939,10 +948,12 @@ async function exportIndividualPdf(){
  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(80,80,80);doc.text(`${r.cargo_funcao||m?.cargo||'Cargo não informado'} · ${setor}`,14,y);y+=7
  doc.setFont('helvetica','bold');doc.setTextColor(40,40,40);doc.text(`Predominante: ${profileLabel(r.perfil_predominante)}`,14,y);doc.text(`Complementar: ${profileLabel(r.perfil_complementar)}`,105,y);y+=6
  doc.setFont('helvetica','normal');doc.text(`Intensidade: ${r.intensidade||'-'}`,14,y);doc.text(`Motor: ${r.engine_version||'leaderk56-v2.0'}`,105,y);y+=8
- doc.autoTable({startY:y,head:[['Dimensão','Resultado']],body:Object.entries(D).map(([k,n])=>[`${k} - ${n}`,pct(objectValue(r.dimensoes,k))]),theme:'grid',styles:{fontSize:8},headStyles:{fillColor:[35,43,56],textColor:[241,210,122]},margin:{left:14,right:105}})
- doc.autoTable({startY:y,head:[['Padrão Executivo','Resultado']],body:Object.entries(P).map(([k,n])=>[`${k} - ${n}`,pct(objectValue(r.perfis,k))]),theme:'grid',styles:{fontSize:8},headStyles:{fillColor:[35,43,56],textColor:[241,210,122]},margin:{left:105,right:14}})
- y=Math.max(doc.lastAutoTable?.finalY||y,doc.previousAutoTable?.finalY||y)+8
- if(y>235){doc.addPage();y=20}
+ doc.autoTable({startY:y,head:[['Dimensão','Resultado']],body:Object.entries(D).map(([k,n])=>[`${k} - ${n}`,pct(objectValue(r.dimensoes,k))]),theme:'grid',styles:{fontSize:8,cellPadding:2.1},headStyles:{fillColor:[35,43,56],textColor:[241,210,122]},margin:{left:14,right:105}})
+ const dimensionsFinalY=doc.lastAutoTable?.finalY||y
+ doc.autoTable({startY:y,head:[['Padrão Executivo','Resultado']],body:Object.entries(P).map(([k,n])=>[`${k} - ${n}`,pct(objectValue(r.perfis,k))]),theme:'grid',styles:{fontSize:8,cellPadding:2.1},headStyles:{fillColor:[35,43,56],textColor:[241,210,122]},margin:{left:105,right:14}})
+ const patternsFinalY=doc.lastAutoTable?.finalY||y
+ y=Math.max(dimensionsFinalY,patternsFinalY)+9
+ if(y>238){doc.addPage();y=20}
  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(40,40,40);doc.text('Interpretação Executiva Individual',14,y);y+=6
  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(70,70,70);const lines=doc.splitTextToSize(individualInterpretation(r),182);doc.text(lines,14,y)
  const safe=nome.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/^-|-$/g,'').toLowerCase()
@@ -973,16 +984,58 @@ function printWindowHtml(title,body){
  const w=window.open('','_blank','width=1100,height=800');if(!w){alert('O navegador bloqueou a janela de impressão. Autorize pop-ups para o LeaderK 360.');return}
  const logo=new URL('logo-leaderk360.png',location.href).href
  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${esc(title)}</title><style>
- body{font-family:Arial,Helvetica,sans-serif;color:#18202b;margin:28px}header{display:flex;align-items:center;gap:14px;border-bottom:2px solid #d6b45a;padding-bottom:14px;margin-bottom:22px}header img{width:48px;height:48px;object-fit:contain}h1{margin:0;font-size:22px}h2{margin:22px 0 10px;font-size:17px;color:#263241}p{line-height:1.55}.muted{color:#667085}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.card{border:1px solid #d8dde6;border-radius:12px;padding:16px;margin:14px 0}table{width:100%;border-collapse:collapse;margin:12px 0 20px}th,td{border-bottom:1px solid #d8dde6;padding:8px;text-align:left;font-size:12px}th{color:#8b6b1f;text-transform:uppercase;font-size:10px}.score{font-weight:700;text-align:right}@media print{body{margin:12mm}.no-print{display:none}.card{break-inside:avoid}section{break-inside:auto}}
- </style></head><body><header><img src="${logo}" alt="LeaderK 360"><div><h1>LeaderK 360</h1><div class="muted">Executive Intelligence Center</div></div></header>${body}<script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script></body></html>`);w.document.close()
+ @page{size:A4 portrait;margin:7mm}
+ *{box-sizing:border-box}
+ body{font-family:Arial,Helvetica,sans-serif;color:#18202b;margin:0;font-size:10.5px;line-height:1.32}
+ header{display:flex;align-items:center;gap:10px;border-bottom:1.5px solid #d6b45a;padding-bottom:7px;margin-bottom:10px}
+ header img{width:38px;height:38px;object-fit:contain}
+ header h1{margin:0;font-size:18px;line-height:1.05}
+ h1{margin:0 0 3px;font-size:18px}
+ h2{margin:8px 0 5px;font-size:13px;color:#263241}
+ p{line-height:1.34;margin:4px 0}
+ .muted{color:#667085;font-size:9px}
+ .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+ .card{border:1px solid #d8dde6;border-radius:9px;padding:9px;margin:7px 0;break-inside:avoid}
+ table{width:100%;border-collapse:collapse;margin:5px 0 7px;break-inside:avoid}
+ th,td{border-bottom:1px solid #d8dde6;padding:3.5px 4px;text-align:left;font-size:9px;line-height:1.2}
+ th{color:#8b6b1f;text-transform:uppercase;font-size:8px}
+ .score{font-weight:700;text-align:right;white-space:nowrap}
+ section{margin:0;break-inside:avoid}
+ @media print{html,body{width:100%;height:auto}.no-print{display:none}.grid{gap:10px}.card{padding:8px;margin:6px 0}header{margin-bottom:8px}}
+ </style></head><body><header><img src="${logo}" alt="LeaderK 360"><div><h1>LeaderK 360</h1><div class="muted">Executive Intelligence Center</div></div></header>${body}<script>window.onload=()=>setTimeout(()=>window.print(),350)<\/script></body></html>`);w.document.close()
 }
-function individualPrintBody(r){const m=memberFor(r), setor=sectorDisplay(r), nome=r.nome||m?.nome||'Resultado';return `<h1>Resultado Individual</h1><p class="muted">${esc(currentOrganizationName)} · ${esc(formatDateTime(r.completed_at))}</p><div class="card"><h2>${esc(nome)}</h2><p>${esc(r.cargo_funcao||m?.cargo||'Cargo não informado')} · ${esc(setor)}</p><p><strong>Predominante:</strong> ${esc(profileLabel(r.perfil_predominante))}<br><strong>Complementar:</strong> ${esc(profileLabel(r.perfil_complementar))}<br><strong>Intensidade:</strong> ${esc(r.intensidade||'-')}</p></div><div class="grid"><section><h2>Dimensões D1 a D8</h2><table>${Object.entries(D).map(([k,n])=>`<tr><td>${esc(`${k} - ${n}`)}</td><td class="score">${esc(pct(objectValue(r.dimensoes,k)))}</td></tr>`).join('')}</table></section><section><h2>Padrões Executivos PE01 a PE07</h2><table>${Object.entries(P).map(([k,n])=>`<tr><td>${esc(`${k} - ${n}`)}</td><td class="score">${esc(pct(objectValue(r.perfis,k)))}</td></tr>`).join('')}</table></section></div><section class="card"><h2>Interpretação Executiva Individual</h2><p>${esc(individualInterpretation(r))}</p></section><p class="muted">Motor interno: ${esc(r.engine_version||'leaderk56-v2.0')}</p>`}
+function individualPrintBody(r){const m=memberFor(r), setor=sectorDisplay(r), nome=r.nome||m?.nome||'Resultado';return `<h1>Resultado Individual</h1><p class="muted">${esc(currentOrganizationName)} · ${esc(formatDateTime(r.completed_at))}</p><div class="card"><h2>${esc(nome)}</h2><p>${esc(r.cargo_funcao||m?.cargo||'Cargo não informado')} · ${esc(setor)}</p><p><strong>Predominante:</strong> ${esc(profileLabel(r.perfil_predominante))} &nbsp; <strong>Complementar:</strong> ${esc(profileLabel(r.perfil_complementar))} &nbsp; <strong>Intensidade:</strong> ${esc(r.intensidade||'-')}</p></div><div class="grid"><section><h2>Dimensões D1 a D8</h2><table>${Object.entries(D).map(([k,n])=>`<tr><td>${esc(`${k} - ${n}`)}</td><td class="score">${esc(pct(objectValue(r.dimensoes,k)))}</td></tr>`).join('')}</table></section><section><h2>Padrões Executivos PE01 a PE07</h2><table>${Object.entries(P).map(([k,n])=>`<tr><td>${esc(`${k} - ${n}`)}</td><td class="score">${esc(pct(objectValue(r.perfis,k)))}</td></tr>`).join('')}</table></section></div><section class="card"><h2>Interpretação Executiva Individual</h2><p>${esc(individualInterpretation(r))}</p></section>`}
 function printIndividual(){if(!currentModalResult)return;printWindowHtml('Resultado Individual - LeaderK 360',individualPrintBody(currentModalResult))}
 function sectorPrintBody(){const rows=currentRows();if(!rows.length)return '';const campaign=campaigns.find(c=>c.id===document.getElementById('campaign-filter').value), groups={};rows.forEach(r=>{const k=sectorDisplay(r);(groups[k]||(groups[k]=[])).push(r)});return `<h1>Relatório por Setor</h1><p class="muted">${esc(currentOrganizationName)} · ${esc(campaign?.name||'Campanha selecionada')}</p>`+Object.entries(groups).sort((a,b)=>a[0].localeCompare(b[0])).map(([sector,group])=>{const pred=dominant(group,'perfil_predominante'),intensity=dominant(group,'intensidade');return `<section><h2>${esc(sector)}</h2><div class="card"><p><strong>Avaliações concluídas:</strong> ${group.length}<br><strong>Padrão predominante:</strong> ${esc(profileLabel(pred))}<br><strong>Intensidade mais frequente:</strong> ${esc(intensity)}<br><strong>D8 médio:</strong> ${esc(pct(average(group,'D8','dimensoes')))} · <strong>D3 médio:</strong> ${esc(pct(average(group,'D3','dimensoes')))}</p></div><table><thead><tr><th>Profissional</th><th>Cargo</th><th>Predominante</th><th>Complementar</th><th>Intensidade</th><th>D8</th><th>D3</th></tr></thead><tbody>${group.map(r=>{const m=memberFor(r);return `<tr><td>${esc(r.nome||m?.nome||'-')}</td><td>${esc(r.cargo_funcao||m?.cargo||'-')}</td><td>${esc(profileLabel(r.perfil_predominante))}</td><td>${esc(profileLabel(r.perfil_complementar))}</td><td>${esc(r.intensidade||'-')}</td><td>${esc(pct(objectValue(r.dimensoes,'D8')))}</td><td>${esc(pct(objectValue(r.dimensoes,'D3')))}</td></tr>`}).join('')}</tbody></table></section>`}).join('')}
 function printSectorReport(){const body=sectorPrintBody();if(!body){alert('Não há avaliações concluídas para imprimir.');return}printWindowHtml('Relatório por Setor - LeaderK 360',body)}
-async function load(){const orgId=loggedUser.organization_id;const [{data:org,error:oe},{data:cs,error:ce},{data:rs,error:re},{data:ms,error:me},{data:ss,error:se}]=await Promise.all([supabase.from('organizations').select('id,nome').eq('id',orgId).single(),supabase.from('assessment_campaigns').select('id,name,slug,status,assessment_key,created_at').eq('organization_id',orgId).order('created_at',{ascending:false}),supabase.from('assessment_responses').select('id,campaign_id,member_id,sector_id,nome,email,cargo_funcao,dimensoes,perfis,perfil_predominante,perfil_complementar,intensidade,assessment_mode,engine_version,completed_at').eq('organization_id',orgId).not('completed_at','is',null).order('completed_at',{ascending:false}),supabase.from('organization_members').select('id,nome,cargo,sector_id,assessment_eligible,status_assessment').eq('organization_id',orgId),supabase.from('organization_sectors').select('id,name').eq('organization_id',orgId)]);if(oe)throw oe;if(ce)throw ce;if(re)throw re;if(me)console.warn(me);if(se)console.warn(se);campaigns=cs||[];responses=rs||[];members=ms||[];sectors=ss||[];currentOrganizationName=org.nome||'';txt('org-name',org.nome);txt('base-elegivel',members.filter(m=>m.assessment_eligible!==false).length)
- const cf=document.getElementById('campaign-filter');cf.innerHTML=campaigns.map(c=>`<option value="${c.id}">${esc(c.name)} · ${esc(c.status)}</option>`).join('');const test=campaigns.find(c=>c.slug==='teste-tecnico-rodrigo-2026');const official=campaigns.find(c=>c.slug==='diagnostico-organizacional-2026');if(test&&responses.some(r=>r.campaign_id===test.id))cf.value=test.id;else if(official)cf.value=official.id;else if(!campaigns.length)cf.innerHTML='<option value="all">Todas as campanhas</option>';const selected=campaigns.find(c=>c.id===cf.value);txt('campaign-name',selected?.name||'Todas as campanhas');
- const sf=document.getElementById('sector-filter');sf.innerHTML='<option value="all">Todos os setores</option>'+sectors.sort((a,b)=>a.name.localeCompare(b.name)).map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');cf.onchange=()=>{txt('campaign-name',campaigns.find(c=>c.id===cf.value)?.name||'Todas as campanhas');render()};sf.onchange=render;render()}
+async function load(){const orgId=loggedUser.organization_id;const [{data:org,error:oe},{data:cs,error:ce},{data:rs,error:re},{data:ms,error:me},{data:ss,error:se}]=await Promise.all([supabase.from('organizations').select('id,nome').eq('id',orgId).single(),supabase.from('assessment_campaigns').select('id,name,slug,status,assessment_key,created_at').eq('organization_id',orgId).order('created_at',{ascending:false}),supabase.from('assessment_responses').select('id,campaign_id,member_id,sector_id,nome,email,cargo_funcao,dimensoes,perfis,perfil_predominante,perfil_complementar,intensidade,assessment_mode,engine_version,completed_at').eq('organization_id',orgId).not('completed_at','is',null).order('completed_at',{ascending:false}),supabase.from('organization_members').select('id,nome,cargo,setor,sector_id,assessment_eligible,status_assessment').eq('organization_id',orgId),supabase.from('organization_sectors').select('id,name').eq('organization_id',orgId)]);if(oe)throw oe;if(ce)throw ce;if(re)throw re;if(me)console.warn(me);if(se)console.warn(se);campaigns=(cs||[]).filter(c=>c.slug!=='teste-tecnico-rodrigo-2026');
+responses=rs||[];
+members=ms||[];
+sectors=ss||[];
+currentOrganizationName=org.nome||'';
+txt('org-name',org.nome);
+txt('base-elegivel',members.filter(m=>m.assessment_eligible!==false).length)
+ const cf=document.getElementById('campaign-filter');
+ cf.innerHTML=campaigns.map(c=>`<option value="${c.id}">${esc(c.name)} · ${esc(c.status)}</option>`).join('');
+ const official=campaigns.find(c=>c.slug==='diagnostico-organizacional-2026');
+ if(official) cf.value=official.id;
+ else if(!campaigns.length) cf.innerHTML='<option value="all">Nenhuma campanha disponível</option>';
+ const selected=campaigns.find(c=>c.id===cf.value);
+ txt('campaign-name',selected?.name||'Campanha institucional');
+
+ const sectorMap=new Map();
+ (sectors||[]).forEach(s=>{if(s?.id&&s?.name)sectorMap.set(s.id,{id:s.id,name:s.name})});
+ (members||[]).forEach(m=>{
+   if(m?.sector_id && m?.setor && !sectorMap.has(m.sector_id)){
+     sectorMap.set(m.sector_id,{id:m.sector_id,name:m.setor});
+   }
+ });
+ const allSectors=[...sectorMap.values()].sort((a,b)=>String(a.name).localeCompare(String(b.name),'pt-BR'));
+ const sf=document.getElementById('sector-filter');
+ sf.innerHTML='<option value="all">Todos os setores</option>'+allSectors.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('');
+ cf.onchange=()=>{txt('campaign-name',campaigns.find(c=>c.id===cf.value)?.name||'Campanha institucional');render()};
+ sf.onchange=render;
+ render()}
 async function logout(){try{await supabase.auth.signOut()}catch{}localStorage.removeItem('leaderk_org_user');sessionStorage.clear();location.replace('login-institucional.html')}
 document.getElementById('logout-btn').onclick=e=>{e.preventDefault();logout()};document.getElementById('refresh-btn').onclick=()=>load().catch(showError);document.getElementById('sector-report-btn').onclick=()=>exportSectorPdf().catch(showError);document.getElementById('sector-print-btn').onclick=()=>printSectorReport();document.getElementById('sector-report-nav').onclick=e=>{e.preventDefault();exportSectorPdf().catch(showError)};document.getElementById('modal-export-pdf').onclick=()=>exportIndividualPdf().catch(showError);document.getElementById('modal-print').onclick=()=>printIndividual();document.getElementById('modal-close').onclick=()=>document.getElementById('result-modal').classList.remove('open');document.getElementById('result-modal').onclick=e=>{if(e.target.id==='result-modal')e.currentTarget.classList.remove('open')};function showError(e){console.error(e);alert('Não foi possível concluir a operação. Verifique o Console do navegador para o detalhe técnico.')};createParticles();load().catch(showError)
 </script></body></html>
