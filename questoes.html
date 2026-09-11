@@ -625,53 +625,16 @@ const dimensions = {
 };
 
 const profileInfo = {
-  COMMANDER: {
-    name: "COMMANDER",
-    desc: "Liderança de decisão, autoridade e ação sob pressão.",
-    risk: "Centralização",
-    riskText: "Você pode assumir controle demais em cenários críticos, reduzindo escuta e autonomia."
-  },
-  STRATEGYK: {
-    name: "STRATEGYK",
-    desc: "Liderança analítica, racional e orientada à estratégia.",
-    risk: "Excesso de análise",
-    riskText: "Você pode demorar a agir quando busca segurança racional antes de avançar."
-  },
-  MENTORIX: {
-    name: "MENTORIX",
-    desc: "Liderança voltada ao desenvolvimento humano e confiança.",
-    risk: "Excesso de tolerância",
-    riskText: "Você pode evitar confrontos necessários para preservar relações."
-  },
-  EXECUTRON: {
-    name: "EXECUTRON",
-    desc: "Liderança de performance, entrega e cobrança por resultado.",
-    risk: "Desgaste da equipe",
-    riskText: "Você pode pressionar demais quando o ritmo de entrega fica abaixo do esperado."
-  },
-  DIPLOMATIK: {
-    name: "DIPLOMATIK",
-    desc: "Liderança de equilíbrio, mediação e estabilidade relacional.",
-    risk: "Evitar confronto",
-    riskText: "Você pode adiar decisões difíceis para preservar harmonia no ambiente."
-  },
-  VISIONEX: {
-    name: "VISIONEX",
-    desc: "Liderança de inovação, transformação e visão de futuro.",
-    risk: "Dispersão",
-    riskText: "Você pode gerar muitas ideias sem consolidar execução suficiente."
-  },
-  GUARDIAN: {
-    name: "GUARDIAN",
-    desc: "Liderança de estabilidade, método e segurança operacional.",
-    risk: "Rigidez",
-    riskText: "Você pode resistir a mudanças quando percebe risco à previsibilidade."
-  }
+  COMMANDER: { name: "COMMANDER", desc: "Liderança de decisão, autoridade e ação sob pressão.", risk: "Centralização", riskText: "Você pode assumir controle demais em cenários críticos, reduzindo escuta e autonomia." },
+  STRATEGYK: { name: "STRATEGYK", desc: "Liderança analítica, racional e orientada à estratégia.", risk: "Excesso de análise", riskText: "Você pode demorar a agir quando busca segurança racional antes de avançar." },
+  MENTORIX: { name: "MENTORIX", desc: "Liderança voltada ao desenvolvimento humano e confiança.", risk: "Excesso de tolerância", riskText: "Você pode evitar confrontos necessários para preservar relações." },
+  EXECUTRON: { name: "EXECUTRON", desc: "Liderança de performance, entrega e cobrança por resultado.", risk: "Desgaste da equipe", riskText: "Você pode pressionar demais quando o ritmo de entrega fica abaixo do esperado." },
+  DIPLOMATIK: { name: "DIPLOMATIK", desc: "Liderança de equilíbrio, mediação e estabilidade relacional.", risk: "Evitar confronto", riskText: "Você pode adiar decisões difíceis para preservar harmonia no ambiente." },
+  VISIONEX: { name: "VISIONEX", desc: "Liderança de inovação, transformação e visão de futuro.", risk: "Dispersão", riskText: "Você pode gerar muitas ideias sem consolidar execução suficiente." },
+  GUARDIAN: { name: "GUARDIAN", desc: "Liderança de estabilidade, método e segurança operacional.", risk: "Rigidez", riskText: "Você pode resistir a mudanças quando percebe risco à previsibilidade." }
 };
 
-function q(text, dims, profiles) {
-  return { text, dims, profiles };
-}
+function q(text, dims, profiles) { return { text, dims, profiles }; }
 
 const questions = [
   q("Quando estou diante de um grupo, consigo transmitir presença e segurança sem precisar impor autoridade.", {D1:3,D2:1}, {COMMANDER:1,DIPLOMATIK:1,MENTORIX:1}),
@@ -680,49 +643,42 @@ const questions = [
   q("Minha postura costuma elevar o nível de atenção e comprometimento das pessoas ao meu redor.", {D1:3,D5:1}, {COMMANDER:1,EXECUTRON:1,MENTORIX:1}),
   q("Consigo mobilizar pessoas em torno de uma ideia antes mesmo de existir uma ordem formal.", {D1:2,D2:2,D6:2}, {VISIONEX:2,DIPLOMATIK:1}),
   q("Quando entro em uma reunião, procuro primeiro compreender o ambiente antes de tentar conduzi-lo.", {D1:1,D2:2,D8:2}, {DIPLOMATIK:2,STRATEGYK:1,MENTORIX:1}),
-
   q("Antes de comunicar uma decisão importante, procuro organizar minha mensagem com clareza.", {D2:3,D6:1}, {STRATEGYK:1,DIPLOMATIK:1,GUARDIAN:1}),
   q("Consigo adaptar minha comunicação conforme o perfil das pessoas envolvidas.", {D2:3,D5:2}, {DIPLOMATIK:2,MENTORIX:2}),
   q("Tenho facilidade em explicar temas complexos de forma simples e compreensível.", {D2:3,D6:2}, {STRATEGYK:2,VISIONEX:1}),
   q("Em conversas difíceis, procuro ser firme sem ser agressivo.", {D2:3,D4:1,D8:1}, {DIPLOMATIK:2,MENTORIX:1,COMMANDER:1}),
   q("Quando discordo de alguém, tento preservar o respeito antes de defender minha posição.", {D2:2,D5:2,D8:2}, {DIPLOMATIK:3,MENTORIX:1}),
   q("Prefiro uma comunicação direta, mesmo que ela possa parecer dura em determinados momentos.", {D2:1,D3:2,D7:1}, {COMMANDER:2,EXECUTRON:1}),
-
   q("Tenho facilidade em tomar decisões quando o ambiente está incerto.", {D3:3,D4:2}, {COMMANDER:2,VISIONEX:1}),
   q("Antes de decidir, costumo avaliar consequências, riscos e impactos futuros.", {D3:2,D6:3}, {STRATEGYK:3,GUARDIAN:1}),
   q("Quando há muita dúvida no ambiente, prefiro estruturar critérios antes de escolher um caminho.", {D3:2,D6:2,D7:1}, {STRATEGYK:2,GUARDIAN:2}),
   q("Se ninguém assume uma decisão necessária, tendo a assumir a responsabilidade.", {D3:3,D1:1,D4:1}, {COMMANDER:3,EXECUTRON:1}),
   q("Consigo decidir mesmo sem ter todas as informações, quando a situação exige avanço.", {D3:3,D4:1,D6:1}, {COMMANDER:1,VISIONEX:2,EXECUTRON:1}),
   q("Tenho dificuldade em aceitar decisões tomadas sem análise mínima suficiente.", {D3:1,D6:3,D8:1}, {STRATEGYK:2,GUARDIAN:1}),
-
   q("Sob pressão, consigo manter clareza suficiente para orientar os outros.", {D4:3,D1:1,D2:1}, {COMMANDER:1,STRATEGYK:1,DIPLOMATIK:1}),
   q("Quando algo sai do controle, minha tendência é organizar prioridades rapidamente.", {D4:2,D7:3}, {EXECUTRON:2,GUARDIAN:1,COMMANDER:1}),
   q("Em momentos de crise, consigo preservar equilíbrio emocional antes de agir.", {D4:3,D2:1,D8:1}, {DIPLOMATIK:2,STRATEGYK:1,MENTORIX:1}),
   q("Sob pressão, minha tolerância a falhas diminui bastante.", {D4:2,D7:1,D5:-2}, {EXECUTRON:2,COMMANDER:1}),
   q("Quando a equipe está insegura, procuro transmitir estabilidade antes de cobrar desempenho.", {D4:2,D5:3,D2:1}, {MENTORIX:2,DIPLOMATIK:2,GUARDIAN:1}),
   q("Em cenários críticos, costumo confiar mais no controle direto do que na delegação.", {D4:2,D7:2,D5:-2}, {COMMANDER:2,EXECUTRON:1}),
-
   q("Tenho satisfação em desenvolver pessoas e vê-las evoluir profissionalmente.", {D5:3,D1:1}, {MENTORIX:3}),
   q("Prefiro criar autonomia na equipe em vez de dependência da minha aprovação.", {D5:3,D7:1,D8:1}, {MENTORIX:2,DIPLOMATIK:1,STRATEGYK:1}),
   q("Percebo rapidamente quando alguém da equipe perde motivação.", {D5:3,D2:1}, {MENTORIX:3,DIPLOMATIK:1}),
   q("Quando alguém erra, procuro entender a causa antes de simplesmente cobrar.", {D5:3,D2:2}, {MENTORIX:2,DIPLOMATIK:2}),
   q("Tenho facilidade em lidar com pessoas de perfis muito diferentes.", {D5:2,D2:2,D8:1}, {DIPLOMATIK:2,MENTORIX:2}),
   q("Tenho dificuldade em delegar tarefas importantes sem acompanhar de perto.", {D7:2,D4:1,D5:-2}, {COMMANDER:1,EXECUTRON:2,GUARDIAN:1}),
-
   q("Costumo enxergar riscos antes que eles se tornem problemas evidentes.", {D6:3,D3:2}, {STRATEGYK:3,GUARDIAN:1}),
   q("Tenho facilidade em perceber oportunidades onde outras pessoas veem apenas obstáculos.", {D6:3,D1:1}, {VISIONEX:3,STRATEGYK:1}),
   q("Penso no longo prazo mesmo quando estou resolvendo problemas imediatos.", {D6:3,D3:1,D7:1}, {STRATEGYK:2,VISIONEX:1,GUARDIAN:1}),
   q("Gosto de questionar métodos antigos quando acredito existir uma forma melhor.", {D6:3,D1:1}, {VISIONEX:3,STRATEGYK:1}),
   q("Prefiro construir soluções sustentáveis a resolver apenas o problema imediato.", {D6:3,D7:2}, {STRATEGYK:2,GUARDIAN:2}),
   q("Tenho tendência a imaginar cenários futuros antes de agir.", {D6:3,D3:1}, {VISIONEX:2,STRATEGYK:2}),
-
   q("Resultados concretos são mais importantes do que boas intenções.", {D7:3,D3:1}, {EXECUTRON:3,COMMANDER:1}),
   q("Tenho dificuldade com pessoas que prometem muito e entregam pouco.", {D7:3,D4:1}, {EXECUTRON:3,COMMANDER:1}),
   q("Gosto de acompanhar de perto o andamento das entregas importantes.", {D7:3,D4:1}, {EXECUTRON:2,GUARDIAN:2}),
   q("Organização e método são essenciais para uma liderança confiável.", {D7:3,D6:1}, {GUARDIAN:3,STRATEGYK:1}),
   q("Quando metas não são cumpridas, sinto necessidade de agir rapidamente.", {D7:3,D3:2,D4:1}, {EXECUTRON:3,COMMANDER:1}),
   q("Prefiro processos claros a improvisações constantes.", {D7:3,D6:1}, {GUARDIAN:3,STRATEGYK:1}),
-
   q("Quando recebo uma decisão superior da qual discordo, consigo executá-la com profissionalismo.", {D8:3,D7:1,D2:1}, {GUARDIAN:2,DIPLOMATIK:2,STRATEGYK:1}),
   q("Consigo defender institucionalmente uma decisão mesmo quando ela não foi minha preferência inicial.", {D8:3,D1:1,D2:1}, {DIPLOMATIK:2,GUARDIAN:1,COMMANDER:1}),
   q("Quando estou subordinado a uma autoridade, procuro compreender o contexto antes de criticar a decisão.", {D8:3,D2:1,D6:1}, {STRATEGYK:2,DIPLOMATIK:2,GUARDIAN:1}),
@@ -752,216 +708,75 @@ let answers = Array(questions.length).fill(null);
 let pendingResult = null;
 let leadData = null;
 
-function startQuiz() {
-  document.getElementById("intro").classList.add("hidden");
-  document.getElementById("quiz").classList.remove("hidden");
-  renderQuestion();
-}
+function startQuiz() { document.getElementById("intro").classList.add("hidden"); document.getElementById("quiz").classList.remove("hidden"); renderQuestion(); }
 
 function renderQuestion() {
   const question = questions[current];
-
   document.getElementById("questionCounter").textContent = `Pergunta ${current + 1} de ${questions.length}`;
-
   const progress = Math.round((current / questions.length) * 100);
   document.getElementById("progressPercent").textContent = `${progress}%`;
   document.getElementById("progressBar").style.width = `${progress}%`;
-
   document.getElementById("questionText").textContent = question.text;
-
   const answersBox = document.getElementById("answers");
   answersBox.innerHTML = "";
-
   scale.forEach(item => {
     const btn = document.createElement("button");
     btn.className = "answer";
     btn.textContent = item.label;
-
-    if (answers[current] === item.value) {
-      btn.classList.add("selected");
-    }
-
-    btn.onclick = () => {
-      answers[current] = item.value;
-      renderQuestion();
-    };
-
+    if (answers[current] === item.value) btn.classList.add("selected");
+    btn.onclick = () => { answers[current] = item.value; renderQuestion(); };
     answersBox.appendChild(btn);
   });
-
-  document.getElementById("nextBtn").textContent =
-    current === questions.length - 1 ? "Finalizar" : "Próxima";
+  document.getElementById("nextBtn").textContent = current === questions.length - 1 ? "Finalizar" : "Próxima";
 }
 
 function nextQuestion() {
-  if (!answers[current]) {
-    alert("Selecione uma resposta para continuar.");
-    return;
-  }
-
-  if (current < questions.length - 1) {
-    current++;
-    renderQuestion();
-  } else {
-    finishQuiz();
-  }
+  if (!answers[current]) { alert("Selecione uma resposta para continuar."); return; }
+  if (current < questions.length - 1) { current++; renderQuestion(); } else { finishQuiz(); }
 }
-
-function prevQuestion() {
-  if (current > 0) {
-    current--;
-    renderQuestion();
-  }
-}
+function prevQuestion() { if (current > 0) { current--; renderQuestion(); } }
 
 function finishQuiz() {
   document.getElementById("quiz").classList.add("hidden");
   document.getElementById("loading").classList.remove("hidden");
-
-  const phrases = [
-    "Cruzando indicadores comportamentais.",
-    "Interpretando perfil predominante.",
-    "Analisando comportamento sob pressão.",
-    "Avaliando maturidade institucional.",
-    "Gerando radar inicial de liderança."
-  ];
-
+  const phrases = ["Cruzando indicadores comportamentais.","Interpretando perfil predominante.","Analisando comportamento sob pressão.","Avaliando maturidade institucional.","Gerando radar inicial de liderança."];
   let i = 0;
-  const interval = setInterval(() => {
-    document.getElementById("loadingText").textContent = phrases[i % phrases.length];
-    i++;
-  }, 900);
-
-  setTimeout(() => {
-    clearInterval(interval);
-    pendingResult = calculateResult();
-    showLeadForm();
-  }, 3600);
+  const interval = setInterval(() => { document.getElementById("loadingText").textContent = phrases[i % phrases.length]; i++; }, 900);
+  setTimeout(() => { clearInterval(interval); pendingResult = calculateResult(); showLeadForm(); }, 3600);
 }
 
 function calculateResult() {
-  const dimScores = {};
-  const dimMax = {};
-  const rawProfileScores = {};
-  const profileMax = {};
-
-  Object.keys(dimensions).forEach(d => {
-    dimScores[d] = 0;
-    dimMax[d] = 0;
-  });
-
-  Object.keys(profileInfo).forEach(p => {
-    rawProfileScores[p] = 0;
-    profileMax[p] = 0;
-  });
-
+  const dimScores = {}, dimMax = {}, rawProfileScores = {}, profileMax = {};
+  Object.keys(dimensions).forEach(d => { dimScores[d] = 0; dimMax[d] = 0; });
+  Object.keys(profileInfo).forEach(p => { rawProfileScores[p] = 0; profileMax[p] = 0; });
   questions.forEach((question, index) => {
     const answer = answers[index];
-
-    Object.entries(question.dims).forEach(([dim, weight]) => {
-      const absWeight = Math.abs(weight);
-      const effectiveAnswer = weight >= 0 ? answer : (6 - answer);
-
-      dimScores[dim] += effectiveAnswer * absWeight;
-      dimMax[dim] += 5 * absWeight;
-    });
-
-    Object.entries(question.profiles).forEach(([profile, weight]) => {
-      if (!rawProfileScores.hasOwnProperty(profile)) return;
-
-      const absWeight = Math.abs(weight);
-      const effectiveAnswer = weight >= 0 ? answer : (6 - answer);
-
-      rawProfileScores[profile] += effectiveAnswer * absWeight;
-      profileMax[profile] += 5 * absWeight;
-    });
+    Object.entries(question.dims).forEach(([dim, weight]) => { const absWeight = Math.abs(weight); const effectiveAnswer = weight >= 0 ? answer : (6 - answer); dimScores[dim] += effectiveAnswer * absWeight; dimMax[dim] += 5 * absWeight; });
+    Object.entries(question.profiles).forEach(([profile, weight]) => { if (!rawProfileScores.hasOwnProperty(profile)) return; const absWeight = Math.abs(weight); const effectiveAnswer = weight >= 0 ? answer : (6 - answer); rawProfileScores[profile] += effectiveAnswer * absWeight; profileMax[profile] += 5 * absWeight; });
   });
-
   const dimPercent = {};
-
-  Object.keys(dimensions).forEach(dim => {
-    dimPercent[dim] = dimMax[dim]
-      ? Math.max(0, Math.min(100, Math.round((dimScores[dim] / dimMax[dim]) * 100)))
-      : 0;
-  });
-
+  Object.keys(dimensions).forEach(dim => { dimPercent[dim] = dimMax[dim] ? Math.max(0, Math.min(100, Math.round((dimScores[dim] / dimMax[dim]) * 100))) : 0; });
   const profileScores = {};
-
-  Object.keys(rawProfileScores).forEach(profile => {
-    profileScores[profile] = profileMax[profile]
-      ? Math.round((rawProfileScores[profile] / profileMax[profile]) * 100)
-      : 0;
-  });
-
-  const sortedProfiles = Object.entries(profileScores)
-    .sort((a, b) => b[1] - a[1]);
-
-  let main = sortedProfiles[0][0];
-  let second = sortedProfiles[1][0];
-
-  const topScore = sortedProfiles[0][1];
-  const secondScore = sortedProfiles[1][1];
-
-  if ((topScore - secondScore) <= 3) {
-    main = resolveTieByDimensions(sortedProfiles.slice(0, 3), dimPercent);
-    second = sortedProfiles.find(([profile]) => profile !== main)?.[0] || sortedProfiles[1][0];
-  }
-
-  const intensityPercent = topScore;
-
-  return {
-    dimPercent,
-    profileScores,
-    main,
-    second,
-    intensityPercent,
-    insight: generateInsight(main)
-  };
+  Object.keys(rawProfileScores).forEach(profile => { profileScores[profile] = profileMax[profile] ? Math.round((rawProfileScores[profile] / profileMax[profile]) * 100) : 0; });
+  const sortedProfiles = Object.entries(profileScores).sort((a,b) => b[1]-a[1]);
+  let main = sortedProfiles[0][0], second = sortedProfiles[1][0];
+  const topScore = sortedProfiles[0][1], secondScore = sortedProfiles[1][1];
+  if ((topScore - secondScore) <= 3) { main = resolveTieByDimensions(sortedProfiles.slice(0,3), dimPercent); second = sortedProfiles.find(([profile]) => profile !== main)?.[0] || sortedProfiles[1][0]; }
+  return { dimPercent, profileScores, main, second, intensityPercent: topScore, insight: generateInsight(main) };
 }
 
 function resolveTieByDimensions(topProfiles, dimPercent) {
-  const dimensionAffinity = {
-    COMMANDER: (dimPercent.D3 * 1.4) + (dimPercent.D4 * 1.3) + (dimPercent.D1 * 0.8),
-    STRATEGYK: (dimPercent.D6 * 1.5) + (dimPercent.D3 * 1.1) + (dimPercent.D8 * 0.8),
-    MENTORIX: (dimPercent.D5 * 1.6) + (dimPercent.D2 * 1.1) + (dimPercent.D8 * 0.7),
-    EXECUTRON: (dimPercent.D7 * 1.6) + (dimPercent.D3 * 1.0) + (dimPercent.D4 * 0.8),
-    DIPLOMATIK: (dimPercent.D2 * 1.4) + (dimPercent.D8 * 1.4) + (dimPercent.D5 * 0.9),
-    VISIONEX: (dimPercent.D6 * 1.5) + (dimPercent.D1 * 1.0) + (dimPercent.D3 * 0.7),
-    GUARDIAN: (dimPercent.D7 * 1.2) + (dimPercent.D8 * 1.4) + (dimPercent.D6 * 0.9)
-  };
-
-  return topProfiles
-    .map(([profile]) => [profile, dimensionAffinity[profile] || 0])
-    .sort((a, b) => b[1] - a[1])[0][0];
+  const dimensionAffinity = { COMMANDER:(dimPercent.D3*1.4)+(dimPercent.D4*1.3)+(dimPercent.D1*0.8), STRATEGYK:(dimPercent.D6*1.5)+(dimPercent.D3*1.1)+(dimPercent.D8*0.8), MENTORIX:(dimPercent.D5*1.6)+(dimPercent.D2*1.1)+(dimPercent.D8*0.7), EXECUTRON:(dimPercent.D7*1.6)+(dimPercent.D3*1.0)+(dimPercent.D4*0.8), DIPLOMATIK:(dimPercent.D2*1.4)+(dimPercent.D8*1.4)+(dimPercent.D5*0.9), VISIONEX:(dimPercent.D6*1.5)+(dimPercent.D1*1.0)+(dimPercent.D3*0.7), GUARDIAN:(dimPercent.D7*1.2)+(dimPercent.D8*1.4)+(dimPercent.D6*0.9) };
+  return topProfiles.map(([profile]) => [profile, dimensionAffinity[profile] || 0]).sort((a,b) => b[1]-a[1])[0][0];
 }
 
 function generateInsight(main) {
-  const insights = {
-    COMMANDER: "Você tende a assumir direção quando há pressão. Isso gera velocidade e clareza, mas pode reduzir escuta e autonomia se usado em excesso.",
-    STRATEGYK: "Você tende a enxergar riscos e consequências antes da maioria das pessoas. Sua força está na análise, mas o excesso de cautela pode atrasar avanços importantes.",
-    MENTORIX: "Você tende a liderar desenvolvendo pessoas e criando vínculos de confiança. Sua força humana é alta, mas pode haver dificuldade em confrontar quando necessário.",
-    EXECUTRON: "Você tende a transformar cobrança em resultado. Sua orientação para entrega é forte, mas pode gerar desgaste quando a equipe não acompanha seu ritmo.",
-    DIPLOMATIK: "Você tende a preservar equilíbrio, respeito institucional e redução de conflitos. Sua liderança gera estabilidade, mas pode atrasar decisões difíceis quando o confronto é necessário.",
-    VISIONEX: "Você tende a enxergar possibilidades antes dos demais. Sua força está na inovação, mas pode haver risco de dispersão quando há excesso de ideias.",
-    GUARDIAN: "Você tende a proteger processos, instituições e previsibilidade. Sua força está na consistência, mas pode haver resistência a mudanças rápidas."
-  };
-
+  const insights = { COMMANDER:"Você tende a assumir direção quando há pressão. Isso gera velocidade e clareza, mas pode reduzir escuta e autonomia se usado em excesso.", STRATEGYK:"Você tende a enxergar riscos e consequências antes da maioria das pessoas. Sua força está na análise, mas o excesso de cautela pode atrasar avanços importantes.", MENTORIX:"Você tende a liderar desenvolvendo pessoas e criando vínculos de confiança. Sua força humana é alta, mas pode haver dificuldade em confrontar quando necessário.", EXECUTRON:"Você tende a transformar cobrança em resultado. Sua orientação para entrega é forte, mas pode gerar desgaste quando a equipe não acompanha seu ritmo.", DIPLOMATIK:"Você tende a preservar equilíbrio, respeito institucional e redução de conflitos. Sua liderança gera estabilidade, mas pode atrasar decisões difíceis quando o confronto é necessário.", VISIONEX:"Você tende a enxergar possibilidades antes dos demais. Sua força está na inovação, mas pode haver risco de dispersão quando há excesso de ideias.", GUARDIAN:"Você tende a proteger processos, instituições e previsibilidade. Sua força está na consistência, mas pode haver resistência a mudanças rápidas." };
   return insights[main] || "Seu perfil demonstra padrões de liderança que merecem análise mais aprofundada.";
 }
 
-function getIntensityLabel(percent) {
-  if (percent >= 82) return "Muito elevada";
-  if (percent >= 68) return "Elevada";
-  if (percent >= 54) return "Moderada";
-  if (percent >= 40) return "Baixa";
-  return "Muito baixa";
-}
-
-function showLeadForm() {
-  document.getElementById("loading").classList.add("hidden");
-  document.getElementById("leadForm").classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+function getIntensityLabel(percent) { if (percent >= 82) return "Muito elevada"; if (percent >= 68) return "Elevada"; if (percent >= 54) return "Moderada"; if (percent >= 40) return "Baixa"; return "Muito baixa"; }
+function showLeadForm() { document.getElementById("loading").classList.add("hidden"); document.getElementById("leadForm").classList.remove("hidden"); window.scrollTo({ top:0, behavior:"smooth" }); }
 
 function submitLeadForm() {
   const nome = document.getElementById("leadNome").value.trim();
@@ -970,26 +785,10 @@ function submitLeadForm() {
   const cargo = document.getElementById("leadCargo").value.trim();
   const empresa = document.getElementById("leadEmpresa").value.trim();
   const lgpd = document.getElementById("leadLgpd").checked;
-
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  if (!nome || !emailValido || !whatsapp || !cargo || !empresa || !lgpd) {
-    document.getElementById("leadError").classList.remove("hidden");
-    return;
-  }
-
+  if (!nome || !emailValido || !whatsapp || !cargo || !empresa || !lgpd) { document.getElementById("leadError").classList.remove("hidden"); return; }
   document.getElementById("leadError").classList.add("hidden");
-
-  leadData = {
-    nome,
-    email,
-    telefone: whatsapp,
-    cargo_funcao: cargo,
-    empresa_orgao: empresa,
-    lgpd_aceite: true,
-    lgpd_aceite_data: new Date().toISOString()
-  };
-
+  leadData = { nome, email, telefone:whatsapp, cargo_funcao:cargo, empresa_orgao:empresa, lgpd_aceite:true, lgpd_aceite_data:new Date().toISOString() };
   document.getElementById("leadForm").classList.add("hidden");
   showResult(pendingResult);
 }
@@ -1003,46 +802,48 @@ async function saveAssessmentResult(result) {
     empresa_orgao: leadData?.empresa_orgao || null,
     lgpd_aceite: leadData?.lgpd_aceite || false,
     lgpd_aceite_data: leadData?.lgpd_aceite_data || null,
-
     respostas: answers,
     dimensoes: result.dimPercent,
     perfis: result.profileScores,
-
     perfil_predominante: result.main,
     perfil_complementar: result.second,
     intensidade: getIntensityLabel(result.intensityPercent),
     insight_inicial: result.insight,
-
     risco_titulo: profileInfo[result.main].risk,
     risco_texto: profileInfo[result.main].riskText,
-
     user_agent: navigator.userAgent,
-    origem: window.location.href
+    origem: window.location.href,
+    engine_version: "leaderk56-v2.0"
   };
 
-  const { data, error } = await supabaseClient
-    .from("assessment_responses")
-    .insert(payload)
-    .select("id")
-    .single();
+  try {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/submit-individual-assessment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: JSON.stringify(payload)
+    });
 
-  if (error) {
-    console.error("Erro ao salvar no Supabase:", error);
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data?.id) {
+      console.error("Erro ao salvar via submit-individual-assessment:", data);
+      return null;
+    }
+    console.log("Resultado salvo com sucesso via Edge Function:", data.id);
+    return data.id;
+  } catch (error) {
+    console.error("Falha de rede ao salvar assessment:", error);
     return null;
   }
-
-  console.log("Resultado salvo com sucesso:", data.id);
-  return data.id;
 }
 
 async function showResult(result) {
   const savedId = await saveAssessmentResult(result);
-
   document.getElementById("result").classList.remove("hidden");
-
-  const mainInfo = profileInfo[result.main];
-  const secondInfo = profileInfo[result.second];
-
+  const mainInfo = profileInfo[result.main], secondInfo = profileInfo[result.second];
   document.getElementById("mainProfile").textContent = mainInfo.name;
   document.getElementById("mainProfileDesc").textContent = mainInfo.desc;
   document.getElementById("secondProfile").textContent = secondInfo.name;
@@ -1051,81 +852,34 @@ async function showResult(result) {
   document.getElementById("riskTitle").textContent = mainInfo.risk;
   document.getElementById("riskText").textContent = mainInfo.riskText;
   document.getElementById("insightText").textContent = result.insight;
-
-  const radar = document.getElementById("radar");
-  radar.innerHTML = "";
-
-  Object.entries(result.dimPercent).forEach(([dim, percent]) => {
-    const row = document.createElement("div");
-    row.className = "dimension";
-    row.innerHTML = `
-      <span>${dimensions[dim]}</span>
-      <div class="dim-bar"><span style="width:${percent}%"></span></div>
-      <strong>${percent}%</strong>
-    `;
-    radar.appendChild(row);
-  });
-
+  const radar = document.getElementById("radar"); radar.innerHTML = "";
+  Object.entries(result.dimPercent).forEach(([dim, percent]) => { const row = document.createElement("div"); row.className="dimension"; row.innerHTML=`<span>${dimensions[dim]}</span><div class="dim-bar"><span style="width:${percent}%"></span></div><strong>${percent}%</strong>`; radar.appendChild(row); });
   const ctaBox = document.querySelector(".cta-box");
-
   if (savedId) {
-    ctaBox.innerHTML = `
-      <h3>Seu relatório completo revela o que este resultado ainda não mostra.</h3>
-      <p>
-        Desbloqueie sua análise executiva premium com pontos cegos, comportamento sob pressão,
-        maturidade institucional, impacto na equipe e plano estratégico de evolução.
-      </p>
-      <button class="btn" onclick="startStripeCheckout('${savedId}', this)">
-        Desbloquear Relatório Executivo — R$ 47,00
-      </button>
-    `;
+    ctaBox.innerHTML = `<h3>Seu relatório completo revela o que este resultado ainda não mostra.</h3><p>Desbloqueie sua análise executiva premium com pontos cegos, comportamento sob pressão, maturidade institucional, impacto na equipe e plano estratégico de evolução.</p><button class="btn" onclick="startStripeCheckout('${savedId}', this)">Desbloquear Relatório Executivo — R$ 47,00</button>`;
   } else {
-    ctaBox.innerHTML = `
-      <h3>Resultado gerado, mas houve falha ao salvar o registro.</h3>
-      <p>Verifique a conexão com o Supabase antes de prosseguir.</p>
-    `;
+    ctaBox.innerHTML = `<h3>Resultado gerado, mas houve falha ao salvar o registro.</h3><p>Não foi possível registrar a avaliação. Tente novamente em alguns instantes.</p>`;
   }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top:0, behavior:"smooth" });
 }
 
 async function startStripeCheckout(assessmentId, button) {
   try {
     button.disabled = true;
     button.textContent = "Redirecionando para pagamento...";
-
-    const response = await fetch(
-      "https://qdgljsbntpsjulfwxolf.supabase.co/functions/v1/create-checkout-session",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-        },
-        body: JSON.stringify({
-          assessment_id: assessmentId
-        })
-      }
-    );
-
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout-session`, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json", "apikey":SUPABASE_ANON_KEY, "Authorization":`Bearer ${SUPABASE_ANON_KEY}` },
+      body:JSON.stringify({ assessment_id:assessmentId })
+    });
     const data = await response.json();
-
-    if (!response.ok || !data.url) {
-      console.error(data);
-      alert("Não foi possível iniciar o pagamento. Tente novamente.");
-      button.disabled = false;
-      button.textContent = "Desbloquear Relatório Executivo — R$ 47,00";
-      return;
-    }
-
+    if (!response.ok || !data.url) { console.error(data); alert("Não foi possível iniciar o pagamento. Tente novamente."); button.disabled=false; button.textContent="Desbloquear Relatório Executivo — R$ 47,00"; return; }
     window.location.href = data.url;
-
   } catch (error) {
     console.error("Erro no checkout:", error);
     alert("Erro ao conectar com o pagamento. Tente novamente.");
-    button.disabled = false;
-    button.textContent = "Desbloquear Relatório Executivo — R$ 47,00";
+    button.disabled=false;
+    button.textContent="Desbloquear Relatório Executivo — R$ 47,00";
   }
 }
 </script>
